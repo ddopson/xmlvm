@@ -25,7 +25,7 @@
 - (void) __init_java_io_ByteArrayInputStream___byte_ARRAYTYPE_int_int :(XMLVMArray*)buf :(int)from :(int)len
 {
 	self->length = len;
-	self->buffer = malloc(sizeof(char)*len);
+	self->buffer = malloc(sizeof(unsigned char)*len);
 
 	int src = from;
 	int dst = 0;
@@ -46,7 +46,8 @@
 	if (pos>=length) {
 		return -1;
 	} else {
-		return buffer[pos++];
+		int val = buffer[pos++];
+		return val;
 	}
 }
 

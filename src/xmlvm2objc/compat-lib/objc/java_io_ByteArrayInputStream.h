@@ -25,7 +25,7 @@
 
 
 @interface java_io_ByteArrayInputStream : java_io_InputStream {
-  char *buffer;
+  unsigned char *buffer;
   int length;
   JAVA_LONG pos;
   JAVA_LONG marked;
