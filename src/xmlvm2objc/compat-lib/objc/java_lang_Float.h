@@ -24,7 +24,7 @@
 
 // java.lang.Float
 //----------------------------------------------------------------------------
-@interface java_lang_Float : java_lang_Object <NSCopying> {
+@interface java_lang_Float : java_lang_Number <NSCopying> {
 
 float number;
 

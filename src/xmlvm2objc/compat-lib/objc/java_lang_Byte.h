@@ -19,12 +19,12 @@
  */
 
 #import "xmlvm.h"
-#import "java_lang_Object.h"
+#import "java_lang_Number.h"
 #import "java_lang_String.h"
 
 // java.lang.Byte
 //----------------------------------------------------------------------------
-@interface java_lang_Byte : java_lang_Object <NSCopying> {
+@interface java_lang_Byte : java_lang_Number <NSCopying> {
 
 unsigned char number;
 

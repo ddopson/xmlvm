@@ -19,29 +19,27 @@
  */
 
 #import "xmlvm.h"
-#import "java_lang_Number.h"
+#import "java_lang_Object.h"
 #import "java_lang_String.h"
+#import "java_lang_Comparable.h"
 
-
-// java.lang.Double
+// java.lang.Integer
 //----------------------------------------------------------------------------
-@interface java_lang_Double : java_lang_Number <NSCopying> {
-
-double number;
+@interface java_lang_Number : java_lang_Object <NSCopying, java_lang_Comparable> {
 
 }
 
 + (void) initialize;
 - (id) init;
 - (id) copyWithZone:(NSZone *)zone;
-- (NSUInteger) hash;
-+ (java_lang_Class*) _GET_TYPE;
-- (void) __init_java_lang_Double___double :(double) d;
 - (BOOL)isEqual:(id)anObject;
+- (BOOL)equals___java_lang_Object:(java_lang_Object*)anObject;
+- (unsigned char) byteValue__;
 - (double) doubleValue__;
+- (float) floatValue__;
+- (int) intValue__;
+- (long) longValue__;
+- (short) shortValue__;
 - (java_lang_String*) toString__;
-+ (double) parseDouble___java_lang_String: (java_lang_String *) str;
-+ (java_lang_String*) toString___double: (double) d;
-+ (java_lang_Double*) valueOf___double: (double) d;
 
 @end

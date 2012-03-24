@@ -18,30 +18,69 @@
  * USA.
  */
 
-#import "xmlvm.h"
 #import "java_lang_Number.h"
-#import "java_lang_String.h"
 
-
-// java.lang.Double
+// java.lang.Number
 //----------------------------------------------------------------------------
-@interface java_lang_Double : java_lang_Number <NSCopying> {
+@implementation java_lang_Number
 
-double number;
-
++ (void) initialize
+{
 }
 
-+ (void) initialize;
-- (id) init;
-- (id) copyWithZone:(NSZone *)zone;
-- (NSUInteger) hash;
-+ (java_lang_Class*) _GET_TYPE;
-- (void) __init_java_lang_Double___double :(double) d;
-- (BOOL)isEqual:(id)anObject;
-- (double) doubleValue__;
-- (java_lang_String*) toString__;
-+ (double) parseDouble___java_lang_String: (java_lang_String *) str;
-+ (java_lang_String*) toString___double: (double) d;
-+ (java_lang_Double*) valueOf___double: (double) d;
+- (id) init
+{
+	return self;
+}
+
+- (id) copyWithZone:(NSZone *)zone
+{
+    [self xmlvmSubclassResponsibility];
+}
+
+- (NSUInteger) hash
+{
+    [self xmlvmSubclassResponsibility];
+}
+
+- (BOOL)isEqual:(id)anObject
+{
+    [self xmlvmSubclassResponsibility];
+}
+
+- (unsigned char) byteValue__
+{
+    [self xmlvmSubclassResponsibility];
+}
+
+- (double) doubleValue__
+{
+    [self xmlvmSubclassResponsibility];
+}
+
+- (float) floatValue__
+{
+    [self xmlvmSubclassResponsibility];
+}
+
+- (int) intValue__
+{
+    [self xmlvmSubclassResponsibility];
+}
+
+- (long) longValue__
+{
+    [self xmlvmSubclassResponsibility];
+}
+
+- (short) shortValue__
+{
+    [self xmlvmSubclassResponsibility];
+}
+
+- (java_lang_String*) toString__
+{
+    [self xmlvmSubclassResponsibility];
+}
 
 @end

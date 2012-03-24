@@ -19,13 +19,13 @@
  */
 
 #import "xmlvm.h"
-#import "java_lang_Object.h"
+#import "java_lang_Number.h"
 #import "java_lang_String.h"
 #import "java_lang_Comparable.h"
 
 // java.lang.Long
 //----------------------------------------------------------------------------
-@interface java_lang_Long : java_lang_Object <NSCopying, java_lang_Comparable> {
+@interface java_lang_Long : java_lang_Number <NSCopying, java_lang_Comparable> {
 
 JAVA_LONG number;
 
