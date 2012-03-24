@@ -44,26 +44,38 @@
 
 void xmlvm_init();
 
-typedef long long JAVA_LONG;
+typedef id                 JAVA_OBJECT;
+typedef unsigned char      JAVA_BYTE;
+typedef unsigned short     JAVA_CHAR;
+typedef short              JAVA_SHORT;
+typedef int                JAVA_INT;
+typedef long long          JAVA_LONG;
 typedef unsigned long long JAVA_ULONG;
+typedef float              JAVA_FLOAT;
+typedef double             JAVA_DOUBLE;
 
 typedef union {
-    id        o;
-    int       i;
-    float     f;
-    double    d;
-    JAVA_LONG l;
+    JAVA_OBJECT     o;
+    JAVA_BYTE       b;
+    JAVA_CHAR       c;
+    JAVA_SHORT      s;
+    JAVA_INT        i;
+    JAVA_LONG       l;
+    JAVA_ULONG      ul;
+    JAVA_FLOAT      f;
+    JAVA_DOUBLE     d;
 } XMLVMElem;
 
 typedef union {
-    id*             o;
-    char*           b;
-    unsigned short* c;
-    short*          s;
-    int*            i;
-    float*          f;
-    double*         d;
+    JAVA_OBJECT*    o;
+    JAVA_BYTE*      b;
+    JAVA_CHAR*      c;
+    JAVA_SHORT*     s;
+    JAVA_INT*       i;
     JAVA_LONG*      l;
+    JAVA_ULONG*     ul;
+    JAVA_FLOAT*     f;
+    JAVA_DOUBLE*    d;
     void*           data;
 } XMLVMElemPtr;
 

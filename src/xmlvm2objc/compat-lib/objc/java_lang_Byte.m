@@ -94,9 +94,9 @@ static java_lang_Class* primitiveByteClass;
     return [java_lang_Byte toString___byte:number];
 }
 
-+ (java_lang_String*) toString___byte: (char) b
++ (java_lang_String*) toString___byte: (unsigned char) b
 {
-    return [[[NSNumber numberWithChar:b] stringValue] retain];
+    return [[[NSNumber numberWithUnsignedChar:b] stringValue] retain];
 }
 
 
