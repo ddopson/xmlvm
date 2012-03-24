@@ -41,6 +41,7 @@
 - (void) setFillColor___float_ARRAYTYPE: (XMLVMArray*) color;
 - (void) setStrokeColor___float_ARRAYTYPE: (XMLVMArray*) color;
 - (void) setLineCap___int: (int) cap;
+- (void) setLineWidth___int: (int) width;
 - (void) fillRect___org_xmlvm_iphone_CGRect: (org_xmlvm_iphone_CGRect*)rect;
 - (void) strokeRect___org_xmlvm_iphone_CGRect: (org_xmlvm_iphone_CGRect*)rect;
 - (void) strokeEllipseInRect___org_xmlvm_iphone_CGRect: (org_xmlvm_iphone_CGRect*)rect;

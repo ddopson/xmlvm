@@ -114,6 +114,10 @@ public class CGContext extends CFType {
         throw new RuntimeException("Stub");
     }
 
+    public void setLineWidth(int width) {
+        // TODO: not sure how this translates into Graphics2D.  sorta like setStroke(Stroke)
+    }
+    
     public void setStrokeColor(float[] color) {
         graphicsContext.setColor(new Color(color[0], color[1], color[2]));
     }

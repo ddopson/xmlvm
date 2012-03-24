@@ -57,6 +57,11 @@
 	CGContextSetLineCap(context, cap);
 }
 
+- (void) setLineWidth___int: (int) width
+{
+	CGContextSetLineWidth(context, width);
+}
+
 - (void) fillRect___org_xmlvm_iphone_CGRect: (org_xmlvm_iphone_CGRect*)rect
 {
     CGRect r = [rect getCGRect];
