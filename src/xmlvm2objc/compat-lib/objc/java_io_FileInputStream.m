@@ -76,7 +76,7 @@
 	if (data == nil) {
 		return -1;
 	}
-	char * ptr = (char *) [data bytes];
+	unsigned char * ptr = (unsigned char *) [data bytes];
 	if (ptr == NULL) {
 		return -1;
 	}	
@@ -140,7 +140,7 @@
 	if (data == nil) {
 		return -1;
 	}
-	char * ptr = (char *) [data bytes];
+	unsigned char * ptr = (unsigned char *) [data bytes];
 	if (ptr == NULL) {
 		return -1;
 	} else {
@@ -158,7 +158,7 @@
 	if (data == nil) {
 		return -1;
 	}
-	char * ptr = (char *) [data bytes];
+	unsigned char * ptr = (unsigned char *) [data bytes];
 	if (ptr == NULL) {
 		return -1;
 	}	else {
