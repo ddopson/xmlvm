@@ -99,5 +99,9 @@ static java_lang_Class* primitiveFloatClass;
     return f;
 }
 
+- (float) intBitsToFloat___int: (int) i
+{
+	return [[NSNumber numberWithInt: i] floatValue];
+}
 
 @end

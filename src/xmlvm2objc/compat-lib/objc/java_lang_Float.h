@@ -41,7 +41,7 @@ float number;
 + (java_lang_Class*) _GET_TYPE;
 - (float) floatValue__;
 + (float) parseFloat___java_lang_String: (java_lang_String *) str;
-
 + (java_lang_Float*) valueOf___float:(float) value;
++ (float) intBitsToFloat___int: (int) i;
 
 @end
