@@ -28,9 +28,11 @@ typedef NSMutableString java_lang_StringBuffer;
 @interface NSMutableString (cat_java_lang_StringBuffer) //java_lang_String : java_lang_Object 
 
 - (void) __init_java_lang_StringBuilder__;
+- (void) __init_java_lang_StringBuilder___int: (int) length;
 - (void) __init_java_lang_StringBuilder___java_lang_String: (java_lang_String*) str;
 - (void) __init_java_lang_StringBuilder___java_lang_CharSequence: (id<java_lang_CharSequence>) str;
 - (void) __init_java_lang_StringBuffer__;
+- (void) __init_java_lang_StringBuffer___int: (int) length;
 - (void) __init_java_lang_StringBuffer___java_lang_String: (java_lang_String*) str;
 - (java_lang_StringBuffer*) append___java_lang_String: (java_lang_String*) str;
 - (java_lang_StringBuffer*) append___char_ARRAYTYPE: (XMLVMArray*) arr;
