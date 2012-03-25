@@ -19,19 +19,33 @@
  */
 
 
-#import "xmlvm.h"
 #import "java_lang_Error.h"
-#import "java_lang_String.h"
 
-
-// java.lang.NoSuchFieldError
+// java.lang.Error
 //----------------------------------------------------------------------------
-@interface java_lang_NoSuchFieldError : java_lang_Error
+@implementation java_lang_Error
 
-- (id) init;
-- (void) __init_java_lang_NoSuchFieldError__;
-- (void) __init_java_lang_NoSuchFieldError___java_lang_String: (java_lang_String*) msg;
-- (void) __init_java_lang_NoSuchFieldError___java_lang_String_java_lang_Throwable: (java_lang_String*) msg: (java_lang_Throwable*) cause;
-- (java_lang_NoSuchFieldError *) initCause___java_lang_Throwable: (java_lang_Throwable*) cause;
+- (id) init
+{
+    return [self initWithName: @"java_lang_Error" reason: nil userInfo: nil];
+}
+
+- (void) __init_java_lang_Error__
+{
+    // Do nothing
+}
+
+- (void) __init_java_lang_Error___java_lang_String: (java_lang_String*) msg
+{
+}
+
+- (void) __init_java_lang_Error___java_lang_String_java_lang_Throwable: (java_lang_String*) msg: (java_lang_Throwable*) cause
+{
+}
+
+- (java_lang_Error *) initCause___java_lang_Throwable: (java_lang_Throwable*) cause
+{
+	return self;
+}
 
 @end

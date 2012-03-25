@@ -20,18 +20,20 @@
 
 
 #import "xmlvm.h"
-#import "java_lang_Error.h"
+#import "java_lang_Throwable.h"
 #import "java_lang_String.h"
 
 
-// java.lang.NoSuchFieldError
+// java.lang.Error
 //----------------------------------------------------------------------------
-@interface java_lang_NoSuchFieldError : java_lang_Error
+// For some reason, compiling for the device doesn't like to define this
+// class as a category.
+@interface java_lang_Error : java_lang_Throwable
 
 - (id) init;
-- (void) __init_java_lang_NoSuchFieldError__;
-- (void) __init_java_lang_NoSuchFieldError___java_lang_String: (java_lang_String*) msg;
-- (void) __init_java_lang_NoSuchFieldError___java_lang_String_java_lang_Throwable: (java_lang_String*) msg: (java_lang_Throwable*) cause;
-- (java_lang_NoSuchFieldError *) initCause___java_lang_Throwable: (java_lang_Throwable*) cause;
+- (void) __init_java_lang_Error__;
+- (void) __init_java_lang_Error___java_lang_String: (java_lang_String*) msg;
+- (void) __init_java_lang_Error___java_lang_String_java_lang_Throwable: (java_lang_String*) msg: (java_lang_Throwable*) cause;
+- (java_lang_Error *) initCause___java_lang_Throwable: (java_lang_Throwable*) cause;
 
 @end

@@ -19,8 +19,8 @@
  */
 
 #import "xmlvm.h"
-#import "java_lang_Object.h"
+#import "java_lang_Error.h"
 
-@interface java_lang_AssertionError : java_lang_Object
+@interface java_lang_AssertionError : java_lang_Error
 
 @end
