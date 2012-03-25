@@ -48,14 +48,14 @@
 - (void) __init_java_lang_String___char_ARRAYTYPE: (XMLVMArray*) chars
 {
 	for(int i = 0; i < chars->length; i++) {
-		[self appendFormat:@"%c", (char) chars->array.c[i]];
+		[self appendFormat:@"%C", chars->array.c[i]];
 	}
 }
 
 - (void) __init_java_lang_String___char_ARRAYTYPE_int_int: (XMLVMArray*) chars :(int) offset :(int) count
 {
 	for(int i = offset; i < offset + count; i++) {
-		[self appendFormat:@"%c", (char) chars->array.c[i]];
+		[self appendFormat:@"%C", chars->array.c[i]];
 	}
 }
 
@@ -107,14 +107,12 @@
 		@throw ex;
 	}
 
-	int offset = 0;
-
 	int j = dstBegin;
-	int n = offset + srcEnd;
-	int i = offset + srcBegin; //srcPos
+	int n = srcEnd - srcBegin;
+	int i = srcBegin; //srcPos
 
 	while (i < n) {
-		dst->array.b[j++] = [self characterAtIndex:i++];
+		dst->array.c[j++] = [self characterAtIndex:i++];
 	}
 }
 
