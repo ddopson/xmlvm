@@ -82,6 +82,11 @@ public class UIImage extends NSObject {
                 (int) point.y, Simulator.getDisplay());
     }
 
+    public void drawAtPoint(int x, int y) {
+        UIGraphics.getCurrentContext().xmlvmGetGraphics2D().drawImage(image, x,
+                y, Simulator.getDisplay());
+    }
+
     public CGSize getSize() {
         if (image == null)
             return new CGSize(0, 0);

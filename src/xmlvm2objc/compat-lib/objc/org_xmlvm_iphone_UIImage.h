@@ -34,12 +34,13 @@
 //----------------------------------------------------------------------------
 typedef UIImage org_xmlvm_iphone_UIImage;
 @interface UIImage (cat_org_xmlvm_iphone_UIImage)
-+ (org_xmlvm_iphone_UIImage*)imageNamed___java_lang_String:(java_lang_String*)n1;
++ (org_xmlvm_iphone_UIImage*) imageNamed___java_lang_String:(java_lang_String*)n1;
 + (org_xmlvm_iphone_UIImage*) imageWithContentsOfFile___java_lang_String :(java_lang_String*)n1;
 + (org_xmlvm_iphone_UIImage*) imageWithData___org_xmlvm_iphone_NSData: (org_xmlvm_iphone_NSData*) data;
 - (org_xmlvm_iphone_UIImage*) stretchableImage___int_int :(int)leftCapWidth :(int)topCapHeight;
 - (org_xmlvm_iphone_CGSize*) getSize__;
 - (void) drawInRect___org_xmlvm_iphone_CGRect: (org_xmlvm_iphone_CGRect*) rect;
+- (void) drawAtPoint___org_xmlvm_iphone_CGPoint: (org_xmlvm_iphone_CGPoint*) point;
 - (void) drawAtPoint___int_int :(int)x :(int)y;
 - (org_xmlvm_iphone_CGImage*) getCGImage__;
 - (void) cropImage: (id) dataPtr;

@@ -81,6 +81,12 @@
 	[self drawAtPoint: p];
 }
 
+- (void) drawAtPoint___org_xmlvm_iphone_CGPoint: (org_xmlvm_iphone_CGPoint*) point;
+{
+	CGPoint p = [point getCGPoint];
+	[self drawAtPoint: p];
+}
+
 - (org_xmlvm_iphone_CGImage*) getCGImage__
 {
 	org_xmlvm_iphone_CGImage* retval = [[org_xmlvm_iphone_CGImage alloc] init];
