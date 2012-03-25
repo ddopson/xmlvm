@@ -47,5 +47,6 @@
 
 - (void) printStackTrace__
 {
+	NSLog(@"%@", [self callStackSymbols]);
 }
 @end

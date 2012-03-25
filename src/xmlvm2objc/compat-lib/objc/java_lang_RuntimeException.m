@@ -53,8 +53,4 @@
 	return self;
 }
 
-- (void) printStackTrace__
-{
-}
-
 @end
