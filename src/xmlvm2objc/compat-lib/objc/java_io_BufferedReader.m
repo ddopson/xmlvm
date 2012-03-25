@@ -61,7 +61,7 @@ static const int defaultExpectedLineLength = 80;
 		@throw ex;
 	}
 	self->target = [reader retain];
-	cb = [XMLVMArray createSingleDimensionWithType: 2 andSize:sz]; //char array
+	cb = [XMLVMArray createSingleDimensionWithType: TYPE_JAVA_CHAR andSize:sz];
 //	[cb retain];
 
 	nChars = 0;
@@ -99,7 +99,7 @@ static const int defaultExpectedLineLength = 80;
 				dst = delta;
 			} else {
 				// Reallocate buffer to accommodate read-ahead limit
-				XMLVMArray* ncb = [XMLVMArray createSingleDimensionWithType: 2 andSize:readAheadLimit]; //char array
+				XMLVMArray* ncb = [XMLVMArray createSingleDimensionWithType: TYPE_JAVA_CHAR andSize:readAheadLimit];
 				[java_lang_System arraycopy___java_lang_Object_int_java_lang_Object_int_int:cb:markedChar:ncb:0:delta];
 				[cb release];
 				cb = ncb;

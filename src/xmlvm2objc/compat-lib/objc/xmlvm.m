@@ -108,32 +108,48 @@ XMLVMElemPtr copyData(int type, int length, XMLVMElemPtr olddata)
     
     // 'type' values are defined by vm:sizeOf in xmlvm2objc.xsl
     switch (type) {
-    case 1: // boolean
-    case 3: // byte
-       sizeOfBaseType = sizeof(char);
-       break;
-    case 2: // char
-    case 4: // short
-       sizeOfBaseType = sizeof(short);
-       break;
-    case 5: // int
-       sizeOfBaseType = sizeof(int);
-       break;
-    case 6: // float
-       sizeOfBaseType = sizeof(float);
-       break;
-    case 7: // double
-       sizeOfBaseType = sizeof(double);
-       break;
-    case 8: // long
-       sizeOfBaseType = sizeof(JAVA_LONG);
-       break;
-    case 100: // XMLVMElem
+    case TYPE_JAVA_OBJECT: // object = 0
+        sizeOfBaseType = sizeof(JAVA_OBJECT);
+        break;
+    case TYPE_JAVA_BOOLEAN: // boolean = 1
+        sizeOfBaseType = sizeof(JAVA_BOOLEAN);
+        break;
+    case TYPE_JAVA_BYTE: // byte = 3
+        sizeOfBaseType = sizeof(JAVA_BYTE);
+        break;
+    case TYPE_JAVA_CHAR: // char = 2
+        sizeOfBaseType = sizeof(JAVA_CHAR);
+        break;
+    case TYPE_JAVA_SHORT: // short = 4
+        sizeOfBaseType = sizeof(JAVA_SHORT);
+        break;
+    case TYPE_JAVA_USHORT: // short = 4
+        sizeOfBaseType = sizeof(JAVA_USHORT);
+        break;
+    case TYPE_JAVA_INT: // int = 5
+        sizeOfBaseType = sizeof(JAVA_INT);
+        break;
+    case TYPE_JAVA_UINT: // uint = 15
+        sizeOfBaseType = sizeof(JAVA_UINT);
+        break;
+    case TYPE_JAVA_FLOAT: // float = 6
+        sizeOfBaseType = sizeof(JAVA_FLOAT);
+        break;
+    case TYPE_JAVA_DOUBLE: // double = 7
+        sizeOfBaseType = sizeof(JAVA_DOUBLE);
+        break;
+    case TYPE_JAVA_LONG: // long = 8
+        sizeOfBaseType = sizeof(JAVA_LONG);
+        break;
+    case TYPE_JAVA_ULONG: // ulong = 18
+        sizeOfBaseType = sizeof(JAVA_ULONG);
+        break;
+    case TYPE_XMLVMELEM: // XMLVMElem = 100
         sizeOfBaseType = sizeof(XMLVMElem);
         break;
-    default: // object reference
-       sizeOfBaseType = sizeof(id);
-       break;
+    default: // object reference - TODO - this sholud be an error
+        sizeOfBaseType = sizeof(id);
+        break;
     }
     
     return sizeOfBaseType;

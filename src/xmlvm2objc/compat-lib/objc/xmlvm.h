@@ -44,22 +44,45 @@
 
 void xmlvm_init();
 
+// Note that even though Java does not define unsigned types (other than byte/char), the JVM does
+// Java's Byte and Character types are unsigned
+
 typedef id                 JAVA_OBJECT;
 typedef unsigned char      JAVA_BYTE;
 typedef unsigned short     JAVA_CHAR;
 typedef short              JAVA_SHORT;
+typedef unsigned short     JAVA_USHORT;
 typedef int                JAVA_INT;
+typedef unsigned int       JAVA_UINT;
 typedef long long          JAVA_LONG;
 typedef unsigned long long JAVA_ULONG;
 typedef float              JAVA_FLOAT;
 typedef double             JAVA_DOUBLE;
+typedef char               JAVA_CHAR;
+
+// These TYPE_* definitions are used with createSingleDimensionWithType
+#define TYPE_JAVA_OBJECT    0
+#define TYPE_JAVA_BOOLEAN   1
+#define TYPE_JAVA_CHAR      2
+#define TYPE_JAVA_BYTE      3
+#define TYPE_JAVA_SHORT     4
+#define TYPE_JAVA_USHORT    14
+#define TYPE_JAVA_INT       5
+#define TYPE_JAVA_UINT      15
+#define TYPE_JAVA_FLOAT     6
+#define TYPE_JAVA_DOUBLE    7
+#define TYPE_JAVA_LONG      8
+#define TYPE_JAVA_ULONG     18
+#define TYPE_XMLVMELEM      100
 
 typedef union {
     JAVA_OBJECT     o;
     JAVA_BYTE       b;
     JAVA_CHAR       c;
     JAVA_SHORT      s;
+    JAVA_USHORT     us;
     JAVA_INT        i;
+    JAVA_UINT       ui;
     JAVA_LONG       l;
     JAVA_ULONG      ul;
     JAVA_FLOAT      f;
@@ -71,7 +94,9 @@ typedef union {
     JAVA_BYTE*      b;
     JAVA_CHAR*      c;
     JAVA_SHORT*     s;
+    JAVA_USHORT*    us;
     JAVA_INT*       i;
+    JAVA_UINT*      ui;
     JAVA_LONG*      l;
     JAVA_ULONG*     ul;
     JAVA_FLOAT*     f;
