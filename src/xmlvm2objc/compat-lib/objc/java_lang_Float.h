@@ -19,7 +19,7 @@
  */
 
 #import "xmlvm.h"
-#import "java_lang_Object.h"
+#import "java_lang_Number.h"
 #import "java_lang_String.h"
 
 // java.lang.Float
