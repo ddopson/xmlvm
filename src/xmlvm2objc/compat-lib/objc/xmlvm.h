@@ -58,7 +58,7 @@ typedef long long          JAVA_LONG;
 typedef unsigned long long JAVA_ULONG;
 typedef float              JAVA_FLOAT;
 typedef double             JAVA_DOUBLE;
-typedef char               JAVA_CHAR;
+typedef char               JAVA_BOOLEAN;
 
 // These TYPE_* definitions are used with createSingleDimensionWithType
 #define TYPE_JAVA_OBJECT    0
