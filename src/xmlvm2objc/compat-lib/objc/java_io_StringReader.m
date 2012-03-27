@@ -35,8 +35,20 @@
 	if ([str length] == pos) {
 		return -1;
 	}
-	return [str charAt___int:pos++];
+	return [str characterAtIndex: pos++];
 }
 
+- (int) read___char_ARRAYTYPE_int_int: (XMLVMArray *) buffer: (int) pos: (int) len
+{
+    for(int p = pos; p < pos + len; p++) {
+      int c = [self read__];
+      NSLog(@"Reading Char: %C", c);
+      if (c == -1) {
+        return p - pos;
+      }
+      buffer->array.c[p] = c;
+    }
+    return len;
+}
 @end
 
