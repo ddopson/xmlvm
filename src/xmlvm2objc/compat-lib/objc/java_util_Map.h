@@ -36,7 +36,8 @@
 
 @end
 
-@interface NSDictionary (cat_java_util_Map)
+typedef NSMutableDictionary java_util_Map;
+@interface NSMutableDictionary (cat_java_util_Map)
 
 - (java_lang_Object*) put___java_lang_Object_java_lang_Object :(java_lang_Object*) key
                                                               :(java_lang_Object*) value;
