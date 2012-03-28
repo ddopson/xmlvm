@@ -34,11 +34,11 @@ static java_lang_Class* primitiveCharacterClass;
 //----------------------------------------------------------------------------
 @implementation java_lang_Character
 
-- (void) __init_java_lang_Character___char :(char) charParm {
+- (void) __init_java_lang_Character___char :(JAVA_CHAR) charParm {
 	self->c = charParm;
 }
 
-- (char) charValue__ {
+- (JAVA_CHAR) charValue__ {
 	return self->c;
 }
 
@@ -53,13 +53,13 @@ static java_lang_Class* primitiveCharacterClass;
 	return primitiveCharacterClass;
 }
 
-+ (java_lang_String*) toString___char: (char) c
++ (java_lang_String*) toString___char: (JAVA_CHAR) c
 {
-	NSString* s = [NSString stringWithFormat:@"%c", c];
+	NSString* s = [NSString stringWithFormat:@"%C", c];
 	return [s retain];
 }
 
-+ (java_lang_Character*) valueOf___char: (char) c {
++ (java_lang_Character*) valueOf___char: (JAVA_CHAR) c {
 	java_lang_Character* result = [[java_lang_Character alloc] init];
 	[result __init_java_lang_Character___char:c];
 	return result;	
