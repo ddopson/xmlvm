@@ -110,11 +110,9 @@
 	return self;
 }
 
-- (java_lang_StringBuffer*) append___char: (char) i
+- (java_lang_StringBuffer*) append___char: (JAVA_CHAR) c
 {
-	char temp[10];
-	sprintf(temp, "%c", i);
-	[self appendString: [NSString stringWithUTF8String: temp]];
+	[self appendString: [NSString stringWithFormat: @"%C", c]];
     [self retain];
 	return self;
 }
