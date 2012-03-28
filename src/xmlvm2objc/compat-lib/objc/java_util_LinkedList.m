@@ -69,4 +69,10 @@
 	return [self poll__];
 }
 
+- (void) addFirst___java_lang_Object:(java_lang_Object *) item
+{
+	[self insertObject:item atIndex: 0];
+}
+
+
 @end
