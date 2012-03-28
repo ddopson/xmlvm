@@ -37,10 +37,12 @@
 
 - (void) __init_java_lang_Error___java_lang_String: (java_lang_String*) msg
 {
+    [self initWithName: @"java_lang_Error" reason: msg userInfo: nil];
 }
 
 - (void) __init_java_lang_Error___java_lang_String_java_lang_Throwable: (java_lang_String*) msg: (java_lang_Throwable*) cause
 {
+    [self initWithName: @"java_lang_Error" reason: msg userInfo: cause];
 }
 
 - (java_lang_Error *) initCause___java_lang_Throwable: (java_lang_Throwable*) cause
