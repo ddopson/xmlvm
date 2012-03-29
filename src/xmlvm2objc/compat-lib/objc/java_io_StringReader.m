@@ -42,7 +42,6 @@
 {
     for(int p = pos; p < pos + len; p++) {
       int c = [self read__];
-      NSLog(@"Reading Char: %C", c);
       if (c == -1) {
         return p - pos;
       }
