@@ -181,5 +181,12 @@
 	[self replaceCharactersInRange:range withString:str];
 	return [self retain];
 }
+
+- (java_lang_StringBuffer*) delete___int_int: (int) start :(int) end
+{
+    [self deleteCharactersInRange: NSMakeRange(start, end - start)];
+    return [self retain];
+}
+
 @end
 
