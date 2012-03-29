@@ -143,17 +143,17 @@
 	NSRange range;
 	range.location = from;
 	range.length = to - from;
-	return [[NSString alloc] initWithString: [self substringWithRange: range]];
+	return [[java_lang_String alloc] initWithString: [self substringWithRange: range]];
 }
 
 - (java_lang_String*) substring___int: (int) from
 {
-	return [[NSString alloc] initWithString: [self substringFromIndex: from]];
+	return [[java_lang_String alloc] initWithString: [self substringFromIndex: from]];
 }
 
 - (java_lang_String*) toString__
 {
-    return [[NSString alloc] initWithString: self];
+    return [[java_lang_String alloc] initWithString: self];
 }
 
 - (int) indexOf___java_lang_String: (java_lang_String*) s {
