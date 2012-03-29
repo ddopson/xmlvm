@@ -35,4 +35,5 @@ typedef NSMutableArray java_util_LinkedList;
 - (java_lang_Object*) poll__;
 - (java_lang_Object*) remove__;
 - (void) addFirst___java_lang_Object: (java_lang_Object *) item;
+- (java_lang_Object *) getFirst__;
 @end

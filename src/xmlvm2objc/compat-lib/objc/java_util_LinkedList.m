@@ -19,7 +19,7 @@
  */
 
 #import "java_util_LinkedList.h"
-
+#import "java_util_NoSuchElementException.h"
 
 // java.util.LinkedList
 //----------------------------------------------------------------------------
@@ -59,14 +59,26 @@
 
 - (java_lang_Object*) element__
 {
-	// TODO should throw exception if list is empty
-	return [self peek__];
+	if ([self count] < 1) {
+        [[[java_util_NoSuchElementException alloc] __init_java_lang_NoSuchElementException___java_lang_String: @"element called on empty list"] raise];
+	}
+     return [self peek__];
 }
 
 - (java_lang_Object*) remove__
 {
-	// TODO should throw exception if list is empty
-	return [self poll__];
+	if ([self count] < 1) {
+        [[[java_util_NoSuchElementException alloc] __init_java_lang_NoSuchElementException___java_lang_String: @"remove called on empty list"] raise];
+	}
+     return [self poll__];
+}
+
+- (java_lang_Object *) getFirst__;
+{
+	if ([self count] < 1) {
+        [[[java_util_NoSuchElementException alloc] __init_java_lang_NoSuchElementException___java_lang_String: @"getFirst called on empty list"] raise];
+     }
+     [[self objectAtIndex:0] retain];
 }
 
 - (void) addFirst___java_lang_Object:(java_lang_Object *) item
