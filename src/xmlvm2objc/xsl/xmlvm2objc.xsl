@@ -1540,7 +1540,7 @@ int main(int argc, char* argv[])
 <xsl:template match="jvm:instanceof">
   <xsl:text>    _op1.o = _stack[--_sp].o;
     _stack[_sp++].i = _op1.o != JAVA_NULL &amp;&amp; 
-        ([_op1.o isKindOfClass: objc_getClass("</xsl:text><xsl:value-of select="vm:fixname(@type)"/><xsl:text>")] ||
+        ([_op1.o isKindOfClass: [</xsl:text><xsl:value-of select="vm:fixname(@type)"/><xsl:text> class]] ||
          [_op1.o conformsToProtocol: objc_getProtocol("</xsl:text><xsl:value-of select="vm:fixname(@type)"/><xsl:text>")]);
 </xsl:text>
 </xsl:template>
@@ -3682,8 +3682,8 @@ int main(int argc, char* argv[])
   <xsl:text>.o != JAVA_NULL &amp;&amp; 
         ([_r</xsl:text>
   <xsl:value-of select="@vy"/>
-  <xsl:text>.o isKindOfClass: objc_getClass("</xsl:text>
-  <xsl:value-of select="vm:fixname(@value)"/><xsl:text>")] ||
+  <xsl:text>.o isKindOfClass: [</xsl:text>
+  <xsl:value-of select="vm:fixname(@value)"/><xsl:text> class]] ||
          [_r</xsl:text>
   <xsl:value-of select="@vy"/>
   <xsl:text>.o conformsToProtocol: objc_getProtocol("</xsl:text>
