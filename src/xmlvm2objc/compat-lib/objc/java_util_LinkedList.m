@@ -78,7 +78,7 @@
 	if ([self count] < 1) {
         [[[java_util_NoSuchElementException alloc] __init_java_lang_NoSuchElementException___java_lang_String: @"getFirst called on empty list"] raise];
      }
-     [[self objectAtIndex:0] retain];
+     return [[self objectAtIndex:0] retain];
 }
 
 - (void) addFirst___java_lang_Object:(java_lang_Object *) item
