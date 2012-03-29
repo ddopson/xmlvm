@@ -21,6 +21,7 @@
 package org.xmlvm.proc.out;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -124,29 +125,11 @@ public class ObjectiveCOutputProcess extends XmlvmProcessImpl {
         while (i.hasNext()) {
             Object cur = i.next();
             if (cur instanceof Element) {
-                Attribute a = ((Element) cur).getAttribute("type");
-                if (a != null) {
+                if (((Element) cur).getName().equals("reference")) {
+                  Attribute a = ((Element) cur).getAttribute("name");
+                  if (a != null) {
                     seen.add(a.getValue());
-                }
-                a = ((Element) cur).getAttribute("extends");
-                if (a != null) {
-                    seen.add(a.getValue());
-                }
-                a = ((Element) cur).getAttribute("interfaces");
-                if (a != null) {
-                    for (String iface : a.getValue().split(",")) {
-                        seen.add(iface);
-                    }
-                }
-                a = ((Element) cur).getAttribute("class-type");
-                if (a != null) {
-                    seen.add(a.getValue());
-                }
-                if (((Element) cur).getName().equals("const-class")) {
-                    a = ((Element) cur).getAttribute("value");
-                    if (a != null) {
-                        seen.add(a.getValue());
-                    }
+                  }
                 }
             }
         }
@@ -161,6 +144,7 @@ public class ObjectiveCOutputProcess extends XmlvmProcessImpl {
                 toRet.add(t.replace('.', '_').replace('$', '_'));
             }
         }
+        Collections.sort(toRet);
         return toRet;
     }
 }
