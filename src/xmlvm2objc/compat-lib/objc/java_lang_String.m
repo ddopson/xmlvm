@@ -134,7 +134,7 @@
 	return chars;
 }
 
-- (unichar) charAt___int: (int) idx
+- (JAVA_CHAR) charAt___int: (int) idx
 {
 	return [self characterAtIndex: idx];
 }
@@ -242,7 +242,7 @@
 	return [self length];
 }
 
-- (java_lang_String*) replace___char_char:(unichar)from :(unichar)to
+- (java_lang_String*) replace___char_char:(JAVA_CHAR)from :(JAVA_CHAR)to
 {
 	NSString * res = [self stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%C",from] withString:[NSString stringWithFormat:@"%C",to]];
 	return [res retain];
