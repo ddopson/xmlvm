@@ -23,6 +23,9 @@
 
 // java.util.LinkedList
 //----------------------------------------------------------------------------
+@implementation java_util_LinkedList
+@end
+
 @implementation NSMutableArray (cat_java_util_LinkedList)
 
 - (void) __init_java_util_LinkedList__
