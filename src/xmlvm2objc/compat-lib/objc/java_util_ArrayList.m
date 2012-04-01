@@ -21,6 +21,49 @@
 #import "java_util_ArrayList.h"
 #import "java_lang_IllegalArgumentException.h"
 
+@implementation java_util_ArrayList
+- (id) init
+{
+  self->internalArray = [[NSMutableArray alloc] init];
+  return self;
+}
+
+- (NSUInteger) count
+{
+  return [self->internalArray count];
+}
+
+- (id) objectAtIndex: (NSUInteger) index
+{
+  return [self->internalArray objectAtIndex: index];
+}
+
+- (void) insertObject: (id) anObject atIndex: (NSUInteger) index
+{
+  [self->internalArray insertObject: anObject atIndex: index]; 
+}
+
+- (void) removeObjectAtIndex: (NSUInteger) index
+{
+  [self->internalArray removeObjectAtIndex: index];
+}
+
+- (void) addObject: (id) anObject
+{
+  [self->internalArray addObject: anObject];
+}
+
+- (void) removeLastObject;
+{
+  [self->internalArray removeLastObject];
+}
+
+- (void) replaceObjectAtIndex: (NSUInteger) index withObject: (id) anObject
+{
+  [self->internalArray replaceObjectAtIndex: index withObject: anObject];
+}
+@end
+
 @implementation NSArray (cat_java_util_ArrayList)
 
 - (java_util_Iterator*) iterator__

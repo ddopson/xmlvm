@@ -25,7 +25,11 @@
 
 // java.util.ArrayList
 //----------------------------------------------------------------------------
-typedef NSMutableArray java_util_ArrayList;
+//
+// We extend the native NSArray / NSMWutableArray objects with categories so that they respond like Java object
+// We create a new class java_util_ArrayList that HAS_A NSMutableDictionary so that this class can be extended safely (not true of the native classes which are actually "class clusters" and can't be easily extended)
+// java_util_ArrayList actually gets it's Java methods from the categories attached to the native classes
+// This means that NSArray objects can be passed to Java methods and will "appear" to be java_util_ArrayList objects in most respects (major caveat is 'instanceof' and reflection)
 
 @interface NSArray (cat_java_util_ArrayList)
 - (int) size__;
@@ -50,4 +54,21 @@ typedef NSMutableArray java_util_ArrayList;
 - (void) clear__;
 - (XMLVMArray*) toArray__;
 - (XMLVMArray*) toArray___java_lang_Object_ARRAYTYPE:(XMLVMArray*) contents;
+@end
+
+@interface java_util_ArrayList : NSMutableArray
+{
+  @private NSMutableArray* internalArray;
+}
+- (id) init;
+// NSArray Overrides
+- (NSUInteger) count;
+- (id) objectAtIndex: (NSUInteger) index;
+// NSMutableArray Overrides
+- (void) insertObject: (id) anObject atIndex: (NSUInteger) index;
+- (void) removeObjectAtIndex: (NSUInteger) index;
+- (void) addObject: (id) anObject;
+- (void) removeLastObject;
+- (void) replaceObjectAtIndex: (NSUInteger) index withObject: (id) anObject;
+
 @end
