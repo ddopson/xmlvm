@@ -24,11 +24,10 @@
 
 // java.util.IteratorImpl
 //----------------------------------------------------------------------------
-@interface java_util_IteratorImpl : java_lang_Object <java_util_Iterator> {
-
-NSEnumerator* enumerator;
-id nextObj;
-
+@interface java_util_IteratorImpl : java_lang_Object <java_util_Iterator>
+{
+    NSEnumerator* enumerator;
+    id nextObj;
 }
 
 - (id) init :(NSEnumerator*) e;
