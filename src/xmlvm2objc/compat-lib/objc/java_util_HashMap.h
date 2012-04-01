@@ -28,9 +28,16 @@
 
 // java.util.HashMap
 //----------------------------------------------------------------------------
-typedef NSMutableDictionary java_util_HashMap;
+@interface java_util_HashMap : NSMutableDictionary
+{
+  @private NSMutableDictionary * internalDict;
+}
 
-@interface NSMutableDictionary (cat_java_util_HashMap)
+- (NSUInteger) count;
+- (id) objectForKey: (id) aKey;
+- (NSEnumerator *) keyEnumerator;
+- (void) setObject: (id) anObject forKey: (id) aKey;
+- (void) removeObjectForKey: (id) aKey;
 
 - (void) __init_java_util_HashMap__;
 - (void) __init_java_util_HashMap___int: (int) size;

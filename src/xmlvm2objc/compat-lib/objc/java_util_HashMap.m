@@ -25,12 +25,12 @@
 
 // java.util.HashMap
 //----------------------------------------------------------------------------
-@implementation NSMutableDictionary (cat_java_util_HashMap)
+@implementation java_util_HashMap
 
 - (id) init
 {
 	[super init];
-
+     self->internalDict = [[NSMutableDictionary alloc] init];
 	return self;
 }
 
@@ -41,6 +41,39 @@
 - (void) __init_java_util_HashMap___int: (int) size
 {
 }
+
+////////////////////////////////////////////////////////////////////////////////
+// Required Base Class Methods
+////////////////////////////////////////////////////////////////////////////////
+
+- (NSUInteger) count
+{
+  return [self->internalDict count];
+}
+
+- (id) objectForKey: (id) aKey
+{
+  return [self->internalDict objectForKey: aKey];
+}
+
+- (NSEnumerator *) keyEnumerator
+{
+  return [self->internalDict keyEnumerator];
+}
+
+- (void) setObject: (id) anObject forKey: (id) aKey
+{
+  [self->internalDict setObject: anObject forKey: aKey];
+}
+
+- (void) removeObjectForKey: (id) aKey
+{
+  [self->internalDict removeObjectForKey: aKey];
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// Java Methods
+////////////////////////////////////////////////////////////////////////////////
 
 - (void) clear__
 {
