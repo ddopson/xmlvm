@@ -20,7 +20,7 @@
 
 #import "xmlvm.h"
 #import "java_lang_Object.h"
-#import "java_util_Set.h"
+#import "java_util_HashSet.h"
 #import "java_util_Map_Entry.h"
 
 @class java_util_HashMap;
@@ -28,7 +28,7 @@
 
 // java.util.HashMap.EntrySet
 //----------------------------------------------------------------------------
-@interface java_util_HashMap_EntrySet : java_util_Set {
+@interface java_util_HashMap_EntrySet : java_util_HashSet {
 	java_util_HashMap* map;
 }
 
