@@ -21,18 +21,37 @@
 #import "xmlvm.h"
 #import "java_lang_Object.h"
 #import "java_util_IteratorImpl.h"
-
+#import "java_util_Collection.h"
 
 // java.util.Set
 //----------------------------------------------------------------------------
-typedef NSMutableSet java_util_Set;
 @interface NSMutableSet (cat_java_util_Set)
 
 - (java_util_Iterator*) iterator__;
-- (void) clear__;
-- (BOOL) add___java_lang_Object: (java_lang_Object*) obj;
-- (BOOL) remove___java_lang_Object:(java_lang_Object*) obj;
 - (int) size__;
 - (BOOL) isEmpty__;
+- (BOOL) add___java_lang_Object: (java_lang_Object*) obj;
+- (BOOL) addAll___java_util_Collection: (java_util_Collection*) c;
+- (BOOL) remove___java_lang_Object:(java_lang_Object*) obj;
+- (void) clear__;
+- (BOOL) contains___java_lang_Object: (java_lang_Object*) o;
 
 @end
+
+@interface java_util_Set : NSMutableSet
+{
+  @private NSMutableSet* internalSet;
+}
+
+- (id) init;
+// NSSet Overrides
+- (NSUInteger) count;
+- (id) member: (id) object;
+- (NSEnumerator *) objectEnumerator;
+// NSMutableSet Overrides
+- (void) addObject: (id) object;
+- (void) removeObject: (id) object;
+
+@end
+
+
