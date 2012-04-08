@@ -82,6 +82,11 @@ static java_lang_Class* primitiveLongClass;
 	return number;
 }
 
++ (java_lang_Long*) valueOf___java_lang_String: (java_lang_String*) str
+{
+  return [java_lang_Long valueOf___long: [self parseLong___java_lang_String: str]];
+}
+
 + (JAVA_LONG) parseLong___java_lang_String: (java_lang_String *) str
 {
 	JAVA_LONG result = 0;

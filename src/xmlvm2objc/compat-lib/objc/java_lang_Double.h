@@ -43,5 +43,6 @@ double number;
 + (double) parseDouble___java_lang_String: (java_lang_String *) str;
 + (java_lang_String*) toString___double: (double) d;
 + (java_lang_Double*) valueOf___double: (double) d;
++ (java_lang_Double*) valueOf___java_lang_String: (java_lang_String*) str;
 
 @end

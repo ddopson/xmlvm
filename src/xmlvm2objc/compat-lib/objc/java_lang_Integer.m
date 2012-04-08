@@ -86,6 +86,11 @@ static java_lang_Class* primitiveIntClass;
 	return number;
 }
 
++ (java_lang_Integer*) valueOf___java_lang_String: (java_lang_String*) str
+{
+  return [java_lang_Integer valueOf___int: [self parseInteger___java_lang_String: str]];
+}
+
 + (int) parseInt___java_lang_String: (java_lang_String *) str
 {
 	int result = 0;

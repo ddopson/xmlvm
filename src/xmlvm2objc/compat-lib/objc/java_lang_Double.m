@@ -79,6 +79,11 @@ static java_lang_Class* primitiveDoubleClass;
 	return number;
 }
 
++ (java_lang_Double*) valueOf___java_lang_String: (java_lang_String*) str
+{
+  return [java_lang_Double valueOf___double: [self parseDouble___java_lang_String: str]];
+}
+
 + (double) parseDouble___java_lang_String: (java_lang_String *) str
 {
 	return atof([str UTF8String]);
