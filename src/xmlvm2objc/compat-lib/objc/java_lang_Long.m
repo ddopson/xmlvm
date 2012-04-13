@@ -77,6 +77,11 @@ static java_lang_Class* primitiveLongClass;
 	return [anObject isKindOfClass: [java_lang_Long class]] && ((java_lang_Long*) anObject)-> number == number;
 }
 
+- (int) intValue__
+{
+	return number;
+}
+
 - (JAVA_LONG) longValue__
 {
 	return number;

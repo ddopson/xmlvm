@@ -37,6 +37,7 @@ JAVA_LONG number;
 - (NSUInteger) hash;
 - (void) __init_java_lang_Long___long :(JAVA_LONG) l;
 - (BOOL) isEqual:(id)anObject;
+- (int) intValue__;
 - (JAVA_LONG) longValue__;
 + (JAVA_LONG) parseLong___java_lang_String: (java_lang_String *) str;
 + (JAVA_LONG) parseLong___java_lang_String_int: (java_lang_String*) str :(int) radix;
