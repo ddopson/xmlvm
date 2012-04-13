@@ -46,11 +46,11 @@
 {
 }
 
-- (int) read__
-{
-	[self xmlvmSubclassResponsibility];
-	return -1;
-}
+// - (int) read__
+// {
+// 	[self xmlvmSubclassResponsibility];
+// 	return -1;
+// }
 
 - (int) read___byte_ARRAYTYPE: (XMLVMArray *) buffer
 {

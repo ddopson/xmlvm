@@ -33,54 +33,54 @@
 	return self;
 }
 
-- (id) copyWithZone:(NSZone *)zone
-{
-    [self xmlvmSubclassResponsibility];
-}
+// - (id) copyWithZone:(NSZone *)zone
+// {
+//     [self xmlvmSubclassResponsibility];
+// }
 
-- (NSUInteger) hash
-{
-    [self xmlvmSubclassResponsibility];
-}
+// - (NSUInteger) hash
+// {
+//     [self xmlvmSubclassResponsibility];
+// }
 
-- (BOOL)isEqual:(id)anObject
-{
-    [self xmlvmSubclassResponsibility];
-}
+// - (BOOL)isEqual:(id)anObject
+// {
+//     [self xmlvmSubclassResponsibility];
+// }
 
-- (unsigned char) byteValue__
-{
-    [self xmlvmSubclassResponsibility];
-}
+// - (unsigned char) byteValue__
+// {
+//     [self xmlvmSubclassResponsibility];
+// }
 
-- (double) doubleValue__
-{
-    [self xmlvmSubclassResponsibility];
-}
+// - (double) doubleValue__
+// {
+//     [self xmlvmSubclassResponsibility];
+// }
 
-- (float) floatValue__
-{
-    [self xmlvmSubclassResponsibility];
-}
+// - (float) floatValue__
+// {
+//     [self xmlvmSubclassResponsibility];
+// }
 
-- (int) intValue__
-{
-    [self xmlvmSubclassResponsibility];
-}
+// - (int) intValue__
+// {
+//     [self xmlvmSubclassResponsibility];
+// }
 
-- (long) longValue__
-{
-    [self xmlvmSubclassResponsibility];
-}
+// - (long) longValue__
+// {
+//     [self xmlvmSubclassResponsibility];
+// }
 
-- (short) shortValue__
-{
-    [self xmlvmSubclassResponsibility];
-}
+// - (short) shortValue__
+// {
+//     [self xmlvmSubclassResponsibility];
+// }
 
-- (java_lang_String*) toString__
-{
-    [self xmlvmSubclassResponsibility];
-}
+// - (java_lang_String*) toString__
+// {
+//     [self xmlvmSubclassResponsibility];
+// }
 
 @end

@@ -29,10 +29,10 @@
 {
 }
 
-- (void) write___int: (int) i
-{
-	[self xmlvmSubclassResponsibility];
-}
+// - (void) write___int: (int) i
+// {
+// 	[self xmlvmSubclassResponsibility];
+// }
 
 - (void) write___byte_ARRAYTYPE: (XMLVMArray *) data
 {

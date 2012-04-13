@@ -75,10 +75,10 @@
 	return [self read___char_ARRAYTYPE_int_int: buffer:	0: [buffer count]];
 }
 
-- (int) read___char_ARRAYTYPE_int_int: (XMLVMArray *) buffer: (int) pos: (int) len
-{
-	[self xmlvmSubclassResponsibility];
-}
+// - (int) read___char_ARRAYTYPE_int_int: (XMLVMArray *) buffer: (int) pos: (int) len
+// {
+// 	[self xmlvmSubclassResponsibility];
+// }
 
 - (bool) ready__
 {
@@ -139,10 +139,10 @@
 	@throw ex;
 }
 
-- (void) close__
-{
-	[self xmlvmSubclassResponsibility];
-}	
+// - (void) close__
+// {
+// 	[self xmlvmSubclassResponsibility];
+// }	
 
 - (void)dealloc {
 	// In order to avoid cyclic dependency, self->lock was NOT retained during initialization if it was equal to self.

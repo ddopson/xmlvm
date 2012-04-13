@@ -60,25 +60,25 @@
 }
 
 
-- (void) close__
-{
-	[self xmlvmSubclassResponsibility];
-}
+// - (void) close__
+// {
+// 	[self xmlvmSubclassResponsibility];
+// }
 
-- (void) flush__
-{
-	[self xmlvmSubclassResponsibility];
-}
+// - (void) flush__
+// {
+// 	[self xmlvmSubclassResponsibility];
+// }
 
 - (void) write___char_ARRAYTYPE: (XMLVMArray *) cbuf
 {
 	[self write___char_ARRAYTYPE_int_int:cbuf:0:[cbuf count]];
 }
 
-- (void) write___char_ARRAYTYPE_int_int: (XMLVMArray *) cbuf: (int) off: (int) len
-{
-	[self xmlvmSubclassResponsibility];
-}
+// - (void) write___char_ARRAYTYPE_int_int: (XMLVMArray *) cbuf: (int) off: (int) len
+// {
+// 	[self xmlvmSubclassResponsibility];
+// }
 
 - (void) write___int: (int) c
 {
