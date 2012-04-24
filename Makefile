@@ -1,8 +1,4 @@
 
-.PHONY:
-default: build
-
-
 .PHONY: build
 build: build/.make.xmlvm
 build/.make.xmlvm: $(shell find src/xmlvm src/xmlvm2objc)
