@@ -21,19 +21,16 @@
 #import "xmlvm.h"
 #import "java_lang_Object.h"
 #import "java_lang_String.h"
-#import "java_io_Appendable.h"
-#import "java_io_Closeable.h"
-#import "java_io_Flushable.h"
+#import "java_io_Writer.h"
 
-@interface java_io_Writer : java_lang_Object <java_io_Appendable, java_io_Closeable, java_io_Flushable> {
-	java_lang_Object* lock;
-	XMLVMArray* writeBuffer;
+@interface java_io_StringWriter : java_io_Writer {
+  NSMutableString* data;
 }
 
 - (java_lang_Object*) getProtectedLock;
 
-- (void) __init_java_io_Writer__;
-- (void) __init_java_io_Writer__java_lang_Object: (java_lang_Object*)lockObject;
+- (void) __init_java_io_StringWriter__;
+- (void) __init_java_io_StringWriter__java_lang_Object: (java_lang_Object*)lockObject;
 
 - (java_io_Writer*) append___char: (JAVA_CHAR) c;
 - (java_io_Writer*) append___java_lang_CharSequence: (java_lang_CharSequence *) csq;

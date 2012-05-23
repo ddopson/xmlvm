@@ -80,6 +80,24 @@
 // 	[self xmlvmSubclassResponsibility];
 // }
 
+- (java_io_Writer*) append___char: (JAVA_CHAR) c
+{
+  [self write___int: c];
+  return self;
+}
+
+- (java_io_Writer*) append___java_lang_CharSequence: (java_lang_CharSequence *) csq;
+{
+  [self write___java_lang_String: csq];
+  return self;
+}
+
+- (java_io_Writer*) append___java_lang_CharSequence_int_int: (java_lang_CharSequence *) csq: (int) start: (int) end;
+{
+  [self write___java_lang_String_int_int: csq: start: end];
+  return self;
+}
+
 - (void) write___int: (int) c
 {
 	int writeBufferSize = 1024;
