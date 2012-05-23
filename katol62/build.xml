@@ -1,0 +1,20 @@
+<project>
+<target name="trim">
+
+<taskdef
+  name="trimmer"
+  classpath="${xmlvm_path}"
+  classname="org.xmlvm.ant.Trimmer"
+  onerror="fail"/>
+
+<trimmer
+  home="${home}"
+  seed="1"
+  shorten="false"
+  cleanup="yes"
+  template="template1234"
+  target="iphone"
+  resources="${resources}"
+/>
+</target>
+</project>
