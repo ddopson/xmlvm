@@ -33,6 +33,7 @@ build/.make.trim: build/.make.xmlvm
 .PHONY: xcodebuild
 xcodebuild: build/.make.xcodebuild
 build/.make.xcodebuild:
+	rsync objc/* build/xcode/build/xcode/src/trim/
 	cd build/xcode/dist; xcodebuild -parallelizeTargets -sdk iphonesimulator -configuration Debug | tee $(CURDIR)/xcodebuild.log
 	@cat $(CURDIR)/xcodebuild.log | ack '(?<= )(error)(?=: )' || true
 
