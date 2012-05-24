@@ -50,5 +50,4 @@ java: javac
 run:
 	@echo > stderr.log
 	@$(IOS_SIM) launch build/xcode/dist/build/Debug-iphonesimulator/HelloResources.app --stderr stderr.log --family iphone --setenv NSZombieEnabled=YES --setenv NSDebugEnabled=YES &
-	@osascript -e "tell application \"iPhone Simulator\" to activate"
 	@tail -n10000 -f stderr.log
