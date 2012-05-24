@@ -41,6 +41,9 @@ build/.make.xcodebuild:
 clean:
 	rm -rf build
 
+.PHONY: java
+java: javac
+	java -cp build/classes/ mypkg.Foo
 
 .PHONY: run
 run:
