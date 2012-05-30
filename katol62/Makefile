@@ -44,7 +44,7 @@ clean:
 
 .PHONY: java
 java: javac
-	java -cp build/classes/ mypkg.Foo
+	java -cp build/classes/ pkg.Main
 
 .PHONY: run
 run:
