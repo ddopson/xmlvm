@@ -30,6 +30,9 @@
 + (java_io_PrintStream*) _GET_out;
 + (void) _PUT_out: (java_io_PrintStream*) v;
 + (void) setOut___java_io_PrintStream: (java_io_PrintStream*) ps;
++ (java_io_PrintStream*) _GET_err;
++ (void) _PUT_err: (java_io_PrintStream*) v;
++ (void) setErr___java_io_PrintStream: (java_io_PrintStream*) ps;
 + (void) _PUT_in: (java_io_InputStream*) v;
 + (java_io_InputStream*) _GET_in;
 + (JAVA_LONG) currentTimeMillis__;
