@@ -43,43 +43,25 @@
 
 @end
 
+static void runTest(NSString* name, Class class, SEL method) {
+  @try {
+    [class performSelector: method withObject: JAVA_NULL];
+    NSLog(@"%@ PASS", name);
+  } @catch (NSException* e) {
+    id stack = [e callStackSymbols];
+    NSLog(@"%@ FAIL - %@\n%@", name, e, stack);
+    [stack release];
+  }
+}
+
+
 int main(int argc, char* argv[])
 {
-    @try {
-      [pkg_BitwiseConversion testmain___java_lang_String_ARRAYTYPE: JAVA_NULL];
-      NSLog(@"BitwiseConversion PASS");
-    } @catch (NSException* e) {
-      NSLog(@"BitwiseConversion FAIL - %@", [e reason]);
-    }
-    
-    @try {
-      [pkg_Constants testmain___java_lang_String_ARRAYTYPE: JAVA_NULL];
-      NSLog(@"Constants PASS");
-    } @catch (NSException* e) {
-      NSLog(@"Constants FAIL - %@", e);
-    }
-    
-    @try {
-      [pkg_Extrema testmain___java_lang_String_ARRAYTYPE: JAVA_NULL];
-      NSLog(@"Extrema PASS");
-    } @catch (NSException* e) {
-      NSLog(@"Extrema FAIL - %@", e);
-    }
-    
-    @try {
-      [pkg_NaNInfinityParsing testmain___java_lang_String_ARRAYTYPE: JAVA_NULL];
-      NSLog(@"NaNInfinityParsing PASS");
-    } @catch (NSException* e) {
-      NSLog(@"NaNInfinityParsing FAIL - %@", e);
-    }
-    
-    @try {
-      [pkg_ParseFloat testmain___java_lang_String_ARRAYTYPE: JAVA_NULL];
-      NSLog(@"ParseFloat PASS");
-    } @catch (NSException* e) {
-      NSLog(@"ParseFloat FAIL - %@", e);
-    }
-    
+    runTest(@"BitwiseConversion", [pkg_BitwiseConversion class], @selector(testmain___java_lang_String_ARRAYTYPE:));
+    runTest(@"Constants", [pkg_Constants class], @selector(testmain___java_lang_String_ARRAYTYPE:));
+    runTest(@"Extrema", [pkg_Extrema class], @selector(testmain___java_lang_String_ARRAYTYPE:));
+    runTest(@"NaNInfinityParsing", [pkg_NaNInfinityParsing class], @selector(testmain___java_lang_String_ARRAYTYPE:));
+    runTest(@"ParseFloat", [pkg_ParseFloat class], @selector(testmain___java_lang_String_ARRAYTYPE:));
 }
   
   
