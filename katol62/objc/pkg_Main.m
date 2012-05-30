@@ -61,7 +61,18 @@ int main(int argc, char* argv[])
     runTest(@"Constants", [pkg_Constants class], @selector(testmain___java_lang_String_ARRAYTYPE:));
     runTest(@"Extrema", [pkg_Extrema class], @selector(testmain___java_lang_String_ARRAYTYPE:));
     runTest(@"NaNInfinityParsing", [pkg_NaNInfinityParsing class], @selector(testmain___java_lang_String_ARRAYTYPE:));
-    runTest(@"ParseFloat", [pkg_ParseFloat class], @selector(testmain___java_lang_String_ARRAYTYPE:));
+ //   runTest(@"ParseFloat", [pkg_ParseFloat class], @selector(testmain___java_lang_String_ARRAYTYPE:));
+    runTest(@"ParseFloat/rudimentary", [pkg_ParseFloat class], @selector(rudimentaryTest__));
+    runTest(@"ParseFloat/good", [pkg_ParseFloat class], @selector(testParseGood__));
+    runTest(@"ParseFloat/paddedGood", [pkg_ParseFloat class], @selector(testParsePaddedGood__));
+    runTest(@"ParseFloat/bad", [pkg_ParseFloat class], @selector(testParseBad__));
+    runTest(@"ParseFloat/paddedBad", [pkg_ParseFloat class], @selector(testParsePaddedBad__));
+
+
+    
+
+
+    
 }
   
   

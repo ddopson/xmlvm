@@ -200,6 +200,22 @@ public class ParseFloat {
         }
     }
 
+    public static void testParseGood() throws Exception {
+        testParsing(goodStrings, false);
+    }
+    
+    public static void testParsePaddedGood() throws Exception {
+        testParsing(paddedGoodStrings, false);
+    }
+    
+    public static void testParseBad() throws Exception {
+        testParsing(badStrings, true);
+    }
+    
+    public static void testParsePaddedBad() throws Exception {
+        testParsing(paddedBadStrings, true);
+    }
+    
     public static void testmain(String[] args) throws Exception {
         rudimentaryTest();
 
