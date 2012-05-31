@@ -47,5 +47,6 @@ float number;
 + (int) floatBitsToInt___float: (float) f;
 + (int) isNaN___float: (float) i;
 + (int) isInfinite___float: (float) i;
++ (int) floatToIntBits___float: (float) f;
 
 @end

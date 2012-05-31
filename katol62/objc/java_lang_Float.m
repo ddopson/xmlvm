@@ -104,9 +104,12 @@ static java_lang_Class* primitiveFloatClass;
     return f;
 }
 
-+ (int) floatToIntBits___float: (float) f
+
++ (JAVA_INT) floatToIntBits___float: (float) f
 {
-	return *(int *)(float *)&f;
+//	return *(int *)(float *)&x;
+    return (JAVA_INT) f;
+
 }
 
 + (float) intBitsToFloat___int: (int) i
