@@ -190,9 +190,9 @@
     _r4.i = _r4.i + 1;
     goto label2;
     label16:;
-    _r4.f = Infinity;
+    _r4.f = INFINITY;
     _r4.i = [java_lang_Float floatToIntBits___float:_r4.f];
-    _r6.i = Infinity;// 2139095040;
+    _r6.i = 2139095040;
     if (_r4.i == _r6.i) goto label63;
     _r4.i = _r5.i + 1;
     _r1.o = [java_lang_System _GET_err];
@@ -200,9 +200,9 @@
     _r2.o = @"Bad conversion for +infinity.";
     [((java_io_PrintStream*) _r1.o) println___java_lang_String:_r2.o];
     label35:;
-    _r5.f = -Infinity;
+    _r5.f = -INFINITY;
     _r5.i = [java_lang_Float floatToIntBits___float:_r5.f];
-    _r6.i = -Infinity;//-8388608;
+    _r6.i = -8388608;
     if (_r5.i == _r6.i) goto label54;
     _r4.i = _r4.i + 1;
     [_r1.o release];

@@ -130,8 +130,10 @@ static java_lang_Class* primitiveFloatClass;
 
 + (JAVA_INT) floatToIntBits___float: (float) f
 {
-    long ff = (long)f;
-	return (JAVA_INT)*(int *)(long *)&ff;
+    return (JAVA_INT)*(int *)(long *)&f;
+
+//    long ff = (long)f;
+//	return (JAVA_INT)*(int *)(long *)&ff;
 //    NSLog(@"%d", (JAVA_INT) f);
 //    return (JAVA_INT) f;
 
