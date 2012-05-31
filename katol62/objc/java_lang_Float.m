@@ -20,6 +20,8 @@
 
 #import "java_lang_Float.h"
 
+//static float NaN = sqrt (-1);
+
 @interface PrimitiveFloat : java_lang_Object
 @end
 
@@ -85,7 +87,28 @@ static java_lang_Class* primitiveFloatClass;
 
 + (float) parseFloat___java_lang_String: (java_lang_String *) str
 {
-	return strtof([str UTF8String], NULL);
+//	return strtof([str UTF8String], NULL);
+//    NSLog(@"str = %@", (NSString *)str);
+    
+    NSString *newstr = (NSString *)str;
+    
+    if ([newstr floatValue]==0)
+    {
+        if ([str isEqualToString:@"NaN"] || [str isEqualToString:@"+NaN"] || [str isEqualToString:@"-NaN"]) {
+            return NaN;
+        }
+        else if ([str isEqualToString:@"Infinity"] || [str isEqualToString:@"+Infinity"]) {
+            return INFINITY;//1.0 / 0.0;
+        }
+        else if ([str isEqualToString:@"-Infinity"]) {
+            return -INFINITY;//log (0);
+        }
+        else {
+            return NAN;// strtof([str UTF8String], NULL);
+        }
+        
+    }
+	return [(NSString *)str floatValue];
 }
 
 + (java_lang_Class*) _GET_TYPE
@@ -107,8 +130,10 @@ static java_lang_Class* primitiveFloatClass;
 
 + (JAVA_INT) floatToIntBits___float: (float) f
 {
-//	return *(int *)(float *)&x;
-    return (JAVA_INT) f;
+    long ff = (long)f;
+	return (JAVA_INT)*(int *)(long *)&ff;
+//    NSLog(@"%d", (JAVA_INT) f);
+//    return (JAVA_INT) f;
 
 }
 
