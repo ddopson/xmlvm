@@ -89,29 +89,31 @@ static java_lang_Class* primitiveFloatClass;
 {
 //	return strtof([str UTF8String], NULL);
 //    NSLog(@"str = %@", (NSString *)str);
+    NSCharacterSet* whitespace = [NSCharacterSet characterSetWithCharactersInString: @" \t\n\r\f\001\013\037"];
+    NSString* trimmed = [str stringByTrimmingCharactersInSet:whitespace];
     
-    NSString *newstr = (NSString *)str;
-    
-    if ([newstr floatValue]==0)
+   
+    float fval = [trimmed floatValue];
+    if (fval==0)
     {
-        if ([str isEqualToString:@"NaN"] || [str isEqualToString:@"+NaN"] || [str isEqualToString:@"-NaN"]) {
+        if ([trimmed isEqualToString:@"NaN"] || [trimmed isEqualToString:@"+NaN"] || [trimmed isEqualToString:@"-NaN"]) {
             return NaN;
         }
-        else if ([str isEqualToString:@"Infinity"] || [str isEqualToString:@"+Infinity"]) {
+        else if ([trimmed isEqualToString:@"Infinity"] || [trimmed isEqualToString:@"+Infinity"]) {
             return INFINITY;//1.0 / 0.0;
         }
-        else if ([str isEqualToString:@"-Infinity"]) {
+        else if ([trimmed isEqualToString:@"-Infinity"]) {
             return -INFINITY;//log (0);
         }
         else {
             java_lang_NumberFormatException *ex = [[[java_lang_NumberFormatException alloc] init] autorelease];
             [ex __init_java_lang_NumberFormatException__];
             @throw ex;
-//            return NAN;// strtof([str UTF8String], NULL);
+//            return NAN;// trimmedtof([trimmed UTF8String], NULL);
         }
         
     }
-	return [(NSString *)str floatValue];
+	return fval;
 }
 
 + (java_lang_Class*) _GET_TYPE
