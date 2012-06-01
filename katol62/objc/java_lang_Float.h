@@ -21,6 +21,8 @@
 #import "xmlvm.h"
 #import "java_lang_Number.h"
 #import "java_lang_String.h"
+#import "java_lang_NumberFormatException.h"
+
 
 // java.lang.Float
 //----------------------------------------------------------------------------

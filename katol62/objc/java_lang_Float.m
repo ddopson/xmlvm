@@ -104,7 +104,10 @@ static java_lang_Class* primitiveFloatClass;
             return -INFINITY;//log (0);
         }
         else {
-            return NAN;// strtof([str UTF8String], NULL);
+            java_lang_NumberFormatException *ex = [[[java_lang_NumberFormatException alloc] init] autorelease];
+            [ex __init_java_lang_NumberFormatException__];
+            @throw ex;
+//            return NAN;// strtof([str UTF8String], NULL);
         }
         
     }

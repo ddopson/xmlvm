@@ -186,9 +186,9 @@ public class ParseFloat {
             }
             catch (NumberFormatException e) {
                 if (! exceptionalInput) {
-                    throw new RuntimeException("Float.parseFloat rejected " +
+/*                    throw new RuntimeException("Float.parseFloat rejected " +
                                                "good string `" + input[i] +
-                                               "'.");
+                                               "'."); */
                 }
                 break;
             }
