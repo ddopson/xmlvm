@@ -1,6 +1,5 @@
-package pkg;
 /*
- * Copyright (c) 2001, 2005, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 1998, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -24,23 +23,36 @@ package pkg;
 
 /*
  * @test
- * @bug 4408489 4826652
- * @summary Testing values of Float.{MIN_VALUE, MIN_NORMAL, MAX_VALUE}
- * @author Joseph D. Darcy
+ * @bug 4124769
+ * @summary Test ignore-case comparison
+ *
  */
+package pkg;
 
-public class Extrema {
+
+public class CompareIC {
+
     public static void testmain(String[] args) throws Exception {
-        if (Float.MIN_VALUE != Float.intBitsToFloat(0x1))
-            throw new RuntimeException("Float.MIN_VALUE is not equal "+
-                                       "to intBitsToFloat(0x1).");
+        String test1 = "Tess";
+        String test2 = "Test";
+        String test3 = "Tesu";
+        CompareIC comparer = new CompareIC();
 
-        if (Float.MIN_NORMAL != Float.intBitsToFloat(0x00800000))
-            throw new RuntimeException("Float.MIN_NORMAL is not equal "+
-                                       "to intBitsToFloat(0x00800000).");
-
-        if (Float.MAX_VALUE != Float.intBitsToFloat(0x7f7fffff))
-            throw new RuntimeException("Float.MAX_VALUE is not equal "+
-                                       "to intBitsToFloat(0x7f7fffff).");
+        comparer.testTriplet(test1, test2, test3);
+        test2 = test2.toUpperCase();
+        comparer.testTriplet(test1, test2, test3);
+        test2 = test2.toLowerCase();
+        comparer.testTriplet(test1, test2, test3);
     }
+
+    private void testTriplet(String one, String two, String three)
+        throws Exception {
+            if (one.compareToIgnoreCase(two) > 0)
+                throw new RuntimeException("Comparison failure1");
+            if (two.compareToIgnoreCase(three) > 0)
+                throw new RuntimeException("Comparison failure2");
+            if (three.compareToIgnoreCase(one) < 0)
+                throw new RuntimeException("Comparison failure3");
+    }
+
 }
