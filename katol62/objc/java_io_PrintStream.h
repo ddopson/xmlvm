@@ -21,6 +21,7 @@
 #import "xmlvm.h"
 #import "java_lang_Object.h"
 #import "java_io_OutputStream.h"
+#import "java_lang_String.h"
 
 
 @interface java_io_PrintStream : java_lang_Object {
@@ -50,5 +51,6 @@
 - (void) print___byte: (char) b;
 - (void) print___short: (short) s;
 - (void) print___long: (JAVA_LONG) i;
+- (java_lang_String *) format___java_lang_String_java_lang_Object_ARRAYTYPE:(java_lang_String *)format :(XMLVMArray *)a;
 
 @end

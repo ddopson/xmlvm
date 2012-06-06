@@ -28,7 +28,7 @@
 
 - (void) __init_java_lang_String___java_lang_String: (java_lang_String*) str
 {
-	[self setString: str];
+	[self setString: (NSString *)str];
 }
 
 - (void) __init_java_lang_String___byte_ARRAYTYPE: (XMLVMArray*) bytes
@@ -62,32 +62,32 @@
 + (java_lang_String*) valueOf___int: (int) i
 {
 	NSNumber* n = [NSNumber numberWithInt: i];
-	return [[NSString alloc] initWithString: [n stringValue]];
+	return (java_lang_String*)[[NSString alloc] initWithString: [n stringValue]];
 }
 
 + (java_lang_String*) valueOf___long: (JAVA_LONG) l {
 	NSNumber* n = [NSNumber numberWithLong: l];
-	return [[NSString alloc] initWithString: [n stringValue]];
+	return (java_lang_String*)[[NSString alloc] initWithString: [n stringValue]];
 }
 
 + (java_lang_String*) valueOf___float: (float) f
 {
 	NSNumber* n = [NSNumber numberWithFloat: f];
-	return [[NSString alloc] initWithString: [n stringValue]];
+	return (java_lang_String*)[[NSString alloc] initWithString: [n stringValue]];
 }
 
 + (java_lang_String*) valueOf___double: (double) d
 {
 	NSNumber* n = [NSNumber numberWithDouble: d];
-	return [[NSString alloc] initWithString: [n stringValue]];
+	return (java_lang_String*)[[NSString alloc] initWithString: [n stringValue]];
 }
 
 + (java_lang_String*) valueOf___java_lang_Object: (java_lang_Object*) o
 {
 	if ([o isKindOfClass: [NSString class]] == YES) {
-		return [[NSString alloc] initWithString: (NSString*) o];
+		return (java_lang_String*)[[NSString alloc] initWithString: (NSString*) o];
 	}
-	return [[NSString alloc] initWithString: @"Unkown type in valueOf___java_lang_Object"];
+	return (java_lang_String*)[[NSString alloc] initWithString: @"Unkown type in valueOf___java_lang_Object"];
 }
 
 - (void) getChars___int_int_char_ARRAYTYPE_int:(int)srcBegin:(int)srcEnd:(XMLVMArray*)dst:(int)dstBegin {
@@ -151,12 +151,12 @@
 
 - (int) contains___java_lang_CharSequence: (java_lang_CharSequence*) str
 {
-	return [self rangeOfString:str].location != NSNotFound;
+	return [self rangeOfString:(NSString *)str].location != NSNotFound;
 }
 
 - (int) endsWith___java_lang_String: (java_lang_String*) s
 {
-	return [self hasSuffix: s] == YES ? 1 : 0;
+	return [self hasSuffix: (NSString *)s] == YES ? 1 : 0;
 }
 
 - (java_lang_String*) substring___int_int: (int) from :(int) to
@@ -174,7 +174,7 @@
 
 - (int) compareTo___java_lang_String: (java_lang_String*) str
 {
-	return [self compare: str];
+	return [self compare: (NSString *)str];
 }
 
 - (int) equals___java_lang_Object: (java_lang_Object*) o
@@ -187,7 +187,7 @@
 
 - (int) equalsIgnoreCase___java_lang_String: (java_lang_String*) s
 {
-	return [self caseInsensitiveCompare: s] == 0;
+	return [self caseInsensitiveCompare: (NSString *)s] == 0;
 }
 
 - (java_lang_String*) toString__
@@ -206,11 +206,11 @@
  }
 
 - (int) startsWith___java_lang_String: (java_lang_String*) s {
-	return [self hasPrefix: s] == YES ? 1 : 0;
+	return [self hasPrefix: (NSString *)s] == YES ? 1 : 0;
 }
 
 - (int) lastIndexOf___java_lang_String: (java_lang_String*) s {
-	NSRange range = [self rangeOfString: s options:NSBackwardsSearch];
+	NSRange range = [self rangeOfString: (NSString *)s options:NSBackwardsSearch];
 	if (range.location == NSNotFound) {
 		return -1;
 	}
@@ -230,7 +230,7 @@
 }
 	
 - (int) indexOf___java_lang_String: (java_lang_String*) s {
-	NSRange range = [self rangeOfString: s];
+	NSRange range = [self rangeOfString: (NSString *)s];
 	if (range.location == NSNotFound) {
 		return -1;
 	}
@@ -245,13 +245,13 @@
 - (java_lang_String*) replace___char_char:(JAVA_CHAR)from :(JAVA_CHAR)to
 {
 	NSString * res = [self stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%C",from] withString:[NSString stringWithFormat:@"%C",to]];
-	return [res retain];
+	return (java_lang_String*)[res retain];
 }
 
 - (java_lang_String*) replace___java_lang_CharSequence_java_lang_CharSequence:(java_lang_CharSequence*)from :(java_lang_CharSequence*)to
 {
-	NSString * res = [self stringByReplacingOccurrencesOfString:from withString:to];
-	return [res retain];
+	NSString * res = [self stringByReplacingOccurrencesOfString:(NSString *)from withString:(NSString *)to];
+	return (java_lang_String*)[res retain];
 }
 
 - (java_lang_String*) replaceFirst___java_lang_String_java_lang_String:(java_lang_String*)regex :(java_lang_String*)replacement
@@ -260,7 +260,7 @@
 #define NSRegularExpressionSearch NSLiteralSearch
 	NSLog(@"String.replaceFirst() not supported");
 #endif
-	NSRange found = [self rangeOfString:regex options:NSRegularExpressionSearch];
+	NSRange found = [self rangeOfString:(NSString *)regex options:NSRegularExpressionSearch];
 	if (found.location == NSNotFound) {
 		return_XMLVM(self);
 	}
@@ -268,7 +268,7 @@
 					  [self substringToIndex:found.location],
 					  replacement,
 					  [self substringFromIndex:(found.location+found.length)]];
-	return [res retain];
+	return (java_lang_String*)[res retain];
 }
 
 - (java_lang_String*) replaceAll___java_lang_String_java_lang_String :(java_lang_String*)a :(java_lang_String*)b {
@@ -277,8 +277,8 @@
 	range.location = 0;
 	range.length = [m length__];
 
-	[m replaceOccurrencesOfString:a withString:b options:(NSLiteralSearch) range:range];
-	return m;
+	[m replaceOccurrencesOfString:(NSString *)a withString:(NSString *)b options:(NSLiteralSearch) range:range];
+	return (java_lang_String*)m;
 }
 
 - (int) matches___java_lang_String:(java_lang_String*)regex
@@ -287,13 +287,13 @@
 //#define NSRegularExpressionSearch NSLiteralSearch
 //	NSLog(@"String.replaceFirst() not supported");
 //#endif
-	NSRange found = [self rangeOfString:regex options:NSRegularExpressionSearch];
+	NSRange found = [self rangeOfString:(NSString *)regex options:NSRegularExpressionSearch];
 	return found.location != NSNotFound;
 }
 
 - (XMLVMArray*) split___java_lang_String :(java_lang_String*)s
 {
-	NSArray *chunks = [self componentsSeparatedByString:s];
+	NSArray *chunks = [self componentsSeparatedByString:(NSString *)s];
 	int length = [chunks count];
 
 	XMLVMArray *result = [XMLVMArray createSingleDimensionWithType: 0 andSize: length]; // object reference array
@@ -315,7 +315,7 @@
 	while (st < len && [self charAt___int:off + len - 1] <= ' ') {
 		len--;
 	}
-	return (st > 0 || len < [self length]) ? [self substring___int_int:st:len] : [self retain];
+	return (st > 0 || len < [self length]) ? (java_lang_String*)[self substring___int_int:st:len] : (java_lang_String*)[self retain];
 }
 
 - (int) isEmpty__

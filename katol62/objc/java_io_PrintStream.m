@@ -158,4 +158,19 @@
 	[self writeString:[NSString stringWithFormat:@"%qi", l]];
 }
 
+- (java_lang_String *) format___java_lang_String_java_lang_Object_ARRAYTYPE:(java_lang_String *)format :(XMLVMArray *)a;
+{
+    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+    NSMutableArray *ar = [[[NSMutableArray alloc] init] autorelease];
+    
+    for (int i=0; i<[a count]; i++)
+    {
+        id object = [a objectAtIndex:i];
+        [ar addObject:object];
+    }
+	return (java_lang_String *)[NSString stringWithFormat:(NSString *)format, [(NSArray *)ar componentsJoinedByString:@" "]];
+    [pool drain];
+
+}
+
 @end
