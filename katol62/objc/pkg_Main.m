@@ -9,6 +9,7 @@
 
 
 #import "pkg_Main.h"
+#import "pkg_BitwiseConversion.h"
 #import "org_xmlvm_iphone_NSObject.h"
 
 
@@ -63,7 +64,14 @@ int main(int argc, char* argv[])
     runTest(@"ToHexString", [pkg_ToHexString class], @selector(testmain___java_lang_String_ARRAYTYPE));
     runTest(@"ToString", [pkg_ToString class], @selector(testmain___java_lang_String_ARRAYTYPE));
      */
+<<<<<<< HEAD
     /*
+=======
+    
+    
+    
+    /* java_lang_Float
+>>>>>>> 3236c790d993a04dee9810e4e166b93259abc911
     runTest(@"BitwiseConversion", [pkg_BitwiseConversion class], @selector(testmain___java_lang_String_ARRAYTYPE:));
     runTest(@"Constants", [pkg_Constants class], @selector(testmain___java_lang_String_ARRAYTYPE:));
     runTest(@"Extrema", [pkg_Extrema class], @selector(testmain___java_lang_String_ARRAYTYPE:));
@@ -76,7 +84,11 @@ int main(int argc, char* argv[])
     runTest(@"ParseFloat/paddedBad", [pkg_ParseFloat class], @selector(testParsePaddedBad__));
  */
 
+<<<<<<< HEAD
 /*
+=======
+/* java_lang_String
+>>>>>>> 3236c790d993a04dee9810e4e166b93259abc911
     runTest(@"CaseConvertSameInstance", [pkg_CaseConvertSameInstance class], @selector(testmain___java_lang_String_ARRAYTYPE:));
     runTest(@"CompareIC", [pkg_CompareIC class], @selector(testmain___java_lang_String_ARRAYTYPE:));
     runTest(@"ContentEquals", [pkg_ContentEquals class], @selector(testmain___java_lang_String_ARRAYTYPE:));
@@ -93,7 +105,11 @@ int main(int argc, char* argv[])
     runTest(@"Supplementary", [pkg_Supplementary class], @selector(testmain___java_lang_String_ARRAYTYPE));
     runTest(@"ToLowerCase", [pkg_ToLowerCase class], @selector(testmain___java_lang_String_ARRAYTYPE));
     runTest(@"ToUpperCase", [pkg_ToUpperCase class], @selector(testmain___java_lang_String_ARRAYTYPE));
+<<<<<<< HEAD
  */
+=======
+*/
+>>>>>>> 3236c790d993a04dee9810e4e166b93259abc911
 }
   
   
