@@ -4,10 +4,7 @@ package pkg;
 
 class Main {
   public static void main(String[] args) throws Exception {
-<<<<<<< HEAD
-    System.out.println("Running BitwiseConversion");
-    BitwiseConversion.testmain(args);
-    
+    // This code is implemented in objc/pkg_Main.m.  DO NOT EDIT it here. 
 	/*
     System.out.println("Running Constants");
     Constants.testmain(args);
@@ -30,8 +27,5 @@ class Main {
     System.out.println("Running ToString");
     ToString.testmain(args);
     */
-=======
-    // This code is implemented in objc/pkg_Main.m.  DO NOT EDIT it here. 
->>>>>>> c12deb8ecf459cd0fbc47a0d949cf711aa0c8b4c
   }
 }
