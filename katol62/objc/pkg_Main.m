@@ -20,10 +20,13 @@
 
 - (id) init
 {
+    self = [super init];
+    return self;
 }
 
 - (void) dealloc
 {
+    [super dealloc];
 }
 
 - (void) __init_pkg_Main__
@@ -50,7 +53,6 @@ static void runTest(NSString* name, Class class, SEL method) {
 
 int main(int argc, char* argv[])
 {
-<<<<<<< HEAD
     runTest(@"BitwiseConversion", [pkg_BitwiseConversion class], @selector(testmain___java_lang_String_ARRAYTYPE:));
     /*
     runTest(@"Constants", [pkg_Constants class], @selector(testmain___java_lang_String_ARRAYTYPE:));
@@ -61,7 +63,6 @@ int main(int argc, char* argv[])
     runTest(@"ToHexString", [pkg_ToHexString class], @selector(testmain___java_lang_String_ARRAYTYPE));
     runTest(@"ToString", [pkg_ToString class], @selector(testmain___java_lang_String_ARRAYTYPE));
      */
-=======
     /*
     runTest(@"BitwiseConversion", [pkg_BitwiseConversion class], @selector(testmain___java_lang_String_ARRAYTYPE:));
     runTest(@"Constants", [pkg_Constants class], @selector(testmain___java_lang_String_ARRAYTYPE:));
@@ -75,7 +76,7 @@ int main(int argc, char* argv[])
     runTest(@"ParseFloat/paddedBad", [pkg_ParseFloat class], @selector(testParsePaddedBad__));
  */
 
-
+/*
     runTest(@"CaseConvertSameInstance", [pkg_CaseConvertSameInstance class], @selector(testmain___java_lang_String_ARRAYTYPE:));
     runTest(@"CompareIC", [pkg_CompareIC class], @selector(testmain___java_lang_String_ARRAYTYPE:));
     runTest(@"ContentEquals", [pkg_ContentEquals class], @selector(testmain___java_lang_String_ARRAYTYPE:));
@@ -92,7 +93,7 @@ int main(int argc, char* argv[])
     runTest(@"Supplementary", [pkg_Supplementary class], @selector(testmain___java_lang_String_ARRAYTYPE));
     runTest(@"ToLowerCase", [pkg_ToLowerCase class], @selector(testmain___java_lang_String_ARRAYTYPE));
     runTest(@"ToUpperCase", [pkg_ToUpperCase class], @selector(testmain___java_lang_String_ARRAYTYPE));
->>>>>>> c12deb8ecf459cd0fbc47a0d949cf711aa0c8b4c
+ */
 }
   
   
