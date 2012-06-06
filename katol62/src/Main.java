@@ -1,8 +1,10 @@
 package pkg;
 
 // DO NOT EDIT HERE - This file is only a placeholder.  The generated src gets replaced by objc/pkg_Main.m
+
 class Main {
   public static void main(String[] args) throws Exception {
+<<<<<<< HEAD
     System.out.println("Running BitwiseConversion");
     BitwiseConversion.testmain(args);
     
@@ -28,5 +30,8 @@ class Main {
     System.out.println("Running ToString");
     ToString.testmain(args);
     */
+=======
+    // This code is implemented in objc/pkg_Main.m.  DO NOT EDIT it here. 
+>>>>>>> c12deb8ecf459cd0fbc47a0d949cf711aa0c8b4c
   }
 }
