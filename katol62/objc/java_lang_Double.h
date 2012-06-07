@@ -21,6 +21,7 @@
 #import "xmlvm.h"
 #import "java_lang_Number.h"
 #import "java_lang_String.h"
+#import "java_lang_NumberFormatException.h"
 
 
 // java.lang.Double
@@ -45,8 +46,9 @@ double number;
 + (java_lang_Double*) valueOf___double: (double) d;
 + (java_lang_Double*) valueOf___java_lang_String: (java_lang_String*) str;
 
-+ (double) longBitsToDouble___long:(long)d;
++ (double) longBitsToDouble___long:(long long)d;
 +(int)isNaN___double:(double)d;
-
++ (long long) doubleToLongBits___double:(double)d;
++ (int) isInfinite___double:(double)d;
 
 @end
