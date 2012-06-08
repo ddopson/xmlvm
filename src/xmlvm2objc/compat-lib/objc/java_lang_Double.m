@@ -86,7 +86,31 @@ static java_lang_Class* primitiveDoubleClass;
 
 + (double) parseDouble___java_lang_String: (java_lang_String *) str
 {
-	return atof([str UTF8String]);
+    NSCharacterSet* whitespace = [NSCharacterSet characterSetWithCharactersInString: @" \t\n\r\f\001\013\037"];
+    NSString* trimmed = [str stringByTrimmingCharactersInSet:whitespace];
+    
+    
+    float fval = [trimmed floatValue];
+    if (fval==0)
+    {
+        if ([trimmed isEqualToString:@"NaN"] || [trimmed isEqualToString:@"+NaN"] || [trimmed isEqualToString:@"-NaN"]) {
+            return NaN;
+        }
+        else if ([trimmed isEqualToString:@"Infinity"] || [trimmed isEqualToString:@"+Infinity"]) {
+            return INFINITY;//1.0 / 0.0;
+        }
+        else if ([trimmed isEqualToString:@"-Infinity"]) {
+            return -INFINITY;//log (0);
+        }
+        else {
+            java_lang_NumberFormatException *ex = [[[java_lang_NumberFormatException alloc] init] autorelease];
+            [ex __init_java_lang_NumberFormatException__];
+            @throw ex;
+        }
+        
+    }
+	return fval;
+
 }
 
 - (java_lang_String*) toString__
@@ -111,9 +135,24 @@ static java_lang_Class* primitiveDoubleClass;
     return isnan(d);
 }
 
-+ (double) longBitsToDouble___long:(long)d
++ (int) isInfinite___double:(double)d
 {
-    return *(double*)&d;
+    return isinf(d);
+}
+
++ (double) longBitsToDouble___long:(long long)d
+{
+    uint64_t x = (uint64_t)d;
+    double doubleValue;
+    doubleValue = *(double*)&x;
+    return doubleValue;
+}
+
++ (long long) doubleToLongBits___double:(double)d
+{
+    const union { double f; uint64_t i; } xUnion = { .f = d };
+    long ll = (long long)xUnion.i;
+    return (long long)xUnion.i;
 }
 
 @end
