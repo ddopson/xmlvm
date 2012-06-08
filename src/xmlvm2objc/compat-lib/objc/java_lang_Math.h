@@ -48,6 +48,7 @@
 + (double) round___double: (double) a;
 + (double) floor___double:(double) a;
 + (double) ceil___double:(double) a;
++ (double) abs___double:(double) d;
 
 @end
 

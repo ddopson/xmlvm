@@ -20,6 +20,8 @@
 
 #import "java_lang_Float.h"
 
+//static float NaN = sqrt (-1);
+
 @interface PrimitiveFloat : java_lang_Object
 @end
 
@@ -75,7 +77,7 @@ static java_lang_Class* primitiveFloatClass;
 
 + (java_lang_String*) toString___float: (float) f
 {
-	return [[[NSNumber numberWithFloat: f] stringValue] retain];
+	return (java_lang_String*)[[[NSNumber numberWithFloat: f] stringValue] retain];
 }
 
 - (float) floatValue__
@@ -85,7 +87,30 @@ static java_lang_Class* primitiveFloatClass;
 
 + (float) parseFloat___java_lang_String: (java_lang_String *) str
 {
-	return strtof([str UTF8String], NULL);
+    NSCharacterSet* whitespace = [NSCharacterSet characterSetWithCharactersInString: @" \t\n\r\f\001\013\037"];
+    NSString* trimmed = [str stringByTrimmingCharactersInSet:whitespace];
+    
+   
+    float fval = [trimmed floatValue];
+    if (fval==0)
+    {
+        if ([trimmed isEqualToString:@"NaN"] || [trimmed isEqualToString:@"+NaN"] || [trimmed isEqualToString:@"-NaN"]) {
+            return NaN;
+        }
+        else if ([trimmed isEqualToString:@"Infinity"] || [trimmed isEqualToString:@"+Infinity"]) {
+            return INFINITY;//1.0 / 0.0;
+        }
+        else if ([trimmed isEqualToString:@"-Infinity"]) {
+            return -INFINITY;//log (0);
+        }
+        else {
+            java_lang_NumberFormatException *ex = [[[java_lang_NumberFormatException alloc] init] autorelease];
+            [ex __init_java_lang_NumberFormatException__];
+            @throw ex;
+        }
+        
+    }
+	return fval;
 }
 
 + (java_lang_Class*) _GET_TYPE
@@ -104,9 +129,25 @@ static java_lang_Class* primitiveFloatClass;
     return f;
 }
 
-- (float) intBitsToFloat___int: (int) i
+
++ (JAVA_INT) floatToIntBits___float: (float) f
 {
-	return [[NSNumber numberWithInt: i] floatValue];
+    return (JAVA_INT)*(int *)(long *)&f;
+}
+
++ (float) intBitsToFloat___int: (int) i
+{
+	return *(float *)(int *)&i;
+}
+
++ (int) isNaN___float: (float) i
+{
+    return isnan(i);
+}
+
++ (int) isInfinite___float : (float) i
+{
+    return isinf(i);
 }
 
 @end

@@ -141,4 +141,8 @@
 	return ceil(a);
 }
 
++ (JAVA_DOUBLE) abs___double:(double) d {
+    return (JAVA_DOUBLE)fabs(d);
+}
+
 @end

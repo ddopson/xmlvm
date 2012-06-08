@@ -21,6 +21,8 @@
 #import "xmlvm.h"
 #import "java_lang_Number.h"
 #import "java_lang_String.h"
+#import "java_lang_NumberFormatException.h"
+
 
 // java.lang.Float
 //----------------------------------------------------------------------------
@@ -44,5 +46,9 @@ float number;
 + (java_lang_Float*) valueOf___java_lang_String:(java_lang_String*) str;
 + (java_lang_Float*) valueOf___float:(float) value;
 + (float) intBitsToFloat___int: (int) i;
++ (int) floatBitsToInt___float: (float) f;
++ (int) isNaN___float: (float) i;
++ (int) isInfinite___float: (float) i;
++ (int) floatToIntBits___float: (float) f;
 
 @end

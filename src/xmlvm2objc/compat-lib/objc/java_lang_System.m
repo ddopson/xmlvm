@@ -40,6 +40,7 @@
 // java.lang.System
 //----------------------------------------------------------------------------
 java_io_PrintStream* _STATIC_java_lang_System_out;
+java_io_PrintStream* _STATIC_java_lang_System_err;
 java_io_InputStream* _STATIC_java_lang_System_in;
 
 java_util_Properties* _STATIC_java_util_Properties_props = nil;
@@ -74,6 +75,7 @@ java_util_Properties* _STATIC_java_util_Properties_props = nil;
 	[v __init_java_io_PrintStream___java_io_OutputStream:console];
 	[console release];
     [java_lang_System _PUT_out: v];
+    [java_lang_System _PUT_err: v];
 	
 	// TODO System.in
     [java_lang_System _PUT_in: JAVA_NULL];	
@@ -88,6 +90,24 @@ java_util_Properties* _STATIC_java_util_Properties_props = nil;
 + (void) _PUT_out: (java_io_PrintStream*) v
 {
     _STATIC_java_lang_System_out = v;
+}
+
++ (java_io_PrintStream*) _GET_err
+{
+    return _STATIC_java_lang_System_err;
+}
+
+
++ (void) _PUT_err: (java_io_PrintStream*) v
+{
+    _STATIC_java_lang_System_err = v;
+}
+
++ (void) setErr___java_io_PrintStream: (java_io_PrintStream*) ps
+{
+	[ps retain];
+    [_STATIC_java_lang_System_err release];
+	[java_lang_System _PUT_err:ps];
 }
 
 + (void) setOut___java_io_PrintStream: (java_io_PrintStream*) ps
