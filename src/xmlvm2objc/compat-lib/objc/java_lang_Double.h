@@ -45,4 +45,8 @@ double number;
 + (java_lang_Double*) valueOf___double: (double) d;
 + (java_lang_Double*) valueOf___java_lang_String: (java_lang_String*) str;
 
++ (double) longBitsToDouble___long:(long)d;
++(int)isNaN___double:(double)d;
+
+
 @end

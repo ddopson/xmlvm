@@ -106,4 +106,14 @@ static java_lang_Class* primitiveDoubleClass;
 	return o;
 }
 
++(int)isNaN___double:(double)d
+{
+    return isnan(d);
+}
+
++ (double) longBitsToDouble___long:(long)d
+{
+    return *(double*)&d;
+}
+
 @end
