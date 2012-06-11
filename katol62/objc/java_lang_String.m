@@ -26,6 +26,22 @@
 //----------------------------------------------------------------------------
 @implementation NSMutableString (cat_java_lang_String)
 
++ (java_lang_String *) format___java_lang_String_java_lang_Object_ARRAYTYPE:(java_lang_String *)format :(XMLVMArray *)args;
+{
+    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+    NSMutableArray *ar = [[[NSMutableArray alloc] init] autorelease];
+    
+    for (int i=0; i<[args count]; i++)
+    {
+        id object = [args objectAtIndex:i];
+        [ar addObject:object];
+    }
+    java_lang_String* ret = (java_lang_String *)[NSString stringWithFormat:(NSString *)format, [(NSArray *)ar componentsJoinedByString:@" "]];
+    [ret retain];
+    [pool drain];
+    return ret;
+}
+
 - (void) __init_java_lang_String___java_lang_String: (java_lang_String*) str
 {
 	[self setString: (NSString *)str];
