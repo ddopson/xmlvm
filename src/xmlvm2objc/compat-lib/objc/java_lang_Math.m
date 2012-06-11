@@ -19,6 +19,7 @@
  */
 
 #import "java_lang_Math.h"
+#import "sun_misc_FpUtils.h"
 
 
 
@@ -139,6 +140,10 @@
 + (double) ceil___double:(double) a
 {
 	return ceil(a);
+}
+
++ (double) scalb___double_int:(double) d:(int) scaleFactor {
+    return [sun_misc_FpUtils scalb___double_int:d:scaleFactor];
 }
 
 + (JAVA_DOUBLE) abs___double:(double) d {

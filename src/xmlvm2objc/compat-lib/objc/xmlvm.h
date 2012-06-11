@@ -126,8 +126,10 @@ extern id JAVA_NULL;
 
 @end
 
-#define Infinity 0x7f800000
-#define NaN 0x7fc00000
+//#define Infinity 0x7f800000
+//#define NaN 0x7fc00000
+#define Infinity 1.0 / 0.0
+#define NaN sqrt (-1)
 
 void ERROR(char* msg);
 

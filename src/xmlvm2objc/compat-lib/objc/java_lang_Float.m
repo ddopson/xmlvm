@@ -87,6 +87,8 @@ static java_lang_Class* primitiveFloatClass;
 
 + (float) parseFloat___java_lang_String: (java_lang_String *) str
 {
+//	return strtof([str UTF8String], NULL);
+//    NSLog(@"str = %@", (NSString *)str);
     NSCharacterSet* whitespace = [NSCharacterSet characterSetWithCharactersInString: @" \t\n\r\f\001\013\037"];
     NSString* trimmed = [str stringByTrimmingCharactersInSet:whitespace];
     
@@ -107,6 +109,7 @@ static java_lang_Class* primitiveFloatClass;
             java_lang_NumberFormatException *ex = [[[java_lang_NumberFormatException alloc] init] autorelease];
             [ex __init_java_lang_NumberFormatException__];
             @throw ex;
+//            return NAN;// trimmedtof([trimmed UTF8String], NULL);
         }
         
     }
@@ -133,6 +136,12 @@ static java_lang_Class* primitiveFloatClass;
 + (JAVA_INT) floatToIntBits___float: (float) f
 {
     return (JAVA_INT)*(int *)(long *)&f;
+
+//    long ff = (long)f;
+//	return (JAVA_INT)*(int *)(long *)&ff;
+//    NSLog(@"%d", (JAVA_INT) f);
+//    return (JAVA_INT) f;
+
 }
 
 + (float) intBitsToFloat___int: (int) i

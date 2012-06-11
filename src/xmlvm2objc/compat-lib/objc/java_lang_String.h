@@ -63,4 +63,5 @@ typedef NSMutableString java_lang_String;
 - (int) length__;
 - (java_lang_String*) trim__;
 - (int) isEmpty__;
++ (java_lang_String *) format___java_lang_String_java_lang_Object_ARRAYTYPE:(java_lang_String *)format :(XMLVMArray *) args;
 @end

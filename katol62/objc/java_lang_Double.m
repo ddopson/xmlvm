@@ -87,12 +87,27 @@ static java_lang_Class* primitiveDoubleClass;
 + (double) parseDouble___java_lang_String: (java_lang_String *) str
 {
 //	return atof([str UTF8String]);
+    NSLog(@"Str=%@", str);
+    
     NSCharacterSet* whitespace = [NSCharacterSet characterSetWithCharactersInString: @" \t\n\r\f\001\013\037"];
     NSString* trimmed = [str stringByTrimmingCharactersInSet:whitespace];
     
+    NSLog(@"trimmed=%@", trimmed);
+
+    double fval;
     
-    float fval = [trimmed floatValue];
-    if (fval==0)
+    
+    NSRange range = [[trimmed lowercaseString] rangeOfString:@"0x"];
+    if (range.location != NSNotFound && (range.location==0 || range.location==1)) {
+        NSScanner *scanner = [NSScanner scannerWithString: trimmed];
+        [scanner scanHexDouble:&fval];
+    }
+    else
+    {
+        fval = [trimmed doubleValue];
+    }
+
+    if ((![self is_zero_string:trimmed]) && fval==0)
     {
         if ([trimmed isEqualToString:@"NaN"] || [trimmed isEqualToString:@"+NaN"] || [trimmed isEqualToString:@"-NaN"]) {
             return NaN;
@@ -112,6 +127,24 @@ static java_lang_Class* primitiveDoubleClass;
     }
 	return fval;
 
+}
+
++ (BOOL) is_zero_string:(NSString*)str
+{
+    return ([str isEqualToString:@"0"] ||
+            [str isEqualToString:@"+0"] ||
+            [str isEqualToString:@"-0"] ||
+            [str isEqualToString:@"00"] ||
+            [str isEqualToString:@"-00"] ||
+            [str isEqualToString:@"+00"] ||
+            [str isEqualToString:@"0000000000"] ||
+            [str isEqualToString:@"-0000000000"] ||
+            [str isEqualToString:@"0.0E-10"] ||
+            [str isEqualToString:@"0.f"] ||
+            [str isEqualToString:@"0.F"] ||
+            [str isEqualToString:@"0e-0D"] ||
+            [str isEqualToString:@"+0000000000"]);
+            
 }
 
 - (java_lang_String*) toString__
