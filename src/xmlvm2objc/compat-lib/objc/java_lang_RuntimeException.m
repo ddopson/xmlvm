@@ -37,14 +37,17 @@
 
 - (void) __init_java_lang_RuntimeException___java_lang_String: (java_lang_String*) msg
 {
+    [self initWithName: @"java_lang_Exception" reason: msg userInfo: nil];
 }
 
 - (void) __init_java_lang_RuntimeException___java_lang_String_java_lang_Throwable: (java_lang_String*) msg: (java_lang_Throwable*) cause
 {
+    [self initWithName: @"java_lang_Exception" reason: msg userInfo: cause];
 }
 
 - (void) __init_java_lang_RuntimeException___java_lang_Throwable: (java_lang_Throwable*) cause
 {
+    [self initWithName: @"java_lang_Exception" reason: nil userInfo: cause];
 }
 
 - (java_lang_RuntimeException *) initCause___java_lang_Throwable: (java_lang_Throwable*) cause
