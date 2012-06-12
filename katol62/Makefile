@@ -3,7 +3,7 @@ XMLVM_DIR      = $(CURDIR)/..
 XMLVM          = $(CURDIR)/../bin/xmlvm
 IOS_SIM        = $(CURDIR)/bin/ios-sim
 
-java_src_files = $(shell find src -name '*.java')
+java_src_files = $(shell find src test -name '*.java')
 
 .PHONY: default
 default: javac xmlvm trim xcodebuild
@@ -28,19 +28,24 @@ build/.make.xmlvm: build/.make.javac
 trim: build/.make.trim
 build/.make.trim: build/.make.xmlvm
 	ant trim -Dxmlvm_path=$(XMLVM_DIR)/dist/xmlvm.jar -Dhome=$(CURDIR)/build/xcode -Dresources=resources/images/:resources/files/:$(objc_resources)
+	rsync objc/* build/xcode/build/xcode/src/trim/ --backup --backup-dir=$(CURDIR)/objc/originals/ --suffix=.backup
 	@touch build/.make.trim
+
+.PHONY: overrides
+overrides:
+	rsync -av objc/* build/xcode/build/xcode/src/trim/ --exclude=originals
+	
 
 .PHONY: xcodebuild
 xcodebuild: build/.make.xcodebuild
 build/.make.xcodebuild:
-	rsync objc/* build/xcode/build/xcode/src/trim/
 	cd build/xcode/dist; xcodebuild -parallelizeTargets -sdk iphonesimulator -configuration Debug | tee $(CURDIR)/xcodebuild.log
 	@cat $(CURDIR)/xcodebuild.log | ack '(?<= )(error)(?=: )' || true
 
 
 .PHONY: clean
 clean:
-	rm -rf build
+	rm -rf build objc/originals
 
 .PHONY: java
 java: javac
