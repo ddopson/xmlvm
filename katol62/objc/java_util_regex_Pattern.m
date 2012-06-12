@@ -15,17 +15,29 @@ java_util_regex_Matcher* matcher;
 
 +(java_util_regex_Pattern*)compile___java_lang_String:(java_lang_String*)str
 {
+    NSAutoreleasePool *loopPool = [[NSAutoreleasePool alloc] init];
+
     java_util_regex_Pattern* pattern = [[[java_util_regex_Pattern alloc] init] autorelease];
     NSError *error = NULL;
+    
+    str = (java_lang_String*)[(NSString *)str stringByReplacingOccurrencesOfString:@"(\\p{XDigit}+)"
+                                                     withString:@"[[:xdigit:]]+"];
+    str = (java_lang_String*)[(NSString *)str stringByReplacingOccurrencesOfString:@"(\\p{Digit}+)"
+                                                     withString:@"[[:digit:]]+"];
+    
     pattern->regex = [NSRegularExpression regularExpressionWithPattern:(NSString*)str
 //                                                              options:NSRegularExpressionCaseInsensitive
                                                                 options:0
                                                                 error:&error];
     return pattern;
+    
+    [loopPool drain];
 }
 
 -(java_util_regex_Matcher*)matcher___java_lang_CharSequence:(NSString *)chr
 {
+    NSAutoreleasePool *loopPool = [[NSAutoreleasePool alloc] init];
+
     NSLog(@"chr=%@", chr);
     NSCharacterSet* whitespace = [NSCharacterSet characterSetWithCharactersInString: @" \t\n\r\f\001\013\037"];
     NSString* trimmed = [chr stringByTrimmingCharactersInSet:whitespace];
@@ -37,6 +49,7 @@ java_util_regex_Matcher* matcher;
                                 range:NSMakeRange(0, [trimmed length])];
     
     return matcher;
+    [loopPool drain];
 }
 
 @end
