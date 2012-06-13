@@ -21,9 +21,9 @@ java_util_regex_Matcher* matcher;
     NSError *error = NULL;
     
     str = (java_lang_String*)[(NSString *)str stringByReplacingOccurrencesOfString:@"(\\p{XDigit}+)"
-                                                     withString:@"[[:xdigit:]]+"];
+                                                     withString:@"[0-9A-Fa-f]+"];
     str = (java_lang_String*)[(NSString *)str stringByReplacingOccurrencesOfString:@"(\\p{Digit}+)"
-                                                     withString:@"[[:digit:]]+"];
+                                                     withString:@"[0-9a-f.-]+"];
     
     pattern->regex = [NSRegularExpression regularExpressionWithPattern:(NSString*)str
 //                                                              options:NSRegularExpressionCaseInsensitive

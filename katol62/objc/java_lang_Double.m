@@ -89,6 +89,8 @@ static java_lang_Class* primitiveDoubleClass;
 //	return atof([str UTF8String]);
     NSLog(@"Str=%@", str);
     
+    NSAutoreleasePool *loopPool = [[NSAutoreleasePool alloc] init];
+    
     NSCharacterSet* whitespace = [NSCharacterSet characterSetWithCharactersInString: @" \t\n\r\f\001\013\037"];
     NSString* trimmed = [str stringByTrimmingCharactersInSet:whitespace];
     
@@ -126,6 +128,7 @@ static java_lang_Class* primitiveDoubleClass;
         
     }
 	return fval;
+    [loopPool drain];
 
 }
 
