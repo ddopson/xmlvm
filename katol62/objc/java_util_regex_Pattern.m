@@ -20,10 +20,14 @@ java_util_regex_Matcher* matcher;
     java_util_regex_Pattern* pattern = [[[java_util_regex_Pattern alloc] init] autorelease];
     NSError *error = NULL;
     
-    str = (java_lang_String*)[(NSString *)str stringByReplacingOccurrencesOfString:@"(\\p{XDigit}+)"
-                                                     withString:@"[0-9A-Fa-f]+"];
-    str = (java_lang_String*)[(NSString *)str stringByReplacingOccurrencesOfString:@"(\\p{Digit}+)"
-                                                     withString:@"[0-9a-f.-]+"];
+//    str = (java_lang_String*)[(NSString *)str stringByReplacingOccurrencesOfString:@"(\\p{XDigit}+)"
+//                                                     withString:@"[0-9A-Fa-f]+"];
+//    str = (java_lang_String*)[(NSString *)str stringByReplacingOccurrencesOfString:@"(\\p{Digit}+)"
+//                                                     withString:@"[0-9a-f.-]+"];
+    
+    str = (java_lang_String*)[(NSString *)str stringByReplacingOccurrencesOfString:@"(((\\p{Digit}+)(\\.)?((\\p{Digit}+)?)([eE][+-]?(\\p{Digit}+))?)|(\\.((\\p{Digit}+))([eE][+-]?(\\p{Digit}+))?))|(((0[xX](\\p{XDigit}+)(\\.)?)|(0[xX](\\p{XDigit}+)?(\\.)(\\p{XDigit}+)))[pP][+-]?(\\p{Digit}+))"
+                                                     withString:@"(((0[xX](\\p{XDigit}+)(\\.)?)|(0[xX](\\p{XDigit}+)?(\\.)(\\p{XDigit}+)))[pP][+-]?(\\p{Digit}+))|(((\\p{Digit}+)(\\.)?((\\p{Digit}+)?)([eE][+-]?(\\p{Digit}+))?)|(\\.((\\p{Digit}+))([eE][+-]?(\\p{Digit}+))?))"];
+
     
     pattern->regex = [NSRegularExpression regularExpressionWithPattern:(NSString*)str
 //                                                              options:NSRegularExpressionCaseInsensitive
