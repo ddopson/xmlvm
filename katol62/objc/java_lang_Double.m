@@ -95,30 +95,39 @@ static java_lang_Class* primitiveDoubleClass;
     NSString* trimmed = [str stringByTrimmingCharactersInSet:whitespace];
     
     NSLog(@"trimmed=%@", trimmed);
+    
+    if ([trimmed isEqualToString:@"+0"]) {
+        NSLog(@"+0");
+    }
 
     double fval;
-    
-    
+    BOOL b;
+
     NSRange range = [[trimmed lowercaseString] rangeOfString:@"0x"];
     if (range.location != NSNotFound && (range.location==0 || range.location==1)) {
         NSScanner *scanner = [NSScanner scannerWithString: trimmed];
-        [scanner scanHexDouble:&fval];
+        b = [scanner scanHexDouble:&fval];
     }
     else
     {
+        NSScanner *scanner = [NSScanner scannerWithString: trimmed];
+        b = [scanner scanDouble:&fval];
         fval = [trimmed doubleValue];
     }
-
-    if ((![self is_zero_string:trimmed]) && fval==0)
+    
+    NSLog(@"isAtEnd = %d", b);
+    
+//    if ((![self is_zero_string:trimmed]) && fval==0)
+    if (b==NO && fval==0)
     {
         if ([trimmed isEqualToString:@"NaN"] || [trimmed isEqualToString:@"+NaN"] || [trimmed isEqualToString:@"-NaN"]) {
             return NaN;
         }
         else if ([trimmed isEqualToString:@"Infinity"] || [trimmed isEqualToString:@"+Infinity"]) {
-            return INFINITY;//1.0 / 0.0;
+            return INFINITY;
         }
         else if ([trimmed isEqualToString:@"-Infinity"]) {
-            return -INFINITY;//log (0);
+            return -INFINITY;
         }
         else {
             java_lang_NumberFormatException *ex = [[[java_lang_NumberFormatException alloc] init] autorelease];
@@ -132,6 +141,7 @@ static java_lang_Class* primitiveDoubleClass;
 
 }
 
+/*
 + (BOOL) is_zero_string:(NSString*)str
 {
     return ([str isEqualToString:@"0"] ||
@@ -149,6 +159,7 @@ static java_lang_Class* primitiveDoubleClass;
             [str isEqualToString:@"+0000000000"]);
             
 }
+*/
 
 - (java_lang_String*) toString__
 {
@@ -157,7 +168,7 @@ static java_lang_Class* primitiveDoubleClass;
 
 + (java_lang_String*) toString___double: (double) d
 {
-	return [[[NSNumber numberWithDouble: d] stringValue] retain];
+	return (java_lang_String*)[[[NSNumber numberWithDouble: d] stringValue] retain];
 }
 
 + (java_lang_Double*) valueOf___double: (double) d
