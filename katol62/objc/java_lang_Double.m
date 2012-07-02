@@ -96,10 +96,6 @@ static java_lang_Class* primitiveDoubleClass;
     
     NSLog(@"trimmed=%@", trimmed);
     
-    if ([trimmed isEqualToString:@"+0"]) {
-        NSLog(@"+0");
-    }
-
     double fval;
     BOOL b;
 
@@ -117,7 +113,6 @@ static java_lang_Class* primitiveDoubleClass;
     
     NSLog(@"isAtEnd = %d", b);
     
-//    if ((![self is_zero_string:trimmed]) && fval==0)
     if (b==NO && fval==0)
     {
         if ([trimmed isEqualToString:@"NaN"] || [trimmed isEqualToString:@"+NaN"] || [trimmed isEqualToString:@"-NaN"]) {
@@ -140,26 +135,6 @@ static java_lang_Class* primitiveDoubleClass;
     [loopPool drain];
 
 }
-
-/*
-+ (BOOL) is_zero_string:(NSString*)str
-{
-    return ([str isEqualToString:@"0"] ||
-            [str isEqualToString:@"+0"] ||
-            [str isEqualToString:@"-0"] ||
-            [str isEqualToString:@"00"] ||
-            [str isEqualToString:@"-00"] ||
-            [str isEqualToString:@"+00"] ||
-            [str isEqualToString:@"0000000000"] ||
-            [str isEqualToString:@"-0000000000"] ||
-            [str isEqualToString:@"0.0E-10"] ||
-            [str isEqualToString:@"0.f"] ||
-            [str isEqualToString:@"0.F"] ||
-            [str isEqualToString:@"0e-0D"] ||
-            [str isEqualToString:@"+0000000000"]);
-            
-}
-*/
 
 - (java_lang_String*) toString__
 {
