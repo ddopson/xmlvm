@@ -29,7 +29,7 @@ NSDecimalNumber* decNumber;
 //    NSString *value = [[NSNumber numberWithDouble:d] stringValue];
 //    decNumber = [NSDecimalNumber decimalNumberWithString:value];
     decNumber = [[NSDecimalNumber alloc] initWithDouble:d];
-    NSLog(@"decNumber floatValue=%6.3f", [decNumber floatValue]);
+    //NSLog(@"decNumber floatValue=%6.3f", [decNumber floatValue]);
     //    NSDecimalNumber *ret = [NSDecimalNumber decimalNumberWithString:value];
 //    decNumber = ret;
 }
@@ -37,7 +37,7 @@ NSDecimalNumber* decNumber;
 + (java_math_BigDecimal*) valueOf___long: (JAVA_LONG) l
 {
     NSString *value = [[NSNumber numberWithLongLong:l] stringValue];
-    NSLog(@"%@", value);
+    //NSLog(@"%@", value);
     NSDecimalNumber *ret = [NSDecimalNumber decimalNumberWithString:value];
     decNumber = ret;
     return (java_math_BigDecimal*)ret;
@@ -45,7 +45,7 @@ NSDecimalNumber* decNumber;
 
 -(java_math_BigDecimal*)divide___java_math_BigDecimal:(java_math_BigDecimal*)d
 {
-    NSLog(@"decNumber=%@", [decNumber stringValue]);
+    //NSLog(@"decNumber=%@", [decNumber stringValue]);
     NSDecimalNumber *ret = [decNumber decimalNumberByDividingBy:(NSDecimalNumber*)d];
     return (java_math_BigDecimal*)ret;
 }

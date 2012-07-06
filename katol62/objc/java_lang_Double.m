@@ -87,14 +87,14 @@ static java_lang_Class* primitiveDoubleClass;
 + (double) parseDouble___java_lang_String: (java_lang_String *) str
 {
 //	return atof([str UTF8String]);
-    NSLog(@"Str=%@", str);
+  //  NSLog(@"Str=%@", str);
     
     NSAutoreleasePool *loopPool = [[NSAutoreleasePool alloc] init];
     
     NSCharacterSet* whitespace = [NSCharacterSet characterSetWithCharactersInString: @" \t\n\r\f\001\013\037"];
     NSString* trimmed = [str stringByTrimmingCharactersInSet:whitespace];
     
-    NSLog(@"trimmed=%@", trimmed);
+//    NSLog(@"trimmed=%@", trimmed);
     
     double fval;
     BOOL b;
@@ -103,15 +103,13 @@ static java_lang_Class* primitiveDoubleClass;
     if (range.location != NSNotFound && (range.location==0 || range.location==1)) {
         NSScanner *scanner = [NSScanner scannerWithString: trimmed];
         b = [scanner scanHexDouble:&fval];
-    }
-    else
-    {
+    } else {
         NSScanner *scanner = [NSScanner scannerWithString: trimmed];
         b = [scanner scanDouble:&fval];
         fval = [trimmed doubleValue];
     }
     
-    NSLog(@"isAtEnd = %d", b);
+    //NSLog(@"isAtEnd = %d", b);
     
     if (b==NO && fval==0)
     {

@@ -39,7 +39,7 @@ public class Constants {
      * of those fields.
      */
     public static void testmain(String[] args) throws Exception {
-        int i = 0;
+        int i = -78;
         switch (i) {
         case (int)Double.NaN:                   // 0
             System.out.println("Double.NaN is a constant!");
