@@ -38,7 +38,7 @@ overrides:
 
 .PHONY: xcodebuild
 xcodebuild: build/.make.xcodebuild
-build/.make.xcodebuild:
+build/.make.xcodebuild: overrides
 	cd build/xcode/dist; xcodebuild -parallelizeTargets -sdk iphonesimulator -configuration Debug | tee $(CURDIR)/xcodebuild.log
 	@cat $(CURDIR)/xcodebuild.log | ack '(?<= )(error)(?=: )' || true
 
