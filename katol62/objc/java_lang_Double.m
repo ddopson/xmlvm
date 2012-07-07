@@ -87,7 +87,7 @@ static java_lang_Class* primitiveDoubleClass;
 + (double) parseDouble___java_lang_String: (java_lang_String *) str
 {
 //	return atof([str UTF8String]);
-    NSLog(@"Str=%@", str);
+//    NSLog(@"Str=%@", str);
     
     NSAutoreleasePool *loopPool = [[NSAutoreleasePool alloc] init];
     
@@ -95,23 +95,25 @@ static java_lang_Class* primitiveDoubleClass;
     NSString* trimmed = [str stringByTrimmingCharactersInSet:whitespace];
     
     NSLog(@"trimmed=%@", trimmed);
+    if ([trimmed isEqualToString:@"0x.1p1"]) {
+        NSLog(@"0x.1p1");
+    }
     
     double fval;
     BOOL b;
 
     NSRange range = [[trimmed lowercaseString] rangeOfString:@"0x"];
+    NSScanner *scanner = [NSScanner scannerWithString: trimmed];
     if (range.location != NSNotFound && (range.location==0 || range.location==1)) {
-        NSScanner *scanner = [NSScanner scannerWithString: trimmed];
         b = [scanner scanHexDouble:&fval];
     }
     else
     {
-        NSScanner *scanner = [NSScanner scannerWithString: trimmed];
         b = [scanner scanDouble:&fval];
         fval = [trimmed doubleValue];
     }
     
-    NSLog(@"isAtEnd = %d", b);
+//    NSLog(@"isAtEnd = %d", b);
     
     if (b==NO && fval==0)
     {
@@ -141,6 +143,53 @@ static java_lang_Class* primitiveDoubleClass;
 	return [java_lang_Double toString___double:number];
 }
 
++ (java_lang_String*) toHexString___double:(double)d
+{
+//    NSLog(@"%@", [[NSNumber numberWithDouble:d] stringValue]);
+//    return [(java_lang_String*)[[NSNumber numberWithDouble:d] stringValue] retain];
+    
+    NSAutoreleasePool *loopPool = [[NSAutoreleasePool alloc] init];
+    NSLog(@"%@", [[NSNumber numberWithDouble:d] stringValue]);
+    
+    NSString *s = [[[NSNumber numberWithDouble:d] stringValue] autorelease];
+
+    if (d==INFINITY) {
+        return (java_lang_String*)[NSString stringWithString:@"Infinity"];
+    }
+    else if (d==-INFINITY) {
+        return (java_lang_String*)[NSString stringWithString:@"-Infinity"];
+    }
+    else if ([self isNaN___double:d]) {
+        return (java_lang_String*)[NSString stringWithString:@"NaN"];
+    }
+    else {
+        
+        float ld = [[NSNumber numberWithDouble:d] floatValue];
+        
+        double dval;
+        BOOL b;
+        NSScanner *scanner = [NSScanner scannerWithString: s];
+        b = [scanner scanHexDouble:&dval];
+
+        NSLog(@"qx = %#qx", [NSNumber numberWithDouble:d]);
+        NSLog(@"p = %p", [NSNumber numberWithFloat:ld]);
+        NSLog(@"a = %a", [NSNumber numberWithFloat:ld]);
+        return (java_lang_String*)[NSString stringWithFormat:@"%#qx", [NSNumber numberWithDouble:d]];
+//        NSRange range = [[s lowercaseString] rangeOfString:@"0x"];
+//        if (range.location != NSNotFound && (range.location==0 || range.location==1)) {
+//            return (java_lang_String*)[NSString stringWithFormat:@"%p", [NSNumber numberWithDouble:d]];
+//        }
+//        else {
+//            NSLog(@"%F", [NSNumber numberWithDouble:d]);
+//            return (java_lang_String*)[NSString stringWithFormat:@"%.f", [NSNumber numberWithDouble:d]];
+//        }
+    }
+    
+//    NSLog(@"%p", [NSNumber numberWithDouble:d]);
+//    return (java_lang_String*)[NSString stringWithFormat:@"%p", [NSNumber numberWithDouble:d]];
+    [loopPool drain];
+}
+
 + (java_lang_String*) toString___double: (double) d
 {
 	return (java_lang_String*)[[[NSNumber numberWithDouble: d] stringValue] retain];
@@ -165,17 +214,18 @@ static java_lang_Class* primitiveDoubleClass;
 
 + (double) longBitsToDouble___long:(long long)d
 {
-    uint64_t x = (uint64_t)d;
-    double doubleValue;
-    doubleValue = *(double*)&x;
-    return doubleValue;
+//    double doubleValue = *(double*)&d;
+    return *(double*)&d;
 }
 
 + (long long) doubleToLongBits___double:(double)d
 {
-    const union { double f; uint64_t i; } xUnion = { .f = d };
-    long ll = (long long)xUnion.i;
-    return (long long)xUnion.i;
+    long long llValue = *((long long*)(&d));
+    
+    if (((llValue & 9218868437227405312)==9218868437227405312) && (llValue & 4503599627370495)!=0L) {
+        return 9221120237041090560;
+    }
+    return llValue;
 }
 
 @end

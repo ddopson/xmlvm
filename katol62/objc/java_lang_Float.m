@@ -91,10 +91,26 @@ static java_lang_Class* primitiveFloatClass;
 //    NSLog(@"str = %@", (NSString *)str);
     NSCharacterSet* whitespace = [NSCharacterSet characterSetWithCharactersInString: @" \t\n\r\f\001\013\037"];
     NSString* trimmed = [str stringByTrimmingCharactersInSet:whitespace];
+
+    NSLog(@"str = %@", (NSString *)trimmed);
+
+    float fval;
+    BOOL b;
     
-   
-    float fval = [trimmed floatValue];
-    if (fval==0)
+    NSRange range = [[trimmed lowercaseString] rangeOfString:@"0x"];
+    if (range.location != NSNotFound && (range.location==0 || range.location==1)) {
+        NSScanner *scanner = [NSScanner scannerWithString: trimmed];
+        b = [scanner scanHexFloat:&fval];
+    }
+    else
+    {
+        NSScanner *scanner = [NSScanner scannerWithString: trimmed];
+        b = [scanner scanFloat:&fval];
+        fval = [trimmed floatValue];
+    }
+
+//    float fval = [trimmed floatValue];
+    if (b==NO && fval==0)
     {
         if ([trimmed isEqualToString:@"NaN"] || [trimmed isEqualToString:@"+NaN"] || [trimmed isEqualToString:@"-NaN"]) {
             return NaN;
@@ -132,6 +148,37 @@ static java_lang_Class* primitiveFloatClass;
     return f;
 }
 
++(java_lang_String*)toHexString___float:(float)f
+{
+//    return (java_lang_String*)[NSString stringWithFormat:@"%a", [NSNumber numberWithFloat:f]];
+    NSAutoreleasePool *loopPool = [[NSAutoreleasePool alloc] init];
+    NSLog(@"%@", [[NSNumber numberWithFloat:f] stringValue]);
+    
+    NSString *s = [[[NSNumber numberWithFloat:f] stringValue] autorelease];
+    
+    if (f==INFINITY) {
+        return (java_lang_String*)[NSString stringWithString:@"Infinity"];
+    }
+    else if (f==-INFINITY) {
+        return (java_lang_String*)[NSString stringWithString:@"-Infinity"];
+    }
+    else if ([self isNaN___float:f]) {
+        return (java_lang_String*)[NSString stringWithString:@"NaN"];
+    }
+    else {
+        
+        float ld = [[NSNumber numberWithFloat:f] floatValue];
+        
+        float dval;
+        BOOL b;
+        NSScanner *scanner = [NSScanner scannerWithString: s];
+        b = [scanner scanHexFloat:&dval];
+        
+        return (java_lang_String*)[NSString stringWithFormat:@"%#p", [NSNumber numberWithFloat:f]];
+    }
+    [loopPool drain];
+
+}
 
 + (JAVA_INT) floatToIntBits___float: (float) f
 {
