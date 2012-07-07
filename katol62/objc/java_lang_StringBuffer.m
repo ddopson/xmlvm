@@ -126,7 +126,7 @@
 
 - (java_lang_StringBuffer*) append___double: (double) d
 {
-    NSLog(@"%@", [[NSNumber numberWithDouble:d] stringValue]);
+    //NSLog(@"%@", [[NSNumber numberWithDouble:d] stringValue]);
 //	[self appendString: [NSString stringWithFormat: @"%f", d]];
 	[self appendString: [[NSNumber numberWithDouble:d] stringValue]];
     [self retain];
