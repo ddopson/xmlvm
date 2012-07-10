@@ -22,6 +22,8 @@
 #import "java_lang_Number.h"
 #import "java_lang_String.h"
 #import "java_lang_NumberFormatException.h"
+#import "sun_misc_DoubleConsts.h"
+#import "sun_misc_FpUtils.h"
 
 
 // java.lang.Double

@@ -91,10 +91,8 @@ static java_lang_Class* primitiveDoubleClass;
     NSCharacterSet* whitespace = [NSCharacterSet characterSetWithCharactersInString: @" \t\n\r\f\001\013\037"];
     NSString* trimmed = [str stringByTrimmingCharactersInSet:whitespace];
     
-    NSLog(@"trimmed=%@", trimmed);
-    if ([trimmed isEqualToString:@"0x.1p1"]) {
-        NSLog(@"0x.1p1");
-    }
+//    NSLog(@"trimmed=%@", trimmed);
+
     double fval;
     BOOL b;
 
@@ -140,20 +138,76 @@ static java_lang_Class* primitiveDoubleClass;
 {
     NSAutoreleasePool *loopPool = [[NSAutoreleasePool alloc] init];
     NSLog(@"%@", [[NSNumber numberWithDouble:d] stringValue]);
+    NSString *ret = [NSString string];
     
     NSString *s = [[[NSNumber numberWithDouble:d] stringValue] autorelease];
 
     if (d==INFINITY) {
-        return (java_lang_String*)[NSString stringWithString:@"Infinity"];
+        ret = [NSString stringWithString:@"Infinity"];
     }
     else if (d==-INFINITY) {
-        return (java_lang_String*)[NSString stringWithString:@"-Infinity"];
+        ret = [NSString stringWithString:@"-Infinity"];
     }
     else if ([self isNaN___double:d]) {
-        return (java_lang_String*)[NSString stringWithString:@"NaN"];
+        ret = [NSString stringWithString:@"NaN"];
     }
     else {
         
+        NSString *start = [[NSString stringWithFormat:@"%@", [[NSNumber numberWithDouble:d] stringValue]] substringWithRange:NSMakeRange(0,1)]; 
+        
+        if ([start isEqualToString:@"-"]) {
+            ret = [ret stringByAppendingString:@"-"];
+        }
+        
+        ret = [ret stringByAppendingString:@"0x"];
+        
+//        d = fabs(d);
+        if (d==0) {
+            ret = [ret stringByAppendingString:@"0.0p0"];
+        }
+        else {
+            BOOL subnormal = d < [sun_misc_DoubleConsts _GET_MIN_NORMAL];// 2.2250738585072014E-308;
+            
+            long long l1 = [self doubleToLongBits___double:d];
+            
+//            long long ll = (((long)[self doubleToLongBits___double:d] & [sun_misc_DoubleConsts _GET_SIGNIF_BIT_MASK]) | 0x1000000000000000L);
+            long long l2 = l1 & (long long)[sun_misc_DoubleConsts _GET_SIGNIF_BIT_MASK];
+            long long ll = l2 | (long long)0x1000000000000000L;
+            
+            ret = [ret stringByAppendingString:(subnormal ? @"0." : @"1.")];
+            NSString *temp = [[NSNumber numberWithLongLong:ll] stringValue];
+            NSLog(@"llu=%@", temp);
+            NSString *signif = [[NSString stringWithFormat:@"%llu", ll] substringWithRange:NSMakeRange(3, 16)];
+            NSString *add = [NSString string];
+            if ([signif isEqualToString:@"0000000000000"])
+            {
+                add = [signif stringByAppendingString:@"0"];
+            }
+            else {
+                
+                NSString *regexToReplace = @"0{1,12}$";   
+                
+                NSError *error = NULL;
+                NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:regexToReplace
+                                                        options:NSRegularExpressionCaseInsensitive
+                                                        error:&error];
+                
+                add = [regex stringByReplacingMatchesInString:signif
+                                                    options:0
+                                                    range:NSMakeRange(0, [add length])
+                                                    withTemplate:@""];
+                
+//                add = (NSString *)[java_lang_String java_lang_String_replaceFirst:@"0{1,12}$":@""];
+
+            }
+
+            ret = [ret stringByAppendingString:add];
+            double addd = subnormal ? [sun_misc_DoubleConsts _GET_MIN_EXPONENT] : [sun_misc_FpUtils getExponent___double:d];
+            ret = [ret stringByAppendingFormat:@"p%d", addd];
+            
+        }
+        
+        /*
         float ld = [[NSNumber numberWithDouble:d] floatValue];
         
         double dval;
@@ -165,7 +219,10 @@ static java_lang_Class* primitiveDoubleClass;
         NSLog(@"p = %p", [NSNumber numberWithFloat:ld]);
         NSLog(@"a = %a", [NSNumber numberWithFloat:ld]);
         return (java_lang_String*)[NSString stringWithFormat:@"%#qx", [NSNumber numberWithDouble:d]];
+         */
+        
     }
+    return (java_lang_String*)ret;
     [loopPool drain];
 }
 
@@ -201,10 +258,19 @@ static java_lang_Class* primitiveDoubleClass;
 {
     long long llValue = *((long long*)(&d));
     
-    if (((llValue & 9218868437227405312)==9218868437227405312) && (llValue & 4503599627370495)!=0L) {
+//    if (((llValue & 9218868437227405312)==9218868437227405312) && (llValue & 4503599627370495)!=0L) {
+    if (((llValue & [sun_misc_DoubleConsts _GET_EXP_BIT_MASK])==[sun_misc_DoubleConsts _GET_EXP_BIT_MASK]) && (llValue & [sun_misc_DoubleConsts _GET_SIGNIF_BIT_MASK])!=0L) {
         return 9221120237041090560;
     }
     return llValue;
+//    const union { double f; uint64_t i; } xUnion = { .f = d };
+//    return xUnion.i;
 }
+
++ (long long) doubleToRawLongBits___double:(double)d
+{
+    return *((long long*)(&d));
+}
+
 
 @end
