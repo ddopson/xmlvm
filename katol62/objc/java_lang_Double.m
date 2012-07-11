@@ -161,27 +161,28 @@ static java_lang_Class* primitiveDoubleClass;
         
         ret = [ret stringByAppendingString:@"0x"];
         
-//        d = fabs(d);
+        d = fabs(d);
         if (d==0) {
             ret = [ret stringByAppendingString:@"0.0p0"];
         }
         else {
             BOOL subnormal = d < [sun_misc_DoubleConsts _GET_MIN_NORMAL];// 2.2250738585072014E-308;
             
-            long long l1 = [self doubleToLongBits___double:d];
+            unsigned long long l1 = [self doubleToLongBits___double:d];
             
-//            long long ll = (((long)[self doubleToLongBits___double:d] & [sun_misc_DoubleConsts _GET_SIGNIF_BIT_MASK]) | 0x1000000000000000L);
-            long long l2 = l1 & (long long)[sun_misc_DoubleConsts _GET_SIGNIF_BIT_MASK];
-            long long ll = l2 | (long long)0x1000000000000000L;
+            unsigned long long l2 = l1 & (unsigned long long)[sun_misc_DoubleConsts _GET_SIGNIF_BIT_MASK];
+            unsigned long long ll = l2 | (unsigned long long)0x1000000000000000L;
             
             ret = [ret stringByAppendingString:(subnormal ? @"0." : @"1.")];
-            NSString *temp = [[NSNumber numberWithLongLong:ll] stringValue];
+            
+            NSString *temp = [java_lang_Long toUnsignedString_long_int:ll:4];
+            
             NSLog(@"llu=%@", temp);
-            NSString *signif = [[NSString stringWithFormat:@"%llu", ll] substringWithRange:NSMakeRange(3, 16)];
+            NSString *signif = [temp substringWithRange:NSMakeRange(3, 13)];
             NSString *add = [NSString string];
             if ([signif isEqualToString:@"0000000000000"])
             {
-                add = [signif stringByAppendingString:@"0"];
+                add = [add stringByAppendingString:@"0"];
             }
             else {
                 
@@ -196,30 +197,16 @@ static java_lang_Class* primitiveDoubleClass;
                                                     options:0
                                                     range:NSMakeRange(0, [add length])
                                                     withTemplate:@""];
-                
-//                add = (NSString *)[java_lang_String java_lang_String_replaceFirst:@"0{1,12}$":@""];
 
             }
 
             ret = [ret stringByAppendingString:add];
-            double addd = subnormal ? [sun_misc_DoubleConsts _GET_MIN_EXPONENT] : [sun_misc_FpUtils getExponent___double:d];
+            int addd = subnormal ? [sun_misc_DoubleConsts _GET_MIN_EXPONENT] : [sun_misc_FpUtils getExponent___double:d];
+            NSString *str = [[NSNumber numberWithInt:addd] stringValue];
+            NSString *str1 = [NSString stringWithFormat:@"%d", addd];
             ret = [ret stringByAppendingFormat:@"p%d", addd];
             
         }
-        
-        /*
-        float ld = [[NSNumber numberWithDouble:d] floatValue];
-        
-        double dval;
-        BOOL b;
-        NSScanner *scanner = [NSScanner scannerWithString: s];
-        b = [scanner scanHexDouble:&dval];
-
-        NSLog(@"qx = %#qx", [NSNumber numberWithDouble:d]);
-        NSLog(@"p = %p", [NSNumber numberWithFloat:ld]);
-        NSLog(@"a = %a", [NSNumber numberWithFloat:ld]);
-        return (java_lang_String*)[NSString stringWithFormat:@"%#qx", [NSNumber numberWithDouble:d]];
-         */
         
     }
     return (java_lang_String*)ret;
@@ -258,6 +245,8 @@ static java_lang_Class* primitiveDoubleClass;
 {
     long long llValue = *((long long*)(&d));
     
+    const union { double f; uint64_t i; } xUnion = { .f = d };
+    
 //    if (((llValue & 9218868437227405312)==9218868437227405312) && (llValue & 4503599627370495)!=0L) {
     if (((llValue & [sun_misc_DoubleConsts _GET_EXP_BIT_MASK])==[sun_misc_DoubleConsts _GET_EXP_BIT_MASK]) && (llValue & [sun_misc_DoubleConsts _GET_SIGNIF_BIT_MASK])!=0L) {
         return 9221120237041090560;
@@ -269,7 +258,8 @@ static java_lang_Class* primitiveDoubleClass;
 
 + (long long) doubleToRawLongBits___double:(double)d
 {
-    return *((long long*)(&d));
+    long long llValue = *((long long*)(&d));
+    return llValue;//*((long long*)(&d));
 }
 
 

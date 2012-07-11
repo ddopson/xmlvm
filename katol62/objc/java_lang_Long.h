@@ -21,37 +21,32 @@
 #import "xmlvm.h"
 #import "java_lang_Number.h"
 #import "java_lang_String.h"
-#import "java_lang_NumberFormatException.h"
-#import "sun_misc_DoubleConsts.h"
-#import "sun_misc_FpUtils.h"
-#import "java_lang_Long.h"
+#import "java_lang_Comparable.h"
 
-
-// java.lang.Double
+// java.lang.Long
 //----------------------------------------------------------------------------
-@interface java_lang_Double : java_lang_Number <NSCopying> {
+@interface java_lang_Long : java_lang_Number <NSCopying, java_lang_Comparable> {
 
-double number;
+JAVA_LONG number;
 
 }
 
-+ (void) initialize;
++ (java_lang_Class*) _GET_TYPE;
 - (id) init;
 - (id) copyWithZone:(NSZone *)zone;
 - (NSUInteger) hash;
-+ (java_lang_Class*) _GET_TYPE;
-- (void) __init_java_lang_Double___double :(double) d;
-- (BOOL)isEqual:(id)anObject;
-- (double) doubleValue__;
-- (java_lang_String*) toString__;
-+ (double) parseDouble___java_lang_String: (java_lang_String *) str;
-+ (java_lang_String*) toString___double: (double) d;
-+ (java_lang_Double*) valueOf___double: (double) d;
-+ (java_lang_Double*) valueOf___java_lang_String: (java_lang_String*) str;
+- (void) __init_java_lang_Long___long :(JAVA_LONG) l;
+- (BOOL) isEqual:(id)anObject;
+- (int) intValue__;
+- (JAVA_LONG) longValue__;
++ (JAVA_LONG) parseLong___java_lang_String: (java_lang_String *) str;
++ (JAVA_LONG) parseLong___java_lang_String_int: (java_lang_String*) str :(int) radix;
++ (java_lang_String*) toString___long: (JAVA_LONG) l;
++ (java_lang_Long*) valueOf___java_lang_String: (java_lang_String*) str;
++ (java_lang_Long*) valueOf___long: (JAVA_LONG) l;
+- (int) compareTo___java_lang_Object: (java_lang_Object*) obj;
+- (int) compareTo___java_lang_Long: (java_lang_Long*) l;
++ (NSString *) toUnsignedString_long_int:(long long)i:(int)shift;
 
-+ (double) longBitsToDouble___long:(long long)d;
-+(int)isNaN___double:(double)d;
-+ (long long) doubleToLongBits___double:(double)d;
-+ (int) isInfinite___double:(double)d;
 
 @end
