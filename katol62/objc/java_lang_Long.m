@@ -178,7 +178,7 @@ static BOOL instanceof(id obj, const char *className) {
 
 + (NSString *) toUnsignedString_long_int:(long long)i:(int)shift
 {
-//private static String toUnsignedString(long i, int shift) {
+
     NSArray *digits = [NSArray arrayWithObjects: 
               @"0", @"1", @"2", @"3", @"4", @"5",
               @"6", @"7", @"8", @"9", @"a", @"b", 
@@ -188,27 +188,22 @@ static BOOL instanceof(id obj, const char *className) {
               @"u", @"v", @"w", @"x", @"y", @"z", nil];
 
     
-    NSMutableArray *buf = [NSMutableArray arrayWithObjects: 
-                           @"0", @"0", @"0", @"0", @"0", @"0", @"0", @"0",
-                           @"0", @"0", @"0", @"0", @"0", @"0", @"0", @"0",
-                           @"0", @"0", @"0", @"0", @"0", @"0", @"0", @"0",
-                           @"0", @"0", @"0", @"0", @"0", @"0", @"0", @"0",
-                           @"0", @"0", @"0", @"0", @"0", @"0", @"0", @"0",
-                           @"0", @"0", @"0", @"0", @"0", @"0", @"0", @"0",
-                           @"0", @"0", @"0", @"0", @"0", @"0", @"0", @"0",
-                           @"0", @"0", @"0", @"0", @"0", @"0", @"0", @"0", nil];    
+    NSMutableArray *buf_temp = [NSMutableArray array];
+    
     int charPos = 64;
     int radix = 1 << shift;
-    unsigned long long mask = radix - 1;
-    int p = (int)(i & mask);
-    while (i != 0) {
-        NSString *d = (NSString *)[digits objectAtIndex:p];
-        [buf insertObject:d atIndex:--charPos];
+    long long mask = radix - 1;
+    do {
+        int p = (int)(i & mask);
+        NSString *d = [digits objectAtIndex:p];
+        [buf_temp addObject:d];
         i = i >> shift;
-    }
+    } while (i != 0);
+    
+    NSArray* buf = [[buf_temp reverseObjectEnumerator] allObjects];
+    
     NSString *str = [buf componentsJoinedByString:@""];
-    NSString *sub = [str substringWithRange:NSMakeRange(charPos, (64-charPos)) ];
-    return sub;
+    return str;
 }
 
 @end
