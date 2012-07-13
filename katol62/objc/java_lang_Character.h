@@ -19,41 +19,24 @@
  */
 
 #import "xmlvm.h"
-#import "java_lang_Number.h"
+#import "java_lang_Object.h"
 #import "java_lang_String.h"
-#import "java_lang_NumberFormatException.h"
-#import "sun_misc_DoubleConsts.h"
-#import "sun_misc_FpUtils.h"
-#import "java_lang_Long.h"
 
 
-// java.lang.Double
+// java.lang.Character
 //----------------------------------------------------------------------------
-@interface java_lang_Double : java_lang_Number <NSCopying> {
-
-double number;
-
+@interface java_lang_Character : java_lang_Object {
+	JAVA_CHAR c;
 }
 
+- (void) __init_java_lang_Character___char :(JAVA_CHAR) c;
+- (JAVA_CHAR) charValue__;
 + (void) initialize;
-- (id) init;
-- (id) copyWithZone:(NSZone *)zone;
-- (NSUInteger) hash;
 + (java_lang_Class*) _GET_TYPE;
-- (void) __init_java_lang_Double___double :(double) d;
-- (BOOL)isEqual:(id)anObject;
-- (double) doubleValue__;
-- (java_lang_String*) toString__;
-+ (double) parseDouble___java_lang_String: (java_lang_String *) str;
-+ (java_lang_String*) toString___double: (double) d;
-+ (java_lang_Double*) valueOf___double: (double) d;
-+ (java_lang_Double*) valueOf___java_lang_String: (java_lang_String*) str;
-
-+ (double) longBitsToDouble___long:(long long)d;
-+(int)isNaN___double:(double)d;
-+ (long long) doubleToLongBits___double:(double)d;
-+ (int) isInfinite___double:(double)d;
-+ (long long) doubleToRawLongBits___double:(double)d;
++ (java_lang_String*) toString___char: (JAVA_CHAR) c;
++ (java_lang_Character*) valueOf___char: (JAVA_CHAR) c;
++ (int)digit___char_int:(int)chr:(int)radix;
++ (java_lang_Character*) forDigit___int_int:(int)digit:(int)radix;
 
 
 @end

@@ -175,9 +175,10 @@ static java_lang_Class* primitiveDoubleClass;
             
             ret = [ret stringByAppendingString:(subnormal ? @"0." : @"1.")];
             
-            NSString *temp = [java_lang_Long toUnsignedString_long_int:ll:4];
+//            NSString *temp = [java_lang_Long toUnsignedString_long_int:ll:4];
+            NSString *temp = [java_lang_Long toHexString___long:ll];
             
-            NSLog(@"llu=%@", temp);
+//            NSLog(@"llu=%@", temp);
             NSString *signif = [temp substringWithRange:NSMakeRange(3, 13)];
             NSString *add = [NSString string];
             if ([signif isEqualToString:@"0000000000000"])
@@ -195,7 +196,7 @@ static java_lang_Class* primitiveDoubleClass;
                 
                 add = [regex stringByReplacingMatchesInString:signif
                                                     options:0
-                                                    range:NSMakeRange(0, [add length])
+                                                    range:NSMakeRange(0, [signif length])
                                                     withTemplate:@""];
 
             }
@@ -247,13 +248,10 @@ static java_lang_Class* primitiveDoubleClass;
     
     const union { double f; uint64_t i; } xUnion = { .f = d };
     
-//    if (((llValue & 9218868437227405312)==9218868437227405312) && (llValue & 4503599627370495)!=0L) {
     if (((llValue & [sun_misc_DoubleConsts _GET_EXP_BIT_MASK])==[sun_misc_DoubleConsts _GET_EXP_BIT_MASK]) && (llValue & [sun_misc_DoubleConsts _GET_SIGNIF_BIT_MASK])!=0L) {
         return 9221120237041090560;
     }
     return llValue;
-//    const union { double f; uint64_t i; } xUnion = { .f = d };
-//    return xUnion.i;
 }
 
 + (long long) doubleToRawLongBits___double:(double)d

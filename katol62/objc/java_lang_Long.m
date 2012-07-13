@@ -143,7 +143,7 @@ static java_lang_Class* primitiveLongClass;
 
 + (java_lang_String*) toString___long: (JAVA_LONG) l
 {
-    return [[[NSNumber numberWithLongLong: l] stringValue] retain];
+    return (java_lang_String*)[[[NSNumber numberWithLongLong: l] stringValue] retain];
 }
 
 + (java_lang_Long*) valueOf___long: (JAVA_LONG) l {
@@ -175,6 +175,10 @@ static BOOL instanceof(id obj, const char *className) {
 	return (thisVal < anotherVal ? -1 : (thisVal == anotherVal ? 0 : 1));
 }
 
++ (NSString*)toHexString___long:(long long)l
+{
+    return [self toUnsignedString_long_int:l :4];
+}
 
 + (NSString *) toUnsignedString_long_int:(long long)i:(int)shift
 {

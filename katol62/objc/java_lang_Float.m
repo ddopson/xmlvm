@@ -92,7 +92,7 @@ static java_lang_Class* primitiveFloatClass;
     NSCharacterSet* whitespace = [NSCharacterSet characterSetWithCharactersInString: @" \t\n\r\f\001\013\037"];
     NSString* trimmed = [str stringByTrimmingCharactersInSet:whitespace];
 
-    NSLog(@"str = %@", (NSString *)trimmed);
+//    NSLog(@"!str = %@", (NSString *)trimmed);
 
     float fval;
     BOOL b;
@@ -116,10 +116,10 @@ static java_lang_Class* primitiveFloatClass;
             return NaN;
         }
         else if ([trimmed isEqualToString:@"Infinity"] || [trimmed isEqualToString:@"+Infinity"]) {
-            return INFINITY;//1.0 / 0.0;
+            return Infinity;//1.0 / 0.0;
         }
         else if ([trimmed isEqualToString:@"-Infinity"]) {
-            return -INFINITY;//log (0);
+            return -Infinity;//log (0);
         }
         else {
             java_lang_NumberFormatException *ex = [[[java_lang_NumberFormatException alloc] init] autorelease];
@@ -148,47 +148,43 @@ static java_lang_Class* primitiveFloatClass;
     return f;
 }
 
-+(java_lang_String*)toHexString___float:(float)f
++(java_lang_String*)toHexString___float:(double)f
 {
-//    return (java_lang_String*)[NSString stringWithFormat:@"%a", [NSNumber numberWithFloat:f]];
-    NSAutoreleasePool *loopPool = [[NSAutoreleasePool alloc] init];
-    NSLog(@"%@", [[NSNumber numberWithFloat:f] stringValue]);
+    NSString *s;
+    if (fabsf(f) < [sun_misc_FloatConsts _GET_MIN_NORMAL] &&  f != 0.0f ) 
+    {
+        
+        int dif = [sun_misc_DoubleConsts _GET_MIN_EXPONENT] - [sun_misc_FloatConsts _GET_MIN_EXPONENT]; 
+        double d = (double)[sun_misc_FpUtils scalb___float_int:f:dif];
+            
+        s = [java_lang_Double toHexString___double:d];
+            
+        NSString *regexToReplace = @"p-1022$";   
+            
+        NSError *error = NULL;
+        NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:regexToReplace
+                                                    options:NSRegularExpressionCaseInsensitive
+                                                    error:&error];
+            
+        s = [regex stringByReplacingMatchesInString:s
+                                    options:0
+                                    range:NSMakeRange(0, [s length])
+                                    withTemplate:@""];
+        return (java_lang_String*)s;
+            
+    }
+    else // double string will be the same as float string
+    {
+        s = [java_lang_Double toHexString___double:f];
+    }
     
-    NSString *s = [[[NSNumber numberWithFloat:f] stringValue] autorelease];
-    
-    if (f==INFINITY) {
-        return (java_lang_String*)[NSString stringWithString:@"Infinity"];
-    }
-    else if (f==-INFINITY) {
-        return (java_lang_String*)[NSString stringWithString:@"-Infinity"];
-    }
-    else if ([self isNaN___float:f]) {
-        return (java_lang_String*)[NSString stringWithString:@"NaN"];
-    }
-    else {
-        
-        float ld = [[NSNumber numberWithFloat:f] floatValue];
-        
-        float dval;
-        BOOL b;
-        NSScanner *scanner = [NSScanner scannerWithString: s];
-        b = [scanner scanHexFloat:&dval];
-        
-        return (java_lang_String*)[NSString stringWithFormat:@"%#p", [NSNumber numberWithFloat:f]];
-    }
-    [loopPool drain];
+    return (java_lang_String*)s;
 
 }
 
 + (JAVA_INT) floatToIntBits___float: (float) f
 {
     return (JAVA_INT)*(int *)(long *)&f;
-
-//    long ff = (long)f;
-//	return (JAVA_INT)*(int *)(long *)&ff;
-//    NSLog(@"%d", (JAVA_INT) f);
-//    return (JAVA_INT) f;
-
 }
 
 + (float) intBitsToFloat___int: (int) i
