@@ -36,6 +36,11 @@ static java_lang_Class* primitiveIntClass;
 //----------------------------------------------------------------------------
 @implementation java_lang_Integer
 
+
+static int MIN_VALUE = 0x80000000;
+static int MAX_VALUE = 0x7fffffff;
+
+
 + (void) initialize
 {
 	primitiveInt = [[PrimitiveInt alloc] init];
@@ -170,9 +175,92 @@ static BOOL instanceof(id obj, const char *className) {
 	return (thisVal < anotherVal ? -1 : (thisVal == anotherVal ? 0 : 1));
 }
 
-+ (int) parseInt___java_lang_String_int:(java_lang_String *)str:(int)i
++ (int) parseInt___java_lang_String_int:(java_lang_String *)str:(int)ii
 {
-    return (int)[(NSString*)str integerValue];
+
+    NSString *s = (NSString*)str;
+    int radix = ii;
+    
+    if (s == nil) {
+        java_lang_NumberFormatException *ex = [[[java_lang_NumberFormatException alloc] init] autorelease];
+        [ex __init_java_lang_NumberFormatException___java_lang_String:(java_lang_String*)@"null"];
+        @throw ex;
+    }
+    
+    if (radix < [java_lang_Character _GET_MIN_RADIX]) {
+        java_lang_NumberFormatException *ex = [[[java_lang_NumberFormatException alloc] init] autorelease];
+        [ex __init_java_lang_NumberFormatException___java_lang_String:(java_lang_String*)[NSString stringWithFormat:@"radix %d less than Character.MIN_RADIX"]];
+        @throw ex;
+    }
+    
+    if (radix > [java_lang_Character _GET_MAX_RADIX]) {
+        java_lang_NumberFormatException *ex = [[[java_lang_NumberFormatException alloc] init] autorelease];
+        [ex __init_java_lang_NumberFormatException___java_lang_String:(java_lang_String*)[NSString stringWithFormat:@"radix %d greater than Character.MAX_RADIX"]];
+        @throw ex;
+    }
+    
+    int result = 0;
+    BOOL negative = false;
+    int i = 0;
+    int len = [s length];
+    int limit = -MAX_VALUE;
+    int multmin;
+    int digit;
+    
+    if (len > 0) {
+        int firstChar = [s characterAtIndex:0];
+        if (firstChar < '0') { // Possible leading "-"
+            if (firstChar == '-') {
+                negative = true;
+                limit = MIN_VALUE;
+            } 
+            else
+            {
+                java_lang_NumberFormatException *ex = [[[java_lang_NumberFormatException alloc] init] autorelease];
+                [ex __init_java_lang_NumberFormatException___java_lang_String:(java_lang_String*)s];
+                @throw ex;
+            }
+            
+            if (len == 1) // Cannot have lone "-"
+            {
+                java_lang_NumberFormatException *ex = [[[java_lang_NumberFormatException alloc] init] autorelease];
+                [ex __init_java_lang_NumberFormatException___java_lang_String:(java_lang_String*)s];
+                @throw ex;
+            }
+            i++;
+        }
+        multmin = limit / radix;
+        while (i < len) {
+            // Accumulating negatively avoids surprises near MAX_VALUE
+            digit = [java_lang_Character digit___char_int:[s characterAtIndex:i++] :radix];//Character.digit(s.charAt(i++),radix);
+            if (digit < 0) {
+                java_lang_NumberFormatException *ex = [[[java_lang_NumberFormatException alloc] init] autorelease];
+                [ex __init_java_lang_NumberFormatException___java_lang_String:(java_lang_String*)s];
+                @throw ex;
+            }
+            if (result < multmin) {
+                java_lang_NumberFormatException *ex = [[[java_lang_NumberFormatException alloc] init] autorelease];
+                [ex __init_java_lang_NumberFormatException___java_lang_String:(java_lang_String*)s];
+                @throw ex;
+            }
+            result *= radix;
+            if (result < limit + digit) {
+                java_lang_NumberFormatException *ex = [[[java_lang_NumberFormatException alloc] init] autorelease];
+                [ex __init_java_lang_NumberFormatException___java_lang_String:(java_lang_String*)s];
+                @throw ex;
+            }
+            result -= digit;
+        }
+    } else {
+        java_lang_NumberFormatException *ex = [[[java_lang_NumberFormatException alloc] init] autorelease];
+        [ex __init_java_lang_NumberFormatException___java_lang_String:(java_lang_String*)s];
+        @throw ex;
+    }
+    
+    
+    return negative ? result : -result;
+    
+//    return (int)[(NSString*)str integerValue];
 }
 
 @end

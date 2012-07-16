@@ -64,4 +64,6 @@ typedef NSMutableString java_lang_String;
 - (java_lang_String*) trim__;
 - (int) isEmpty__;
 + (java_lang_String *) format___java_lang_String_java_lang_Object_ARRAYTYPE:(java_lang_String *)format :(XMLVMArray *) args;
++ (java_lang_String*) replaceFirst___java_lang_String_java_lang_String:(java_lang_String*)pattern:(java_lang_String*)replace;
+
 @end

@@ -151,32 +151,35 @@ static java_lang_Class* primitiveFloatClass;
 +(java_lang_String*)toHexString___float:(double)f
 {
     NSString *s;
-    if (fabsf(f) < [sun_misc_FloatConsts _GET_MIN_NORMAL] &&  f != 0.0f ) 
-    {
+
+//    double fd = (double)f;
+//    if (f==INFINITY) {
+//        s = [NSString stringWithString:@"Infinity"];
+//    }
+//    else if (f==-INFINITY) {
+//        s = [NSString stringWithString:@"-Infinity"];
+//    }
+//    else if ([self isNaN___float:f]) {
+//        s = [NSString stringWithString:@"NaN"];
+//    }
+//    else {
+
+        if (fabs(f) < [sun_misc_FloatConsts _GET_MIN_NORMAL] &&  f != 0.0f ) 
+        {
         
-        int dif = [sun_misc_DoubleConsts _GET_MIN_EXPONENT] - [sun_misc_FloatConsts _GET_MIN_EXPONENT]; 
-        double d = (double)[sun_misc_FpUtils scalb___float_int:f:dif];
+            int dif = (int)([sun_misc_DoubleConsts _GET_MIN_EXPONENT] - [sun_misc_FloatConsts _GET_MIN_EXPONENT]); 
+            double d = (double)[sun_misc_FpUtils scalb___float_int:f:dif];
             
-        s = [java_lang_Double toHexString___double:d];
+            s = [java_lang_Double toHexString___double:d];
             
-        NSString *regexToReplace = @"p-1022$";   
+            s = (NSString *)[(java_lang_String *)s replaceFirst___java_lang_String_java_lang_String:(java_lang_String*)@"p-1022$":(java_lang_String*)@"p-126"];
             
-        NSError *error = NULL;
-        NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:regexToReplace
-                                                    options:NSRegularExpressionCaseInsensitive
-                                                    error:&error];
-            
-        s = [regex stringByReplacingMatchesInString:s
-                                    options:0
-                                    range:NSMakeRange(0, [s length])
-                                    withTemplate:@""];
-        return (java_lang_String*)s;
-            
-    }
-    else // double string will be the same as float string
-    {
-        s = [java_lang_Double toHexString___double:f];
-    }
+        }
+        else // double string will be the same as float string
+        {
+            s = [java_lang_Double toHexString___double:f];
+        }
+//    }
     
     return (java_lang_String*)s;
 
