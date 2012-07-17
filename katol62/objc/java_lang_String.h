@@ -21,6 +21,7 @@
 #import "xmlvm.h"
 #import "java_lang_Object.h"
 #import "java_lang_CharSequence.h"
+#import "java_util_Locale.h"
 
 typedef NSMutableString java_lang_String;
 
@@ -65,5 +66,6 @@ typedef NSMutableString java_lang_String;
 - (int) isEmpty__;
 + (java_lang_String *) format___java_lang_String_java_lang_Object_ARRAYTYPE:(java_lang_String *)format :(XMLVMArray *) args;
 + (java_lang_String*) replaceFirst___java_lang_String_java_lang_String:(java_lang_String*)pattern:(java_lang_String*)replace;
+- (java_lang_String*) toLowerCase___java_util_Locale:(java_util_Locale*)locale;
 
 @end

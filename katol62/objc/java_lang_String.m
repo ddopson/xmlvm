@@ -369,4 +369,14 @@
 
 }
 
+- (java_lang_String*) toLowerCase___java_util_Locale:(java_util_Locale*)locale
+{
+    NSString *updated = [NSString stringWithString:(NSString*)self];
+    if ([(NSString *)[locale getCountry__] isEqualToString:@"US"]) {
+        NSLocale *locale = [[[NSLocale alloc] initWithLocaleIdentifier:@"en-US"] autorelease];
+        updated = [updated stringByFoldingWithOptions:NSDiacriticInsensitiveSearch locale:locale];
+    }
+    return (java_lang_String*)[updated lowercaseString];
+}
+
 @end

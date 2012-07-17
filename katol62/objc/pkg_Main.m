@@ -17,6 +17,7 @@
 #import "pkg_ToString.h"
 #import "pkg_ParseDouble.h"
 #import "pkg_ToHexString.h"
+#import "pkg_ParseHexFloatingPoint.h"
 
 @implementation pkg_Main;
 
@@ -66,9 +67,7 @@ int main(int argc, char* argv[])
     runTest(@"ToString", [pkg_ToString class], @selector(testmain___java_lang_String_ARRAYTYPE:));
     runTest(@"ParseDouble", [pkg_ParseDouble class], @selector(testmain___java_lang_String_ARRAYTYPE:));
     runTest(@"ToHexString", [pkg_ToHexString class], @selector(testmain___java_lang_String_ARRAYTYPE:));
-    /*
-     runTest(@"ParseHexFloatingPoint", [pkg_ParseHexFloatingPoint class], @selector(testmain___java_lang_String_ARRAYTYPE:));
-     */
+	runTest(@"ParseHexFloatingPoint", [pkg_ParseHexFloatingPoint class], @selector(testmain___java_lang_String_ARRAYTYPE:));
     
     /* java_lang_Float
     runTest(@"BitwiseConversion", [pkg_BitwiseConversion class], @selector(testmain___java_lang_String_ARRAYTYPE:));
