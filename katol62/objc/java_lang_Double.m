@@ -86,20 +86,41 @@ static java_lang_Class* primitiveDoubleClass;
 
 + (double) parseDouble___java_lang_String: (java_lang_String *) str
 {
+    
     NSAutoreleasePool *loopPool = [[NSAutoreleasePool alloc] init];
     
     NSCharacterSet* whitespace = [NSCharacterSet characterSetWithCharactersInString: @" \t\n\r\f\001\013\037"];
     NSString* trimmed = [str stringByTrimmingCharactersInSet:whitespace];
     
+    NSMutableString *tmp = [[NSMutableString stringWithString:trimmed] autorelease];
+    NSRange foundRange = [tmp rangeOfString:@"+0x"];
+    if (foundRange.location != NSNotFound)
+    {
+        [tmp replaceCharactersInRange:foundRange withString:@"0x"];
+        trimmed = [NSString stringWithString:tmp];
+    }
+    
 //    NSLog(@"trimmed=%@", trimmed);
 
+    if([trimmed isEqualToString:@"0x1.000000000000001p-1075"])
+    {
+        NSLog(@"stop");
+    }
+    
     double fval;
     BOOL b;
-
+    
+    const char *c = [trimmed cStringUsingEncoding:NSNonLossyASCIIStringEncoding];
+    
     NSRange range = [[trimmed lowercaseString] rangeOfString:@"0x"];
+    NSRange range_dec = [[trimmed lowercaseString] rangeOfString:@"."];
     NSScanner *scanner = [NSScanner scannerWithString: trimmed];
     if (range.location != NSNotFound && (range.location==0 || range.location==1)) {
         b = [scanner scanHexDouble:&fval];
+        if (range_dec.location != NSNotFound && range_dec.location>1) 
+        {
+            fval = strtod (c, NULL);
+        }
     } else {
         NSScanner *scanner = [NSScanner scannerWithString: trimmed];
         b = [scanner scanDouble:&fval];
@@ -247,5 +268,29 @@ static java_lang_Class* primitiveDoubleClass;
     return llValue;//*((long long*)(&d));
 }
 
++ (int) compare___double_double:(double)d1:(double)d2
+{
+//    if (d1 < d2)
+//        return -1;           // Neither val is NaN, thisVal is smaller
+//    if (d1 > d2)
+//        return 1;            // Neither val is NaN, thisVal is larger
+    
+    // Cannot use doubleToRawLongBits because of possibility of NaNs.
+    long long thisBits    = [self doubleToLongBits___double:d1];
+    long long anotherBits = [self doubleToLongBits___double:d2];
+    
+    return (thisBits == anotherBits ?  0 : // Values are equal
+            (thisBits < anotherBits ? -1 : // (-0.0, 0.0) or (!NaN, NaN)
+             1));                          //
+    
+    /*
+    NSLog(@"diff=%f", fabsf(d1 - d2));
+    
+    if(fabsf(d1 - d2) < 0.000001)
+        return 1;
+    else
+        return 0;
+     */
+}
 
 @end
