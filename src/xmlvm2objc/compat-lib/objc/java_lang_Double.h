@@ -22,6 +22,9 @@
 #import "java_lang_Number.h"
 #import "java_lang_String.h"
 #import "java_lang_NumberFormatException.h"
+#import "sun_misc_DoubleConsts.h"
+#import "sun_misc_FpUtils.h"
+#import "java_lang_Long.h"
 
 
 // java.lang.Double
@@ -50,5 +53,7 @@ double number;
 +(int)isNaN___double:(double)d;
 + (long long) doubleToLongBits___double:(double)d;
 + (int) isInfinite___double:(double)d;
++ (long long) doubleToRawLongBits___double:(double)d;
+
 
 @end

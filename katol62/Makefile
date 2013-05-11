@@ -3,10 +3,10 @@ XMLVM_DIR      = $(CURDIR)/..
 XMLVM          = $(CURDIR)/../bin/xmlvm
 IOS_SIM        = $(CURDIR)/bin/ios-sim
 
-java_src_files = $(shell find src test -name '*.java')
+java_src_files = $(shell find src/java test -name '*.java')
 
 .PHONY: default
-default: javac xmlvm trim xcodebuild
+default: javac xmlvm
 
 .PHONY: build
 build: xcodebuild
@@ -21,20 +21,8 @@ build/.make.javac: $(java_src_files)
 .PHONY: xmlvm
 xmlvm: javac build/.make.xmlvm
 build/.make.xmlvm: build/.make.javac
-	$(XMLVM) --in=build/classes/ --out=build/xcode --target=iphone --enable-ref-counting --app-name=HelloResources --lib=SystemConfiguration.framework --lib=StoreKit.framework
+	$(XMLVM) --in=build/classes/ --out=build/gen-objc --target=objc --enable-ref-counting
 	@touch build/.make.xmlvm
-
-.PHONY: trim
-trim: build/.make.trim
-build/.make.trim: build/.make.xmlvm
-	ant trim -Dxmlvm_path=$(XMLVM_DIR)/dist/xmlvm.jar -Dhome=$(CURDIR)/build/xcode -Dresources=resources/images/:resources/files/:$(objc_resources)
-	rsync objc/* build/xcode/build/xcode/src/trim/ --backup --backup-dir=$(CURDIR)/objc/originals/ --suffix=.backup
-	@touch build/.make.trim
-
-.PHONY: overrides
-overrides:
-	rsync -av objc/* build/xcode/build/xcode/src/trim/ --exclude=originals
-	
 
 .PHONY: xcodebuild
 xcodebuild: build/.make.xcodebuild

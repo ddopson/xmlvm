@@ -83,9 +83,9 @@ int _STATIC_sun_misc_FpUtils__assertionsDisabled;
     XMLVMElem _r2;
     XMLVMElem _r4;
     _r4.d = n1;
-    _r0.l = [java_lang_Double doubleToRawLongBits___double:_r4.d];
+    _r0.l = (long long)[java_lang_Double doubleToRawLongBits___double:_r4.d];
     _r2.l = 9218868437227405312;
-    _r0.l = _r0.l & _r2.l;
+    _r0.l = (long long)_r0.l & _r2.l;
     _r2.i = 52;
     _r0.l = _r0.l >> (0x3f & _r2.l);
     _r2.l = 1023;
@@ -547,8 +547,9 @@ int _STATIC_sun_misc_FpUtils__assertionsDisabled;
     label53:;
     return _r4.d;
 }
-+ (float) scalb___float_int :(float)n1 :(int)n2
++ (double) scalb___float_int :(float)n1 :(int)n2
 {
+    /*
     XMLVMElem _r0;
     XMLVMElem _r1;
     XMLVMElem _r3;
@@ -565,6 +566,43 @@ int _STATIC_sun_misc_FpUtils__assertionsDisabled;
     _r0.d = _r1.d * _r3.d;
     _r0.f = (float) _r0.d;
     return _r0.f;
+    */
+    
+    double d = n1;
+    int scale_factor = n2;
+    
+    int MAX_SCALE = 1023 + 1022 + 53 + 1;
+    int exp_adjust = 0;
+    int scale_increment = 0;
+    double exp_delta = NAN;
+    
+    // Make sure scaling factor is in a reasonable range
+    
+    if(n2 < 0) {
+        scale_factor = MAX(scale_factor, -MAX_SCALE);
+        scale_increment = -512;
+        exp_delta = [sun_misc_FpUtils powerOfTwoD___int:scale_increment];
+    }
+    else {
+        scale_factor = MIN(scale_factor, MAX_SCALE);
+        scale_increment = 512;
+        exp_delta = [sun_misc_FpUtils powerOfTwoD___int:scale_increment];
+    }
+    
+    // Calculate (scale_factor % +/-512), 512 = 2^9, using
+    // technique from "Hacker's Delight" section 10-2.
+    int t = (scale_factor >> 9-1) >> 32 - 9;
+    exp_adjust = ((scale_factor + t) & (512 -1)) - t;
+    
+    d *= [sun_misc_FpUtils powerOfTwoD___int:exp_adjust];//powerOfTwoD(exp_adjust);
+    scale_factor -= exp_adjust;
+    
+    while(scale_factor != 0) {
+        d *= exp_delta;
+        scale_factor -= scale_increment;
+    }
+    return d;
+    
 }
 + (double) nextAfter___double_double :(double)n1 :(double)n2
 {

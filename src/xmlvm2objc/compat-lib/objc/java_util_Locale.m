@@ -107,4 +107,11 @@ static Class localeClass;
 	return [country retain];
 }
 
++ (java_util_Locale *) _GET_US
+{
+    java_util_Locale *locale = [[[java_util_Locale alloc] init] autorelease];
+    [locale __init_java_util_Locale___java_lang_String_java_lang_String:(java_lang_String*)@"en" :(java_lang_String*)@"US"];
+    return [locale retain];
+}
+
 @end

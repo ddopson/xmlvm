@@ -35,5 +35,9 @@
 + (java_lang_Class*) _GET_TYPE;
 + (java_lang_String*) toString___char: (JAVA_CHAR) c;
 + (java_lang_Character*) valueOf___char: (JAVA_CHAR) c;
++ (int)digit___char_int:(int)chr:(int)radix;
++ (java_lang_Character*) forDigit___int_int:(int)digit:(int)radix;
 
++ (int) _GET_MIN_RADIX;
++ (int) _GET_MAX_RADIX;
 @end

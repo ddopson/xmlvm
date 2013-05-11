@@ -18,26 +18,16 @@
  * USA.
  */
 
-#import "xmlvm.h"
-#import "java_lang_Object.h"
-#import "java_lang_String.h"
+package org.xmlvm;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
-// java.lang.Character
-//----------------------------------------------------------------------------
-@interface java_lang_Character : java_lang_Object {
-	JAVA_CHAR c;
+/**
+ * This annotation can be applied to classes, fields and methods, in which case
+ * the referring class, field or method is removed from the resulting XMLVM.
+ */
+@Retention(RetentionPolicy.CLASS)
+public @interface XMLVMIgnore {
+
 }
-
-- (void) __init_java_lang_Character___char :(JAVA_CHAR) c;
-- (JAVA_CHAR) charValue__;
-+ (void) initialize;
-+ (java_lang_Class*) _GET_TYPE;
-+ (java_lang_String*) toString___char: (JAVA_CHAR) c;
-+ (java_lang_Character*) valueOf___char: (JAVA_CHAR) c;
-+ (int)digit___char_int:(int)chr:(int)radix;
-+ (java_lang_Character*) forDigit___int_int:(int)digit:(int)radix;
-
-+ (int) _GET_MIN_RADIX;
-+ (int) _GET_MAX_RADIX;
-@end

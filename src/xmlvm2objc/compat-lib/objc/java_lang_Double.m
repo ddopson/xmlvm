@@ -18,7 +18,7 @@
  * USA.
  */
 
-#import "java_lang_Double.h"
+#import "java_lang_Double.h"oo
 
 @interface PrimitiveDouble : java_lang_Object
 @end
@@ -86,37 +86,57 @@ static java_lang_Class* primitiveDoubleClass;
 
 + (double) parseDouble___java_lang_String: (java_lang_String *) str
 {
-//	return atof([str UTF8String]);
-    NSLog(@"Str=%@", str);
+    
+    NSAutoreleasePool *loopPool = [[NSAutoreleasePool alloc] init];
     
     NSCharacterSet* whitespace = [NSCharacterSet characterSetWithCharactersInString: @" \t\n\r\f\001\013\037"];
     NSString* trimmed = [str stringByTrimmingCharactersInSet:whitespace];
     
-    NSLog(@"trimmed=%@", trimmed);
-
-    double fval;
+    NSMutableString *tmp = [[NSMutableString stringWithString:trimmed] autorelease];
+    NSRange foundRange = [tmp rangeOfString:@"+0x"];
+    if (foundRange.location != NSNotFound)
+    {
+        [tmp replaceCharactersInRange:foundRange withString:@"0x"];
+        trimmed = [NSString stringWithString:tmp];
+    }
     
+//    NSLog(@"trimmed=%@", trimmed);
+
+    if([trimmed isEqualToString:@"0x1.000000000000001p-1075"])
+    {
+        NSLog(@"stop");
+    }
+    
+    double fval;
+    BOOL b;
+    
+    const char *c = [trimmed cStringUsingEncoding:NSNonLossyASCIIStringEncoding];
     
     NSRange range = [[trimmed lowercaseString] rangeOfString:@"0x"];
+    NSRange range_dec = [[trimmed lowercaseString] rangeOfString:@"."];
+    NSScanner *scanner = [NSScanner scannerWithString: trimmed];
     if (range.location != NSNotFound && (range.location==0 || range.location==1)) {
+        b = [scanner scanHexDouble:&fval];
+        if (range_dec.location != NSNotFound && range_dec.location>1) 
+        {
+            fval = strtod (c, NULL);
+        }
+    } else {
         NSScanner *scanner = [NSScanner scannerWithString: trimmed];
-        [scanner scanHexDouble:&fval];
-    }
-    else
-    {
+        b = [scanner scanDouble:&fval];
         fval = [trimmed doubleValue];
     }
-
-    if ((![self is_zero_string:trimmed]) && fval==0)
+    
+    if (b==NO && fval==0)
     {
         if ([trimmed isEqualToString:@"NaN"] || [trimmed isEqualToString:@"+NaN"] || [trimmed isEqualToString:@"-NaN"]) {
             return NaN;
         }
         else if ([trimmed isEqualToString:@"Infinity"] || [trimmed isEqualToString:@"+Infinity"]) {
-            return INFINITY;//1.0 / 0.0;
+            return INFINITY;
         }
         else if ([trimmed isEqualToString:@"-Infinity"]) {
-            return -INFINITY;//log (0);
+            return -INFINITY;
         }
         else {
             java_lang_NumberFormatException *ex = [[[java_lang_NumberFormatException alloc] init] autorelease];
@@ -126,25 +146,8 @@ static java_lang_Class* primitiveDoubleClass;
         
     }
 	return fval;
+    [loopPool drain];
 
-}
-
-+ (BOOL) is_zero_string:(NSString*)str
-{
-    return ([str isEqualToString:@"0"] ||
-            [str isEqualToString:@"+0"] ||
-            [str isEqualToString:@"-0"] ||
-            [str isEqualToString:@"00"] ||
-            [str isEqualToString:@"-00"] ||
-            [str isEqualToString:@"+00"] ||
-            [str isEqualToString:@"0000000000"] ||
-            [str isEqualToString:@"-0000000000"] ||
-            [str isEqualToString:@"0.0E-10"] ||
-            [str isEqualToString:@"0.f"] ||
-            [str isEqualToString:@"0.F"] ||
-            [str isEqualToString:@"0e-0D"] ||
-            [str isEqualToString:@"+0000000000"]);
-            
 }
 
 - (java_lang_String*) toString__
@@ -152,9 +155,76 @@ static java_lang_Class* primitiveDoubleClass;
 	return [java_lang_Double toString___double:number];
 }
 
++ (java_lang_String*) toHexString___double:(double)d
+{
+    NSAutoreleasePool *loopPool = [[NSAutoreleasePool alloc] init];
+    NSString *ret = [NSString string];
+    
+    NSString *s = [[[NSNumber numberWithDouble:d] stringValue] autorelease];
+
+    if (d==INFINITY) {
+        ret = [NSString stringWithString:@"Infinity"];
+    }
+    else if (d==-INFINITY) {
+        ret = [NSString stringWithString:@"-Infinity"];
+    }
+    else if ([self isNaN___double:d]) {
+        ret = [NSString stringWithString:@"NaN"];
+    }
+    else {
+        
+        NSString *start = [[NSString stringWithFormat:@"%@", [[NSNumber numberWithDouble:d] stringValue]] substringWithRange:NSMakeRange(0,1)]; 
+        
+        if ([start isEqualToString:@"-"]) {
+            ret = [ret stringByAppendingString:@"-"];
+        }
+        
+        ret = [ret stringByAppendingString:@"0x"];
+        
+        d = fabs(d);
+        if (d==0) {
+            ret = [ret stringByAppendingString:@"0.0p0"];
+        }
+        else {
+            BOOL subnormal = d < [sun_misc_DoubleConsts _GET_MIN_NORMAL];// 2.2250738585072014E-308;
+            
+            unsigned long long l1 = [self doubleToLongBits___double:d];
+            
+            unsigned long long l2 = l1 & (unsigned long long)[sun_misc_DoubleConsts _GET_SIGNIF_BIT_MASK];
+            unsigned long long ll = l2 | (unsigned long long)0x1000000000000000L;
+            
+            ret = [ret stringByAppendingString:(subnormal ? @"0." : @"1.")];
+            
+            NSString *temp = [java_lang_Long toHexString___long:ll];
+            
+            NSString *signif = [temp substringWithRange:NSMakeRange(3, 13)];
+            NSString *add = [NSString string];
+            if ([signif isEqualToString:@"0000000000000"])
+            {
+                add = [add stringByAppendingString:@"0"];
+            }
+            else {
+                
+                add = (NSString *)[(java_lang_String *)signif replaceFirst___java_lang_String_java_lang_String:(java_lang_String*)@"0{1,12}$":(java_lang_String*)@""];
+                
+            }
+
+            ret = [ret stringByAppendingString:add];
+            int addd = subnormal ? [sun_misc_DoubleConsts _GET_MIN_EXPONENT] : [sun_misc_FpUtils getExponent___double:d];
+            NSString *str = [[NSNumber numberWithInt:addd] stringValue];
+            NSString *str1 = [NSString stringWithFormat:@"%d", addd];
+            ret = [ret stringByAppendingFormat:@"p%d", addd];
+            
+        }
+        
+    }
+    return (java_lang_String*)ret;
+    [loopPool drain];
+}
+
 + (java_lang_String*) toString___double: (double) d
 {
-	return [[[NSNumber numberWithDouble: d] stringValue] retain];
+	return (java_lang_String*)[[[NSNumber numberWithDouble: d] stringValue] retain];
 }
 
 + (java_lang_Double*) valueOf___double: (double) d
@@ -176,17 +246,51 @@ static java_lang_Class* primitiveDoubleClass;
 
 + (double) longBitsToDouble___long:(long long)d
 {
-    uint64_t x = (uint64_t)d;
-    double doubleValue;
-    doubleValue = *(double*)&x;
-    return doubleValue;
+//    double doubleValue = *(double*)&d;
+    return *(double*)&d;
 }
 
 + (long long) doubleToLongBits___double:(double)d
 {
+    long long llValue = *((long long*)(&d));
+    
     const union { double f; uint64_t i; } xUnion = { .f = d };
-    long ll = (long long)xUnion.i;
-    return (long long)xUnion.i;
+    
+    if (((llValue & [sun_misc_DoubleConsts _GET_EXP_BIT_MASK])==[sun_misc_DoubleConsts _GET_EXP_BIT_MASK]) && (llValue & [sun_misc_DoubleConsts _GET_SIGNIF_BIT_MASK])!=0L) {
+        return 9221120237041090560;
+    }
+    return llValue;
+}
+
++ (long long) doubleToRawLongBits___double:(double)d
+{
+    long long llValue = *((long long*)(&d));
+    return llValue;//*((long long*)(&d));
+}
+
++ (int) compare___double_double:(double)d1:(double)d2
+{
+//    if (d1 < d2)
+//        return -1;           // Neither val is NaN, thisVal is smaller
+//    if (d1 > d2)
+//        return 1;            // Neither val is NaN, thisVal is larger
+    
+    // Cannot use doubleToRawLongBits because of possibility of NaNs.
+    long long thisBits    = [self doubleToLongBits___double:d1];
+    long long anotherBits = [self doubleToLongBits___double:d2];
+    
+    return (thisBits == anotherBits ?  0 : // Values are equal
+            (thisBits < anotherBits ? -1 : // (-0.0, 0.0) or (!NaN, NaN)
+             1));                          //
+    
+    /*
+    NSLog(@"diff=%f", fabsf(d1 - d2));
+    
+    if(fabsf(d1 - d2) < 0.000001)
+        return 1;
+    else
+        return 0;
+     */
 }
 
 @end

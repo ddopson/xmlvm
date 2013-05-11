@@ -274,8 +274,21 @@
 {
 #if __IPHONE_OS_VERSION_MIN_REQUIRED <= __IPHONE_3_1
 #define NSRegularExpressionSearch NSLiteralSearch
-	NSLog(@"String.replaceFirst() not supported");
+//	NSLog(@"String.replaceFirst() not supported");
 #endif
+    
+    NSError *error = NULL;
+    NSRegularExpression *regexpr = [NSRegularExpression regularExpressionWithPattern:(NSString *)regex
+                                                                           options:NSRegularExpressionCaseInsensitive
+                                                                             error:&error];
+    
+    NSString *ret = [regexpr stringByReplacingMatchesInString:(NSString *)self
+                                                    options:0
+                                                      range:NSMakeRange(0, [(NSString *)self length])
+                                               withTemplate:(NSString*)replacement];
+    return (java_lang_String*)ret;
+
+    /*
 	NSRange found = [self rangeOfString:(NSString *)regex options:NSRegularExpressionSearch];
 	if (found.location == NSNotFound) {
 		return_XMLVM(self);
@@ -285,6 +298,7 @@
 					  replacement,
 					  [self substringFromIndex:(found.location+found.length)]];
 	return (java_lang_String*)[res retain];
+     */
 }
 
 - (java_lang_String*) replaceAll___java_lang_String_java_lang_String :(java_lang_String*)a :(java_lang_String*)b {
@@ -337,6 +351,32 @@
 - (int) isEmpty__
 {
 	return [self length] == 0;
+}
+
++ (java_lang_String*) replaceFirst___java_lang_String_java_lang_String:(java_lang_String*)pattern:(java_lang_String*)replace
+{
+    
+    NSError *error = NULL;
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:(NSString *)pattern
+                                                                           options:NSRegularExpressionCaseInsensitive
+                                                                             error:&error];
+    
+    NSString *ret = [regex stringByReplacingMatchesInString:(NSString *)self
+                                    options:0
+                                    range:NSMakeRange(0, [(NSString *)self length])
+                                    withTemplate:@""];
+    return (java_lang_String*)ret;
+
+}
+
+- (java_lang_String*) toLowerCase___java_util_Locale:(java_util_Locale*)locale
+{
+    NSString *updated = [NSString stringWithString:(NSString*)self];
+    if ([(NSString *)[locale getCountry__] isEqualToString:@"US"]) {
+        NSLocale *locale = [[[NSLocale alloc] initWithLocaleIdentifier:@"en-US"] autorelease];
+        updated = [updated stringByFoldingWithOptions:NSDiacriticInsensitiveSearch locale:locale];
+    }
+    return (java_lang_String*)[updated lowercaseString];
 }
 
 @end

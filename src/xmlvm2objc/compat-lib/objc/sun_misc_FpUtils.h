@@ -44,7 +44,7 @@
 + (int) ilogb___double :(double)n1;
 + (int) ilogb___float :(float)n1;
 + (double) scalb___double_int :(double)n1 :(int)n2;
-+ (float) scalb___float_int :(float)n1 :(int)n2;
++ (double) scalb___float_int :(float)n1 :(int)n2;
 + (double) nextAfter___double_double :(double)n1 :(double)n2;
 + (float) nextAfter___float_double :(float)n1 :(double)n2;
 + (double) nextUp___double :(double)n1;

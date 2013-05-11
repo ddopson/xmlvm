@@ -143,7 +143,7 @@ static java_lang_Class* primitiveLongClass;
 
 + (java_lang_String*) toString___long: (JAVA_LONG) l
 {
-    return [[[NSNumber numberWithLongLong: l] stringValue] retain];
+    return (java_lang_String*)[[[NSNumber numberWithLongLong: l] stringValue] retain];
 }
 
 + (java_lang_Long*) valueOf___long: (JAVA_LONG) l {
@@ -173,6 +173,41 @@ static BOOL instanceof(id obj, const char *className) {
 	JAVA_LONG thisVal = [self longValue__];
 	JAVA_LONG anotherVal = [l longValue__];
 	return (thisVal < anotherVal ? -1 : (thisVal == anotherVal ? 0 : 1));
+}
+
++ (NSString*)toHexString___long:(long long)l
+{
+    return [self toUnsignedString_long_int:l :4];
+}
+
++ (NSString *) toUnsignedString_long_int:(long long)i:(int)shift
+{
+
+    NSArray *digits = [NSArray arrayWithObjects: 
+              @"0", @"1", @"2", @"3", @"4", @"5",
+              @"6", @"7", @"8", @"9", @"a", @"b", 
+              @"c", @"d", @"e", @"f", @"g", @"h",
+              @"i", @"j", @"k", @"l", @"m", @"n",
+              @"o", @"p", @"q", @"r", @"s", @"t",
+              @"u", @"v", @"w", @"x", @"y", @"z", nil];
+
+    
+    NSMutableArray *buf_temp = [NSMutableArray array];
+    
+    int charPos = 64;
+    int radix = 1 << shift;
+    long long mask = radix - 1;
+    do {
+        int p = (int)(i & mask);
+        NSString *d = [digits objectAtIndex:p];
+        [buf_temp addObject:d];
+        i = i >> shift;
+    } while (i != 0);
+    
+    NSArray* buf = [[buf_temp reverseObjectEnumerator] allObjects];
+    
+    NSString *str = [buf componentsJoinedByString:@""];
+    return str;
 }
 
 @end

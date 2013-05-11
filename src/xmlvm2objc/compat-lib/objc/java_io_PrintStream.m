@@ -158,12 +158,21 @@
 	[self writeString:[NSString stringWithFormat:@"%qi", l]];
 }
 
-- (java_io_PrintStream *) format___java_lang_String_java_lang_Object_ARRAYTYPE:(java_lang_String *)format :(XMLVMArray *) args;
+- (java_io_PrintStream *) format___java_lang_String_java_lang_Object_ARRAYTYPE:(java_lang_String *)format :(XMLVMArray *) args
 {
-    java_lang_String* str = [java_lang_String format___java_lang_String_java_lang_Object_ARRAYTYPE: format: args];
-    [self writeString: str];
-    [str release];
+//    java_lang_String* str = [java_lang_String format___java_lang_String_java_lang_Object_ARRAYTYPE: format: args];
+//    java_lang_String* str = (java_lang_String*)[NSString stringWithFormat:(NSString*)format, args];
+//    NSLog(@"str=%@", str);
+    [self writeString: [NSString stringWithFormat:(NSString*)format, args]];
+//    [self writeString: str];
+//    [str release];
     return self;
 }
+
+- (java_io_PrintStream *) printf___java_lang_String_java_lang_Object_ARRAYTYPE:(java_lang_String *)format :(XMLVMArray *)a
+{
+    return [self format___java_lang_String_java_lang_Object_ARRAYTYPE:format:a];
+}
+
 
 @end

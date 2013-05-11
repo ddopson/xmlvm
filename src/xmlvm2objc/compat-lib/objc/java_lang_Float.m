@@ -91,19 +91,35 @@ static java_lang_Class* primitiveFloatClass;
 //    NSLog(@"str = %@", (NSString *)str);
     NSCharacterSet* whitespace = [NSCharacterSet characterSetWithCharactersInString: @" \t\n\r\f\001\013\037"];
     NSString* trimmed = [str stringByTrimmingCharactersInSet:whitespace];
+
+//    NSLog(@"!str = %@", (NSString *)trimmed);
+
+    float fval;
+    BOOL b;
     
-   
-    float fval = [trimmed floatValue];
-    if (fval==0)
+    NSRange range = [[trimmed lowercaseString] rangeOfString:@"0x"];
+    if (range.location != NSNotFound && (range.location==0 || range.location==1)) {
+        NSScanner *scanner = [NSScanner scannerWithString: trimmed];
+        b = [scanner scanHexFloat:&fval];
+    }
+    else
+    {
+        NSScanner *scanner = [NSScanner scannerWithString: trimmed];
+        b = [scanner scanFloat:&fval];
+        fval = [trimmed floatValue];
+    }
+
+//    float fval = [trimmed floatValue];
+    if (b==NO && fval==0)
     {
         if ([trimmed isEqualToString:@"NaN"] || [trimmed isEqualToString:@"+NaN"] || [trimmed isEqualToString:@"-NaN"]) {
             return NaN;
         }
         else if ([trimmed isEqualToString:@"Infinity"] || [trimmed isEqualToString:@"+Infinity"]) {
-            return INFINITY;//1.0 / 0.0;
+            return Infinity;//1.0 / 0.0;
         }
         else if ([trimmed isEqualToString:@"-Infinity"]) {
-            return -INFINITY;//log (0);
+            return -Infinity;//log (0);
         }
         else {
             java_lang_NumberFormatException *ex = [[[java_lang_NumberFormatException alloc] init] autorelease];
@@ -132,16 +148,46 @@ static java_lang_Class* primitiveFloatClass;
     return f;
 }
 
++(java_lang_String*)toHexString___float:(double)f
+{
+    NSString *s;
+
+//    double fd = (double)f;
+//    if (f==INFINITY) {
+//        s = [NSString stringWithString:@"Infinity"];
+//    }
+//    else if (f==-INFINITY) {
+//        s = [NSString stringWithString:@"-Infinity"];
+//    }
+//    else if ([self isNaN___float:f]) {
+//        s = [NSString stringWithString:@"NaN"];
+//    }
+//    else {
+
+        if (fabs(f) < [sun_misc_FloatConsts _GET_MIN_NORMAL] &&  f != 0.0f ) 
+        {
+        
+            int dif = (int)([sun_misc_DoubleConsts _GET_MIN_EXPONENT] - [sun_misc_FloatConsts _GET_MIN_EXPONENT]); 
+            double d = (double)[sun_misc_FpUtils scalb___float_int:f:dif];
+            
+            s = [java_lang_Double toHexString___double:d];
+            
+            s = (NSString *)[(java_lang_String *)s replaceFirst___java_lang_String_java_lang_String:(java_lang_String*)@"p-1022$":(java_lang_String*)@"p-126"];
+            
+        }
+        else // double string will be the same as float string
+        {
+            s = [java_lang_Double toHexString___double:f];
+        }
+//    }
+    
+    return (java_lang_String*)s;
+
+}
 
 + (JAVA_INT) floatToIntBits___float: (float) f
 {
     return (JAVA_INT)*(int *)(long *)&f;
-
-//    long ff = (long)f;
-//	return (JAVA_INT)*(int *)(long *)&ff;
-//    NSLog(@"%d", (JAVA_INT) f);
-//    return (JAVA_INT) f;
-
 }
 
 + (float) intBitsToFloat___int: (int) i

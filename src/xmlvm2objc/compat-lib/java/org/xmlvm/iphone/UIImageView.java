@@ -20,6 +20,7 @@
 
 package org.xmlvm.iphone;
 
+import java.util.ArrayList;
 import org.xmlvm.XMLVMSkeletonOnly;
 import org.xmlvm.iphone.internal.renderer.UIImageViewRenderer;
 
@@ -39,6 +40,10 @@ public class UIImageView extends UIView {
         setContentMode(UIViewContentMode.Center);
         xmlvmSetRenderer(new UIImageViewRenderer(this));
     }
+
+    public void setAnimationImages(ArrayList<UIImage> images) { }
+    public void startAnimating() { }
+    public void stopAnimating() { }
 
     public void setImage(UIImage image) {
         this.image = image;

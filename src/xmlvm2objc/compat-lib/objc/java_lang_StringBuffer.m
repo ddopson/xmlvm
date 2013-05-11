@@ -126,7 +126,9 @@
 
 - (java_lang_StringBuffer*) append___double: (double) d
 {
-	[self appendString: [NSString stringWithFormat: @"%f", d]];
+    //NSLog(@"%@", [[NSNumber numberWithDouble:d] stringValue]);
+//	[self appendString: [NSString stringWithFormat: @"%f", d]];
+	[self appendString: [[NSNumber numberWithDouble:d] stringValue]];
     [self retain];
 	return self;
 }
@@ -178,7 +180,7 @@
 	NSRange range;
 	range.location = from;
 	range.length = to-from;
-	[self replaceCharactersInRange:range withString:str];
+	[self replaceCharactersInRange:range withString:(NSString*)str];
 	return [self retain];
 }
 

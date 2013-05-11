@@ -22,7 +22,10 @@
 #import "java_lang_Number.h"
 #import "java_lang_String.h"
 #import "java_lang_NumberFormatException.h"
-
+#import "java_lang_Double.h"
+#import "sun_misc_FpUtils.h"
+#import "sun_misc_DoubleConsts.h"
+#import "sun_misc_FloatConsts.h"
 
 // java.lang.Float
 //----------------------------------------------------------------------------

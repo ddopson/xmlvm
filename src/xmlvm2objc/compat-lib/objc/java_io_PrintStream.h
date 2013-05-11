@@ -52,5 +52,6 @@
 - (void) print___short: (short) s;
 - (void) print___long: (JAVA_LONG) i;
 - (java_io_PrintStream *) format___java_lang_String_java_lang_Object_ARRAYTYPE:(java_lang_String *)format :(XMLVMArray *)a;
+- (java_io_PrintStream *) printf___java_lang_String_java_lang_Object_ARRAYTYPE:(java_lang_String *)format :(XMLVMArray *)a;
 
 @end

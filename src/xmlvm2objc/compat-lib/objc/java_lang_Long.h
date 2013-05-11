@@ -46,5 +46,8 @@ JAVA_LONG number;
 + (java_lang_Long*) valueOf___long: (JAVA_LONG) l;
 - (int) compareTo___java_lang_Object: (java_lang_Object*) obj;
 - (int) compareTo___java_lang_Long: (java_lang_Long*) l;
++ (NSString *) toUnsignedString_long_int:(long long)i:(int)shift;
++ (NSString*)toHexString___long:(long long)l;
+
 
 @end

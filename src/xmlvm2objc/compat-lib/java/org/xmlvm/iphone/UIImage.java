@@ -52,6 +52,11 @@ public class UIImage extends NSObject {
         return uiImage.image != null ? uiImage : null;
     }
 
+    public static UIImage imageWithCGImage(CGImage cgImage) {
+        // TODO : Java implementation
+        return null;
+    }
+    
     public static UIImage imageWithData(NSData data) {
         // TODO : Java implementation
         return null;

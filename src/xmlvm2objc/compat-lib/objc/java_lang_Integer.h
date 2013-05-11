@@ -22,6 +22,7 @@
 #import "java_lang_Number.h"
 #import "java_lang_String.h"
 #import "java_lang_Comparable.h"
+#import "java_lang_Character.h"
 
 // java.lang.Integer
 //----------------------------------------------------------------------------
@@ -46,5 +47,6 @@ int number;
 + (java_lang_Integer*) valueOf___java_lang_String: (java_lang_String*) s;
 - (int) compareTo___java_lang_Object: (java_lang_Object*) obj;
 - (int) compareTo___java_lang_Integer: (java_lang_Integer*) i;
++ (int) parseInt___java_lang_String_int:(java_lang_String *)str:(int)ii;
 
 @end

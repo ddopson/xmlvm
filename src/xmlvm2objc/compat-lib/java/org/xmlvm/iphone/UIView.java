@@ -201,6 +201,8 @@ public class UIView extends UIResponder {
         return new CGRect(this.bounds);
     }
 
+    public void setBounds(int l, int t, int r, int b) { }
+    
     public void setBounds(CGRect rect) {
         bounds = new CGRect(rect);
     }

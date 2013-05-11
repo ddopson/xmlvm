@@ -41,5 +41,7 @@
 - (java_lang_String*) toString__;
 - (java_lang_String*) getLanguage__;
 - (java_lang_String*) getCountry__;
++ (java_util_Locale *) _GET_US;
+
 	
 @end

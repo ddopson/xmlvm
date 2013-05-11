@@ -2,25 +2,17 @@
 //  java_util_regex_Matcher.m
 //  HelloResources
 //
-//  Created by apple on 08.06.12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
-//
 
+#import "xmlvm.h"
 #import "java_util_regex_Matcher.h"
 
 @implementation java_util_regex_Matcher
 
 @synthesize charSequence, matches;
 
--(int)matches__
+- (JAVA_BOOLEAN) matches__
 {
-    int n = 0;
-    for (NSTextCheckingResult *match in matches) {
-        NSRange matchRange = [match range];
-        NSRange firstHalfRange = [match rangeAtIndex:n];
-        n++;
-    }
-    return [matches count];
+    return [matches count] > 0;
 }
 
 @end
