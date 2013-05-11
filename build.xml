@@ -21,8 +21,6 @@
 
 	<project name="xmlvm" default="jar" basedir=".">
 
-	<target name="demos" depends="demos-iphone,demos-android"/>
-
 	<target name="init">
 		<!-- initialize properties -->
 		<property file="properties/local.properties"/>
@@ -70,7 +68,6 @@
 		<mkdir dir="${xmlvm.bin}/ios" />
 		<mkdir dir="${xmlvm.bin}/iphone" />
 		<mkdir dir="${xmlvm.bin}/lib" />
-		<mkdir dir="${xmlvm.bin}/xmlvm2c" />
 	</target>
 
 
@@ -84,48 +81,9 @@
 			</classpath>
 			<include name="**/*.java" />
 		</javac>
-		<javac srcdir="src/ios" destdir="${xmlvm.objc-compat-lib}" debug="${debug}">
-			<classpath refid="classpath.compile" />
-			<classpath>
-				<pathelement location="${xmlvm.bin}" />
-			</classpath>
-			<include name="**/*.java" />
-		</javac>
 		<jar destfile="${xmlvm.libjars}/objc-compat.jar">
 			<fileset dir="${xmlvm.objc-compat-lib}" />
 		</jar>
-	</target>
-
-	<target name="build-android-compat-lib" depends="build-objc-compat-lib">
-		<mkdir dir="${xmlvm.android-compat-lib.java}" />
-		<javac srcdir="./src/android2iphone" destdir="${xmlvm.android-compat-lib.java}" debug="${debug}">
-			<classpath>
-				<pathelement location="${xmlvm.libjars}/objc-compat.jar" />
-				<pathelement location="${xmlvm.bin}" />
-			</classpath>
-			<include name="**/*.java" />
-		</javac>
-		<jar destfile="${xmlvm.libjars}/android-compat.jar">
-			<fileset dir="${xmlvm.android-compat-lib.java}" />
-		</jar>
-	</target>
-	
-	<target name="cc-android-compat-lib" depends="build-android-compat-lib,build-xmlvm">
-		<uptodate property="cc-android-compat-lib.notrequired" targetfile="${xmlvm.android-compat-lib.objc}">
-   			<srcfiles dir= "${xmlvm.android-compat-lib.java}" includes="**/*.class"/>
-  		</uptodate>
-		<antcall target="cc-android-compat-lib.impl" inheritRefs="yes"/>
-	</target>
-	
-	<target name="cc-android-compat-lib.impl" unless="cc-android-compat-lib.notrequired">
-		<echo message="Building android compatibility lib"/>
-		<mkdir dir="${xmlvm.android-compat-lib.objc}" />
-		<java classname="org.xmlvm.Main">
-			<arg value="--out=${xmlvm.android-compat-lib.objc}" />
-			<arg value="--target=objc" />
-			<arg value="--in=${xmlvm.android-compat-lib.java}/" />
-			<classpath refid="classpath.run" />
-		</java>
 	</target>
 
 	<target name="build-xmlvm" depends="init">
@@ -139,7 +97,7 @@
 
 	<target name="jar" depends="xmlvmjar"/>
 
-	<target name="xmlvmjar" depends="cc-android-compat-lib">
+	<target name="xmlvmjar" depends="build-xmlvm,build-objc-compat-lib">
 
 		<copy todir="${xmlvm.build.lib}">
 			<fileset dir="lib">
@@ -175,12 +133,6 @@
 			</patternset>
 		</unjar>
 
-		<unjar src="dist/lib/android-compat.jar" dest="${xmlvm.build}">
-			<patternset>
-				<include name="**/*.class" />
-			</patternset>
-		</unjar>
-
 		<javac srcdir="src/tools/ant/xcode-updater/" destdir="${xmlvm.build}" classpath="${ant.core.lib}" debug="${debug}">
 			<include name="**/*.java" />
 		</javac>
@@ -192,32 +144,8 @@
 			<fileset file="lib/redlist.txt" />
 		</copy>
 
-		<jar destfile="${xmlvm.bin}/xmlvm2c/java-ios-lib.jar">
-			<fileset dir="src/xmlvm2c/lib/ios/" />
-		</jar>
-
-		<jar destfile="${xmlvm.bin}/iphone/cocoa-compat-lib.jar">
-			<fileset dir="src/xmlvm2c/compat-lib/iphone/" />
-		</jar>
-
-		<jar destfile="${xmlvm.bin}/ios/wrapper-lib.jar">
-			<fileset dir="src/xmlvm2c/lib/wrapper/" />
-		</jar>
-
-		<jar destfile="${xmlvm.bin}/xmlvm2c/java-compat-lib.jar">
-			<fileset dir="src/xmlvm2c/compat-lib/java/" />
-		</jar>
-		
-		<jar destfile="${xmlvm.bin}/xmlvm2csharp/java-compat-lib.jar">
-			<fileset dir="src/xmlvm2csharp/compat-lib/java/" />
-		</jar>
-
 		<jar destfile="${xmlvm.bin}/iphone/compat-lib.jar">
 			<fileset dir="src/xmlvm2objc/compat-lib/objc/" />
-		</jar>
-
-		<jar destfile="${xmlvm.bin}/iphone/android-compat-lib.jar">
-			<fileset dir="${xmlvm.android-compat-lib.objc}" />
 		</jar>
 
 		<mkdir dir="${xmlvm.cocoa-java}" />
@@ -228,88 +156,9 @@
 			<classpath refid="classpath.compile" />
 			<include name="**/*.java" />
 		</javac>
-		<javac srcdir="src/ios" destdir="${xmlvm.cocoa-java}" debug="${debug}">
-			<classpath refid="classpath.compile" />
-			<classpath>
-				<pathelement location="${xmlvm.bin}" />
-			</classpath>
-			<include name="**/*.java" />
-		</javac>
 		<jar destfile="${xmlvm.bin}/lib/cocoa-java.jar">
 			<fileset dir="${xmlvm.cocoa-java}" />
 		</jar>
-
-		<mkdir dir="${xmlvm.xmlvm-util-java}" />
-		<javac srcdir="./src/xmlvm2c/lib/util" destdir="${xmlvm.xmlvm-util-java}" debug="${debug}">
-			<classpath>
-				<pathelement location="${xmlvm.bin}" />
-			</classpath>
-			<classpath refid="classpath.compile" />
-			<include name="**/*.java" />
-		</javac>
-		<jar destfile="${xmlvm.bin}/lib/xmlvm-util-java.jar">
-			<fileset dir="${xmlvm.xmlvm-util-java}" />
-		</jar>
-		
-		<mkdir dir="${xmlvm.proxies-java}" />
-		<javac srcdir="./src/xmlvm2c/lib/proxies" destdir="${xmlvm.proxies-java}" debug="${debug}">
-			<classpath>
-				<pathelement location="${xmlvm.xmlvm-util-java}" />
-				<pathelement location="lib/harmony6-build.jar" />
-				<pathelement location="lib/jaxp.jar" />
-			</classpath>
-			<include name="**/*.java" />
-		</javac>
-		<jar destfile="${xmlvm.bin}/lib/proxies-java.jar">
-			<fileset dir="${xmlvm.proxies-java}" />
-		</jar>
-		
-		<mkdir dir="${xmlvm.iphone-android-java}" />
-		<javac srcdir="./src/android2iphone" destdir="${xmlvm.iphone-android-java}" debug="${debug}">
-			<classpath>
-				<pathelement location="${xmlvm.libjars}/objc-compat.jar" />
-				<pathelement location="${xmlvm.bin}" />
-			</classpath>
-			<include name="**/*.java" />
-		</javac>
-		<jar destfile="${xmlvm.bin}/lib/iphone-android-java.jar">
-			<fileset dir="${xmlvm.iphone-android-java}" />
-		</jar>
-		
-		<jar destfile="${xmlvm.bin}/lib/native-c-lib.jar">
-			<fileset dir="src/xmlvm2c/lib/native/" />
-		</jar>
-		
-		<jar destfile="${xmlvm.bin}/lib/native-csharp-lib.jar">
-			<fileset dir="src/xmlvm2csharp/lib/native/" />
-		</jar>
-
-		<copy todir="${xmlvm.bin}/iphone">
-			<fileset file="var/iphone/Makefile" />
-			<fileset file="var/iphone/project.template" />
-			<fileset file="var/iphone/Info.plist" />
-		</copy>
-
-		<copy todir="${xmlvm.bin}/posix">
-			<fileset file="var/posix/Makefile" />
-		</copy>
-
-		<mkdir dir="${xmlvm.build}/xmlvm2js" />
-		<jar destfile="${xmlvm.build}/xmlvm2js/xmlvm2js.jar">
-			<fileset dir="src/xmlvm2js/" />
-		</jar>
-
-		<copy todir="${xmlvm.build}/xmlvm2js">
-			<fileset file="src/xmlvm2js/Application.js.template" />
-		</copy>
-
-		<copy todir="${xmlvm.bin}/templates/">
-			<fileset dir="var/templates" />
-		</copy>
-
-		<copy todir="${xmlvm.build}/sys_resources">
-			<fileset dir="var/iphone/sys_resources"/>
-		</copy>
 
 		<jar destfile="${xmlvm.build.main}/main.jar" basedir="${xmlvm.bin}">
 			<manifest>
@@ -335,87 +184,16 @@
 		</jar>
 
 		<!-- Declare the location of xmlvm.jar to all iPhone projects -->
-		<ant dir="demo" target="classpath"/>
-		<ant dir="tutorial" target="classpath"/>
-	</target>
-
-	<target name="eventHandlerCompatLib" depends="build-xmlvm">
-		<echo message="Compiling event handler for compat lib" />
-		<exec executable="${cscCompiler}">
-			<arg value="/out:${tmp.dir}/EventBinaries.exe" />
-			<arg value="/warn:0" />
-			<arg value="/nologo" />
-			<arg value="src/clr2jvm/compat-lib/c_sharp/eventHandler/DummyMain.cs" />
-			<arg value="src/clr2jvm/compat-lib/c_sharp/eventHandler/EventArgs.cs" />
-			<arg value="src/clr2jvm/compat-lib/c_sharp/eventHandler/EventHandler.cs" />
-		</exec>
-		<echo message="Cross compiling event handler for compat lib" />
-		<java classname="org.xmlvm.Main">
-			<arg value="--java" />
-			<arg value="--out=${xmlvm.main}" />
-			<arg value="${tmp.dir}/EventBinaries.exe" />
-			<classpath refid="classpath.run" />
-		</java>
-		<echo message="Compiling compat lib" />
-		<javac srcdir="src/clr2jvm/compat-lib/Java" destdir="${xmlvm.main}" debug="${debug}">
-			<classpath refid="classpath.compile" />
-			<include name="**/*.java" />
-		</javac>
-
-		<delete file="${tmp.dir}/EventBinaries.exe" />
-		<delete file="${xmlvm.main}/DummyMain.class" />
 	</target>
 
 	<target name="create-local.properties" unless="sdk.dir">
 		<echo file="properties/local.properties" message="# The location of the AndroidSDK.${line.separator}# Since this file is included in all Android demo projects, it is advised${line.separator}# to use an absolute path, or else the demo projects will not be properly${line.separator}# configured.${line.separator}#${line.separator}sdk.dir=LOCATION_OF_ANDROID_SDK"/>
 	</target>
 
-	<target name="demos-iphone" depends="jar">
-		<ant dir="demo" target="demos-iphone"/>
-	</target>
-
-	<target name="demos-android" depends="jar,create-local.properties">
-		<ant dir="demo" target="demos-android"/>
-	</target>
-
-	<target name="tutorial">
-		<ant dir="tutorial"/>
-	</target>
-
-	<target name="gen-c-wrappers" depends="jar">
-		<java jar="dist/xmlvm.jar" fork="true" failonerror="true">
-			<jvmarg value="-Xmx512m"/>
-			<arg value="--in=build/cocoa-java/org/xmlvm/iphone"/>
-			<arg value="--target=gen-c-wrappers"/>
-			<arg value="--out=src/xmlvm2c/compat-lib/iphone"/>
-			<arg value="--c-source-extension=m"/>
-		</java>
-	</target>
-
-	<target name="gen-c-native-skeletons" depends="jar">
-		<java jar="dist/xmlvm.jar" fork="true" failonerror="true">
-			<jvmarg value="-Xmx1G"/>
-			<arg value="--in=lib/harmony6-build.jar"/>
-			<arg value="--in=${xmlvm.bin}/lib/xmlvm-util-java.jar"/>
-			<arg value="--target=gen-c-wrappers"/>
-			<arg value="--out=src/xmlvm2c/lib/native"/>
-			<arg value="--gen-native-skeletons"/>
-		</java>
-	</target>
-
 	<target name="clean" description="Remove all build files">
-		<ant dir="demo" target="clean"/>
-		<ant dir="tutorial" target="clean"/>
-
 		<delete dir=".cache" />
 		<delete dir="dist" />
 		<delete dir="build" />
-		<delete dir="${doc.dir}/homepage/lib" />
-		<delete file="${doc.dir}/homepage/android/demo/xokoban.jar" />
-		<delete file="${doc.dir}/homepage/iphone/demo/ifireworks.jar" />
-		<delete dir="var/Netbeans/build"/>
-		<delete dir="var/Netbeans/nbproject/private"/>
-		<delete dir="demo/iphone/plugins/Zip/nbproject/private"/>
 	</target>
 
 	<target name="install" depends="init,jar">
